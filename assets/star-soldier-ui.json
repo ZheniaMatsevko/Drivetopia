@@ -1,0 +1,53 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	font: {
+		file: font-export1.fnt
+	}
+	title: {
+		file: font-title-export1.fnt
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	black: {
+		r: 0
+		g: 0
+		b: 0
+		a: 1
+	}
+	sky-blue: {
+		r: 0.2733333
+		g: 0.68720984
+		b: 1
+		a: 1
+	}
+	white: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	dark-blue: {
+		name: white
+		color: {
+			r: 0.09466666
+			g: 0.11323714
+			b: 0.23666666
+			a: 1
+		}
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: {
+		up: button
+		down: button-selected
+	}
+	toggle: {
+		up: button
+		down: button-selected
+		checked: button-selected
+	}
+}
+
+}
