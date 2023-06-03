@@ -127,7 +127,11 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         profileBtn = new ImageButton(myTexRegionDrawable);
         profileBtn.setSize(250,150);
         profileBtn.setPosition(10, GraphicConstants.rowHeight*7.3F);
-
+        profileBtn.addListener(new ClickListener() {
+            public void clicked(InputEvent event,float x, float y) {
+                app.setScreen(new ProfileScreen(app,1,1));
+            }
+        });
         stage.addActor(profileBtn);
 
         Texture myTexture1 = new Texture(Gdx.files.internal("sound2.png"));
