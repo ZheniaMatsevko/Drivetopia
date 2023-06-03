@@ -55,6 +55,8 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
     private Button finalTestBtn;
     private Button exitBtn;
 
+    private int soundState = 1;
+
     public MainMenuScreen(final Drivetopia app, int level, int score) {
         // Initialize FontFactory
         fontFactory = new FontFactory();
@@ -139,13 +141,45 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         });
         stage.addActor(profileBtn);
 
+        /**звичайна іконка звуку**/
         Texture myTexture1 = new Texture(Gdx.files.internal("sound2.png"));
         TextureRegion myTextureRegion1 = new TextureRegion(myTexture1);
-        TextureRegionDrawable myTexRegionDrawable1 = new TextureRegionDrawable(myTextureRegion1);
+        final TextureRegionDrawable myTexRegionDrawable1 = new TextureRegionDrawable(myTextureRegion1);
+
+        Texture myTexture2 = new Texture(Gdx.files.internal("sound2small.png"));
+        TextureRegion myTextureRegion2 = new TextureRegion(myTexture2);
+        final TextureRegionDrawable myTexRegionDrawable2 = new TextureRegionDrawable(myTextureRegion2);
+
+        Texture myTexture3 = new Texture(Gdx.files.internal("sound2no.png"));
+        TextureRegion myTextureRegion3 = new TextureRegion(myTexture3);
+        final TextureRegionDrawable myTexRegionDrawable3 = new TextureRegionDrawable(myTextureRegion3);
 
         soundBtn = new ImageButton(myTexRegionDrawable1);
         soundBtn.setSize(250,150);
         soundBtn.setPosition(GraphicConstants.colWidth*7-soundBtn.getWidth()/2, GraphicConstants.rowHeight*7.3F);
+
+
+        /**це чомусь не працює :(**/
+        soundBtn.addListener(new ClickListener() {
+            public void clicked(InputEvent event,float x, float y) {
+                switch(soundState) {
+                    case 1:
+                        soundBtn = new ImageButton(myTexRegionDrawable2);
+                        soundState  = 2;
+                        break;
+                    case 2:
+                        soundBtn = new ImageButton(myTexRegionDrawable3);
+                        soundState  = 3;
+                        break;
+                    default:
+                        soundBtn = new ImageButton(myTexRegionDrawable1);
+                        soundState  = 1;
+                        break;
+                }
+            }
+        });
+
+
 
         stage.addActor(soundBtn);
 
@@ -201,21 +235,21 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         Vector2 coord = stage.screenToStageCoordinates(new Vector2((float)screenX,(float) screenY));
         Actor hitActor = stage.hit(coord.x,coord.y,true);
      //   if(finalTestBtn.isPressed()) app.setScreen(new BeginningScreen(app,1,1));
-        if(hitActor==profileBtn.getImage()){
+       // if(hitActor==profileBtn.getImage()){
             //if(app.soundState) app.clicksound.play();
-            System.out.println("Hit " + hitActor.getClass());
-           app.setScreen(new ProfileScreen(app,1,1));
-        } /*else if(hitActor==helpButton.getImage()){
+         //   System.out.println("Hit " + hitActor.getClass());
+           //app.setScreen(new ProfileScreen(app,1,1));
+        //} *else if(hitActor==helpButton.getImage()){
             //if(game.soundState)  game.clicksound.play();
-            System.out.println("Hit " + hitActor.getClass());
+          //  System.out.println("Hit " + hitActor.getClass());
             //game.setScreen(new HelpScreen(game,level,bonusScore));
-        }
-        else if(hitActor==settingsButton.getImage()){
+        //}
+        //else if(hitActor==settingsButton.getImage()){
             //if(game.soundState)  game.clicksound.play();
-            System.out.println("Hit " + hitActor.getClass());
+          //  System.out.println("Hit " + hitActor.getClass());
             //game.setScreen(new OptionsScreen(game,level,bonusScore,game.musicStage,game.soundState));
-        }*/
-        return true;
+        //}*/
+       return true;
     }
 
     @Override
