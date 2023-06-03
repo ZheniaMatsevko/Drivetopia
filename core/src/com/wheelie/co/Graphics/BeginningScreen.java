@@ -17,10 +17,13 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.sun.tools.javac.Main;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Tools.FontFactory;
 
@@ -44,10 +47,10 @@ public class BeginningScreen extends ScreenAdapter implements InputProcessor {
     private Locale ukrLocale;
     private FontFactory fontFactory;
     private final GlyphLayout layout;
-    private Button startBtn;
+    private TextButton startBtn;
 
 
-    private Button regBtn;
+    private TextButton regBtn;
 
     public BeginningScreen(final Drivetopia app, int level, int score) {
         // Initialize FontFactory
@@ -88,16 +91,29 @@ public class BeginningScreen extends ScreenAdapter implements InputProcessor {
         startBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
         startBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,GraphicConstants.rowHeight*5);
 
+        startBtn.addListener(new ClickListener() {
+            public void clicked(InputEvent event,float x, float y) {
+                app.setScreen(new MainMenuScreen(app,1,1));
+            }
+        });
+
         stage.addActor(startBtn);
         regBtn = new TextButton("Реєстрація",skin);
         regBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
         regBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,startBtn.getY()-startBtn.getHeight()*1.2F);
+
+        regBtn.addListener(new ClickListener() {
+            public void clicked(InputEvent event,float x, float y) {
+                app.setScreen(new MainMenuScreen(app,1,1));
+            }
+        });
+
         stage.addActor(regBtn);
 
 
         sprite = new Sprite(new Texture(Gdx.files.internal("b13.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.input.setInputProcessor(this);
+        Gdx.input.setInputProcessor(stage);
         layout = new GlyphLayout(font2, "DRIVETOPIA");
 
 

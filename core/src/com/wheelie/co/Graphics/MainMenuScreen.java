@@ -14,11 +14,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -100,13 +102,22 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         aboutBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
         aboutBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,settingsBtn.getY()-startBtn.getHeight()*1.2F);
         stage.addActor(aboutBtn);
+
+
         finalTestBtn = new TextButton("Фінальний тест",skin);
         finalTestBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
         finalTestBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,aboutBtn.getY()-startBtn.getHeight()*1.2F);
         stage.addActor(finalTestBtn);
+
+
         exitBtn = new TextButton("Вийти",skin);
         exitBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
         exitBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,finalTestBtn.getY()-startBtn.getHeight()*1.2F);
+        exitBtn.addListener(new ClickListener() {
+            public void clicked(InputEvent event,float x, float y) {
+                app.setScreen(new BeginningScreen(app,1,1));
+            }
+        });
         stage.addActor(exitBtn);
 
         Texture myTexture = new Texture(Gdx.files.internal("u5.png"));
@@ -132,7 +143,7 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
 
         sprite = new Sprite(new Texture(Gdx.files.internal("b13.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.input.setInputProcessor(this);
+        Gdx.input.setInputProcessor(stage);
         layout = new GlyphLayout(font2, "DRIVETOPIA");
 
 
@@ -180,6 +191,7 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector2 coord = stage.screenToStageCoordinates(new Vector2((float)screenX,(float) screenY));
         Actor hitActor = stage.hit(coord.x,coord.y,true);
+        if(finalTestBtn.isPressed()) app.setScreen(new BeginningScreen(app,1,1));
         /*if(hitActor==startButton.getImage()){
             //if(app.soundState) app.clicksound.play();
             System.out.println("Hit " + hitActor.getClass());
