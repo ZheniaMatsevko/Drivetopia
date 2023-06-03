@@ -11,5 +11,7 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setTitle("Drivetopia");
 		new Lwjgl3Application(new Drivetopia(), config);
+
+
 	}
 }

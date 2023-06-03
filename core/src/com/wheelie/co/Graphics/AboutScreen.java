@@ -26,7 +26,8 @@ import com.wheelie.co.Tools.FontFactory;
 
 import java.util.Locale;
 
-public class ProfileScreen extends ScreenAdapter implements InputProcessor {
+/**Марина: поки що це просто копія екрану профіля,якщо воно так і залишено це значить що я ще не доробила**/
+public class AboutScreen extends ScreenAdapter implements InputProcessor {
     Drivetopia app;
     private SpriteBatch batch;
     private Sprite sprite;
@@ -68,7 +69,7 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
 
 
 
-    public ProfileScreen(final Drivetopia app, int level, int score) {
+    public AboutScreen(final Drivetopia app, int level, int score) {
         // Initialize FontFactory
         fontFactory = new FontFactory();
         fontFactory.initialize();
@@ -111,23 +112,9 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         skin2.load(Gdx.files.internal("skin-composer-ui.json"));
 
 
-        editButton = new TextButton("Редагувати",skin2);
-        editButton.setColor(Color.BLUE);
-        editButton.setSize(GraphicConstants.colWidth*5,GraphicConstants.rowHeight*0.7F);
-        editButton.setPosition(GraphicConstants.centerX-editButton.getWidth()/2,500-editButton.getHeight()*1.2F);
-
-        editButton.addListener(new ClickListener() {
-            public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new MainMenuScreen(app,1,1));
-            }
-        });
-
-        stage.addActor(editButton);
-
 
 
         backButton = new TextButton("Назад",skin2);
-        backButton.setColor(Color.BLUE);
         backButton.setSize(GraphicConstants.colWidth*5,GraphicConstants.rowHeight*0.7F);
         backButton.setPosition(GraphicConstants.centerX- backButton.getWidth()/2,300- backButton.getHeight()*1.2F);
 
@@ -140,24 +127,21 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         stage.addActor(backButton);
 
 
-        PIB = new Label("ПІБ: \n" + PIBBD,skin);
-        age = new Label(ageBD + " років",skin);
-        failures = new Label("Кількість перездач: " + failuresBD,skin);
+        PIB = new Label(" Цей додаток допоможе Вам \n вивчити основи ПДР, або ж \n перевірити свої знання, якщо \n Ви уже є досвіченим водієм!\n\n\n" +
+                " Цей екран можна було б\n скролити вниз, і він має\n містити всю інфу про\n додаток, якби ж я ще знала\n як це робити!",skin);
         PIB.setSize(40,25);
-        PIB.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,1400);
-        age.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,1150);
-        failures.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,650);
+        PIB.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,1100);
 
         stage.addActor(PIB);
-        stage.addActor(age);
-        stage.addActor(failures);
 
 
 
-        sprite = new Sprite(new Texture(Gdx.files.internal("white.jpg")));
+
+        sprite = new Sprite(new Texture(Gdx.files.internal("mountbgr.png")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(stage);
-        layout = new GlyphLayout(font2, "User profile");
+        layout = new GlyphLayout(font2, "Drivetopia");
+
 
 
     }
