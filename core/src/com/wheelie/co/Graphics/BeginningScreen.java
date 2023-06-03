@@ -78,8 +78,8 @@ public class BeginningScreen extends ScreenAdapter implements InputProcessor {
         // Initialize locales
         enLocale = new Locale("en", "US");
         ukrLocale = new Locale("uk", "UA");
-        font2=fontFactory.getFont(enLocale);
-        font3=fontFactory.getFont(ukrLocale);
+        font2=fontFactory.getFont(enLocale,1);
+        font3=fontFactory.getFont(ukrLocale,1);
 
 
 

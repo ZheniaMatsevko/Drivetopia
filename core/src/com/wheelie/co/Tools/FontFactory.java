@@ -15,6 +15,8 @@ public class FontFactory {
     private BitmapFont enFont;
     private BitmapFont ukrFont;
 
+    private BitmapFont smallUkr;
+
     private BitmapFont generateFont(String fontName, String characters, int size, Color color) {
 
         // Configure font parameters
@@ -34,16 +36,20 @@ public class FontFactory {
 
         return font;
     }
-    public BitmapFont getFont(Locale locale) {
+    public BitmapFont getFont(Locale locale,int numb) {
         if      ("en".equals(locale.getLanguage())) return enFont;
-        else if ("uk".equals(locale.getLanguage())) return ukrFont;
+        else if ("uk".equals(locale.getLanguage()) && numb==1) return ukrFont;
+        else if ("uk".equals(locale.getLanguage())) return smallUkr;
         else throw new IllegalArgumentException("Not supported language");
     }
     public void initialize() {
         // If fonts are already generated, dispose it!
         if (enFont != null) enFont.dispose();
         if (ukrFont != null) ukrFont.dispose();
+        if (smallUkr != null) ukrFont.dispose();
 
+
+        smallUkr = generateFont(UKRAINIAN_FONT_NAME, UKRAINIAN_CHARACTERS,70, Color.BLACK);
         enFont = generateFont(ENGLISH_FONT_NAME, FreeTypeFontGenerator.DEFAULT_CHARS,100, Color.BLACK);
         ukrFont = generateFont(UKRAINIAN_FONT_NAME, UKRAINIAN_CHARACTERS,95, Color.WHITE);
     }

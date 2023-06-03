@@ -81,8 +81,8 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         // Initialize locales
         enLocale = new Locale("en", "US");
         ukrLocale = new Locale("uk", "UA");
-        font2=fontFactory.getFont(enLocale);
-        font3=fontFactory.getFont(ukrLocale);
+        font2=fontFactory.getFont(enLocale,1);
+        font3=fontFactory.getFont(ukrLocale,1);
 
 
 
@@ -191,12 +191,12 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector2 coord = stage.screenToStageCoordinates(new Vector2((float)screenX,(float) screenY));
         Actor hitActor = stage.hit(coord.x,coord.y,true);
-        if(finalTestBtn.isPressed()) app.setScreen(new BeginningScreen(app,1,1));
-        /*if(hitActor==startButton.getImage()){
+     //   if(finalTestBtn.isPressed()) app.setScreen(new BeginningScreen(app,1,1));
+        if(hitActor==profileBtn.getImage()){
             //if(app.soundState) app.clicksound.play();
             System.out.println("Hit " + hitActor.getClass());
-           // app.setScreen(new PutShipsScreen(app,level,bonusScore));
-        }else if(hitActor==helpButton.getImage()){
+           app.setScreen(new ProfileScreen(app,1,1));
+        } /*else if(hitActor==helpButton.getImage()){
             //if(game.soundState)  game.clicksound.play();
             System.out.println("Hit " + hitActor.getClass());
             //game.setScreen(new HelpScreen(game,level,bonusScore));
