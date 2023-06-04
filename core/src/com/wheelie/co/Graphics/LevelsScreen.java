@@ -33,6 +33,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.Tools.MyDialog;
+import com.wheelie.co.levelTemplates.SimpleTextChoiceQuestionScreen;
+import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -218,8 +220,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         practiceBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                dialog.hide(); // Сховати вікно після натискання кнопки
-                 // Встановити результат натискання кнопки
+                app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion()));
             }
         });
         dialog.getButtonTable().add(theoryBtn).size(550f,120f).padRight(10f).padBottom(10f);
@@ -246,6 +247,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
                     dialog.setMessage(topic);
                     dialog.setVisible(true);
                     dialog.show(stage);
+
                 }
             });
             counter++;
