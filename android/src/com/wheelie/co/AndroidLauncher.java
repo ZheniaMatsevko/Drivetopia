@@ -11,14 +11,21 @@ import com.wheelie.co.Drivetopia;
 import DBWorkH.DatabaseHelperH;
 
 public class AndroidLauncher extends AndroidApplication {
+
+
 	@Override
-	protected void onCreate (Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		initialize(new Drivetopia(), config);
 
-		DatabaseHelperH databaseHelper = new DatabaseHelperH(this);
-		SQLiteDatabase database = databaseHelper.getWritableDatabase();
+		// Perform database operations as needed
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+
 	}
 }
