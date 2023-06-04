@@ -171,6 +171,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         levelsBtns = new LinkedList<>();
 
 
+
         for(int i=0;i<9;i++){
             String path = "level" + (i+1) + ".png";
             Texture myTexture = new Texture(Gdx.files.internal(path));
@@ -254,8 +255,6 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
 
     }
 
-
-
     /**
      * Малюємо головне меню
      */
@@ -291,7 +290,23 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
      */
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
+        Vector2 coord = stage.screenToStageCoordinates(new Vector2((float)screenX,(float) screenY));
+        Actor hitActor = stage.hit(coord.x,coord.y,true);
+        //   if(finalTestBtn.isPressed()) app.setScreen(new BeginningScreen(app,1,1));
+        // if(hitActor==profileBtn.getImage()){
+        //if(app.soundState) app.clicksound.play();
+        //   System.out.println("Hit " + hitActor.getClass());
+        //app.setScreen(new ProfileScreen(app,1,1));
+        //} *else if(hitActor==helpButton.getImage()){
+        //if(game.soundState)  game.clicksound.play();
+        //  System.out.println("Hit " + hitActor.getClass());
+        //game.setScreen(new HelpScreen(game,level,bonusScore));
+        //}
+        //else if(hitActor==settingsButton.getImage()){
+        //if(game.soundState)  game.clicksound.play();
+        //  System.out.println("Hit " + hitActor.getClass());
+        //game.setScreen(new OptionsScreen(game,level,bonusScore,game.musicStage,game.soundState));
+        //}*/
         return true;
     }
 
