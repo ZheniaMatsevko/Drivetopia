@@ -209,8 +209,9 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         theoryBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                dialog.hide(); // Сховати вікно після натискання кнопки
-                // Встановити результат натискання кнопки
+                dialog.hide();
+                app.setScreen(new TheoryScreen(app,1,1));
+
             }
         });
 

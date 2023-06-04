@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.wheelie.co.Graphics.BeginningScreen;
 import com.wheelie.co.Graphics.MainMenuScreen;
 import com.wheelie.co.Graphics.ProfileScreen;
+import com.wheelie.co.Graphics.TheoryScreen;
 
 public class Drivetopia extends Game {
 
@@ -18,7 +19,7 @@ public class Drivetopia extends Game {
 
 		shapeRenderer = new ShapeRenderer();
 		//setScreen(new MainMenuScreen(this,1,1));
-			setScreen(new BeginningScreen(this,1,1));
+			setScreen(new TheoryScreen(this,1,1));
 //	setScreen(new ProfileScreen(this,1,1));
 
 	}
