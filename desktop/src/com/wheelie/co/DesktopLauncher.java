@@ -10,7 +10,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("Drivetopia");
-		new Lwjgl3Application(new Drivetopia(), config);
+		//new Lwjgl3Application(new Drivetopia(), config);
 
 
 	}
