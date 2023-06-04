@@ -18,14 +18,19 @@ import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Tools.FontFactory;
+import com.wheelie.co.Tools.MyDialog;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -83,7 +88,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         enLocale = new Locale("en", "US");
         ukrLocale = new Locale("uk", "UA");
         font2=fontFactory.getFont(enLocale,1);
-        font3=fontFactory.getFont(ukrLocale,1);
+        font3=fontFactory.getFont(ukrLocale,4);
 
 
 
@@ -150,7 +155,6 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         levelsBtns = new LinkedList<>();
 
 
-
         for(int i=0;i<9;i++){
             String path = "level" + (i+1) + ".png";
             Texture myTexture = new Texture(Gdx.files.internal(path));
@@ -181,7 +185,59 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         layout = new GlyphLayout(font2, "DRIVETOPIA");
 
 
+        final MyDialog dialog = new MyDialog("", skin);
+
+        TextButton theoryBtn = new TextButton("Теорія", skin);
+        TextButton practiceBtn = new TextButton("Практика", skin);
+
+        theoryBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                dialog.hide(); // Сховати вікно після натискання кнопки
+                // Встановити результат натискання кнопки
+            }
+        });
+
+        practiceBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                dialog.hide(); // Сховати вікно після натискання кнопки
+                 // Встановити результат натискання кнопки
+            }
+        });
+        dialog.getButtonTable().add(theoryBtn).size(550f,120f).padRight(10f).padBottom(10f);
+        dialog.getButtonTable().add(practiceBtn).size(500f,120f).padLeft(10f).padBottom(10f);
+        dialog.setColor(Color.valueOf("#066c35"));
+
+        dialog.setVisible(false);
+        stage.addActor(dialog);
+        final List<String> topics = new LinkedList<>();
+        topics.add("Тема 1. Загальні положення");
+        topics.add("Тема 2. Обов'язки та права\nа.водіїв   б.пасажирів");
+        topics.add("Тема 3. Рух транспорту із \nспеціальними сигналами");
+        topics.add("Тема 4. Регулювання \nдорожнього руху");
+        topics.add("Тема 5. Попереджувальні\n сигнали");
+        topics.add("Тема 6. Початок руху \nта зміна напрямку");
+        topics.add("Тема 7. Розташування \nтранспорту на дорозі");
+        topics.add("Тема 8. Швидкість руху");
+        topics.add("Тема 9. Дистанція, інтервал,\n зустрічний роз'їзд");
+
+        int counter=0;
+        for(final String topic: topics){
+            levelsBtns.get(counter).addListener(new ClickListener() {
+                public void clicked(InputEvent event,float x, float y) {
+                    dialog.setMessage(topic);
+                    dialog.setVisible(true);
+                    dialog.show(stage);
+                }
+            });
+            counter++;
+        }
+
+
     }
+
+
 
     /**
      * Малюємо головне меню
@@ -218,23 +274,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
      */
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector2 coord = stage.screenToStageCoordinates(new Vector2((float)screenX,(float) screenY));
-        Actor hitActor = stage.hit(coord.x,coord.y,true);
-        //   if(finalTestBtn.isPressed()) app.setScreen(new BeginningScreen(app,1,1));
-        // if(hitActor==profileBtn.getImage()){
-        //if(app.soundState) app.clicksound.play();
-        //   System.out.println("Hit " + hitActor.getClass());
-        //app.setScreen(new ProfileScreen(app,1,1));
-        //} *else if(hitActor==helpButton.getImage()){
-        //if(game.soundState)  game.clicksound.play();
-        //  System.out.println("Hit " + hitActor.getClass());
-        //game.setScreen(new HelpScreen(game,level,bonusScore));
-        //}
-        //else if(hitActor==settingsButton.getImage()){
-        //if(game.soundState)  game.clicksound.play();
-        //  System.out.println("Hit " + hitActor.getClass());
-        //game.setScreen(new OptionsScreen(game,level,bonusScore,game.musicStage,game.soundState));
-        //}*/
+
         return true;
     }
 
