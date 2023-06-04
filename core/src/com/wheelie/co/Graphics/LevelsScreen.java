@@ -18,9 +18,11 @@ import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -52,7 +54,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
 
     private ImageButton mainMenuBtn;
     private List<ImageButton> levelsBtns;
-    private ImageButton soundBtn;
+    private Image soundBtn;
 
     private int soundState = 1;
 
@@ -120,30 +122,44 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         TextureRegion myTextureRegion3 = new TextureRegion(myTexture3);
         final TextureRegionDrawable myTexRegionDrawable3 = new TextureRegionDrawable(myTextureRegion3);
 
-        soundBtn = new ImageButton(myTexRegionDrawable1);
+
+        if(soundState==1) {
+            soundBtn = new Image(new Texture(Gdx.files.internal("sound2.png")));
+        }
+        else if(soundState==2){
+            soundBtn = new Image(new Texture(Gdx.files.internal("sound2small.png")));
+
+        }
+        else if (soundState==3) {
+
+            soundBtn = new Image(new Texture(Gdx.files.internal("sound2no.png")));
+
+        }
         soundBtn.setSize(250,150);
         soundBtn.setPosition(GraphicConstants.colWidth*7-soundBtn.getWidth()/2, GraphicConstants.rowHeight*7.3F);
+        soundState = 1;
 
-
-        /**це чомусь не працює :(**/
+        /**це чомусь не працює :( upd": працює**/
         soundBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
                 switch(soundState) {
                     case 1:
-                        soundBtn = new ImageButton(myTexRegionDrawable2);
+                        soundBtn.setDrawable(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("sound2small.png")))));
                         soundState  = 2;
                         break;
                     case 2:
-                        soundBtn = new ImageButton(myTexRegionDrawable3);
+                        soundBtn.setDrawable(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("sound2no.png")))));
                         soundState  = 3;
                         break;
                     default:
-                        soundBtn = new ImageButton(myTexRegionDrawable1);
+                        soundBtn.setDrawable(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("sound2.png")))));
                         soundState  = 1;
                         break;
                 }
             }
         });
+
+
 
         stage.addActor(soundBtn);
 
