@@ -14,12 +14,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -27,9 +27,12 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Tools.FontFactory;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
-public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
+public class LevelsScreen extends ScreenAdapter implements InputProcessor {
+
     Drivetopia app;
     private SpriteBatch batch;
     private Sprite sprite;
@@ -42,22 +45,18 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
 
     private Skin skin;
     private int score;
-    private int backgroundOffset;
     private Locale enLocale;
     private Locale ukrLocale;
     private FontFactory fontFactory;
     private final GlyphLayout layout;
-    private Button startBtn;
-    private ImageButton profileBtn;
+
+    private ImageButton mainMenuBtn;
+    private List<ImageButton> levelsBtns;
     private ImageButton soundBtn;
-    private Button settingsBtn;
-    private Button aboutBtn;
-    private Button finalTestBtn;
-    private Button exitBtn;
 
     private int soundState = 1;
 
-    public MainMenuScreen(final Drivetopia app, int level, int score) {
+    public LevelsScreen(final Drivetopia app, int level, int score) {
         // Initialize FontFactory
         fontFactory = new FontFactory();
         fontFactory.initialize();
@@ -65,13 +64,13 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         this.level =level;
         this.app = app;
         this.score = score;
-        backgroundOffset=0;
+
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Zyana.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 135;
         parameter.borderWidth = 1.5F;
 
-        parameter.color=Color.BLACK;
+        parameter.color= Color.BLACK;
         parameter.borderColor = Color.BLACK;
         font = generator.generateFont(parameter);
         stage = new Stage(new ScreenViewport());
@@ -92,59 +91,21 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         skin.add("font", font3);
 
         skin.load(Gdx.files.internal("skin-composer-ui.json"));
-        startBtn = new TextButton("Уроки",skin);
-        startBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
-        startBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,GraphicConstants.rowHeight*5);
-        startBtn.addListener(new ClickListener() {
+
+        Texture myTexture0 = new Texture(Gdx.files.internal("mainMenu.png"));
+        TextureRegion myTextureRegion0 = new TextureRegion(myTexture0);
+        TextureRegionDrawable myTexRegionDrawable0 = new TextureRegionDrawable(myTextureRegion0);
+
+        mainMenuBtn = new ImageButton(myTexRegionDrawable0);
+        mainMenuBtn.setSize(280,170);
+        mainMenuBtn.setPosition(0, GraphicConstants.rowHeight*7.3F);
+        mainMenuBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new LevelsScreen(app,1,1));
+                app.setScreen(new MainMenuScreen(app,1,1));
             }
         });
-        stage.addActor(startBtn);
-        settingsBtn = new TextButton("Налаштування",skin);
-        settingsBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
-        settingsBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,startBtn.getY()-startBtn.getHeight()*1.2F);
-        stage.addActor(settingsBtn);
-        aboutBtn = new TextButton("Про додаток",skin);
-        aboutBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
-        aboutBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,settingsBtn.getY()-startBtn.getHeight()*1.2F);
-        aboutBtn.addListener(new ClickListener() {
-            public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new AboutScreen(app,1,1));
-            }
-        });
-        stage.addActor(aboutBtn);
+        stage.addActor(mainMenuBtn);
 
-
-        finalTestBtn = new TextButton("Фінальний тест",skin);
-        finalTestBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
-        finalTestBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,aboutBtn.getY()-startBtn.getHeight()*1.2F);
-        stage.addActor(finalTestBtn);
-
-
-        exitBtn = new TextButton("Вийти",skin);
-        exitBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
-        exitBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,finalTestBtn.getY()-startBtn.getHeight()*1.2F);
-        exitBtn.addListener(new ClickListener() {
-            public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new BeginningScreen(app,1,1));
-            }
-        });
-        stage.addActor(exitBtn);
-
-        Texture myTexture = new Texture(Gdx.files.internal("u5.png"));
-        TextureRegion myTextureRegion = new TextureRegion(myTexture);
-        TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
-
-        profileBtn = new ImageButton(myTexRegionDrawable);
-        profileBtn.setSize(250,150);
-        profileBtn.setPosition(10, GraphicConstants.rowHeight*7.3F);
-        profileBtn.addListener(new ClickListener() {
-            public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new ProfileScreen(app,1,1));
-            }
-        });
-        stage.addActor(profileBtn);
 
         /**звичайна іконка звуку**/
         Texture myTexture1 = new Texture(Gdx.files.internal("sound2.png"));
@@ -162,7 +123,7 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         soundBtn = new ImageButton(myTexRegionDrawable1);
         soundBtn.setSize(250,150);
         soundBtn.setPosition(GraphicConstants.colWidth*7-soundBtn.getWidth()/2, GraphicConstants.rowHeight*7.3F);
-       soundState = 1;
+
 
         /**це чомусь не працює :(**/
         soundBtn.addListener(new ClickListener() {
@@ -184,12 +145,37 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
             }
         });
 
-
-
         stage.addActor(soundBtn);
 
+        levelsBtns = new LinkedList<>();
 
-        sprite = new Sprite(new Texture(Gdx.files.internal("b13.jpg")));
+
+
+        for(int i=0;i<9;i++){
+            String path = "level" + (i+1) + ".png";
+            Texture myTexture = new Texture(Gdx.files.internal(path));
+            TextureRegion myTextureRegion = new TextureRegion(myTexture);
+            final TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
+
+            ImageButton levelBtn = new ImageButton(myTexRegionDrawable);
+            levelBtn.setSize(310,240);
+            stage.addActor(levelBtn);
+            levelsBtns.add(levelBtn);
+        }
+        levelsBtns.get(0).setPosition(10,GraphicConstants.rowHeight*6 - 55);
+        levelsBtns.get(1).setPosition(levelsBtns.get(0).getWidth() - 20,GraphicConstants.rowHeight*6 - 55);
+        levelsBtns.get(2).setPosition(levelsBtns.get(0).getWidth()*2 - 40,GraphicConstants.rowHeight*6 - 65);
+        levelsBtns.get(3).setPosition(GraphicConstants.screenWidth-GraphicConstants.colWidth*2,GraphicConstants.rowHeight*5+80);
+        levelsBtns.get(4).setPosition(GraphicConstants.screenWidth-GraphicConstants.colWidth*2,GraphicConstants.rowHeight*4 + 100);
+        levelsBtns.get(5).setPosition(levelsBtns.get(0).getWidth()*2 - 40,GraphicConstants.rowHeight*4);
+        levelsBtns.get(6).setPosition(levelsBtns.get(1).getX()+10,levelsBtns.get(5).getY());
+        levelsBtns.get(7).setPosition(levelsBtns.get(0).getX()+10,levelsBtns.get(5).getY());
+        levelsBtns.get(8).setPosition(-20,GraphicConstants.rowHeight*3+20);
+        levelsBtns.get(8).setSize(290,220);
+
+
+
+        sprite = new Sprite(new Texture(Gdx.files.internal("levels1.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(stage);
         layout = new GlyphLayout(font2, "DRIVETOPIA");
@@ -205,11 +191,6 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         ScreenUtils.clear(0, 0, 0, 1);
         batch.begin();
         sprite.draw(batch);
-        //font2.draw(batch, "DRIVETOPIA", Gdx.graphics.getWidth()/6,Gdx.graphics.getHeight()/4*3);
-        font2.draw(batch, layout, GraphicConstants.centerX-layout.width/2,GraphicConstants.rowHeight*6.8F);
-
-        //fontFactory.getFont(ukrLocale).draw(batch, "Приав", Gdx.graphics.getWidth()/4-20,Gdx.graphics.getHeight()/4*3+200);
-
 
 
         batch.end();
@@ -239,22 +220,22 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector2 coord = stage.screenToStageCoordinates(new Vector2((float)screenX,(float) screenY));
         Actor hitActor = stage.hit(coord.x,coord.y,true);
-     //   if(finalTestBtn.isPressed()) app.setScreen(new BeginningScreen(app,1,1));
-       // if(hitActor==profileBtn.getImage()){
-            //if(app.soundState) app.clicksound.play();
-         //   System.out.println("Hit " + hitActor.getClass());
-           //app.setScreen(new ProfileScreen(app,1,1));
+        //   if(finalTestBtn.isPressed()) app.setScreen(new BeginningScreen(app,1,1));
+        // if(hitActor==profileBtn.getImage()){
+        //if(app.soundState) app.clicksound.play();
+        //   System.out.println("Hit " + hitActor.getClass());
+        //app.setScreen(new ProfileScreen(app,1,1));
         //} *else if(hitActor==helpButton.getImage()){
-            //if(game.soundState)  game.clicksound.play();
-          //  System.out.println("Hit " + hitActor.getClass());
-            //game.setScreen(new HelpScreen(game,level,bonusScore));
+        //if(game.soundState)  game.clicksound.play();
+        //  System.out.println("Hit " + hitActor.getClass());
+        //game.setScreen(new HelpScreen(game,level,bonusScore));
         //}
         //else if(hitActor==settingsButton.getImage()){
-            //if(game.soundState)  game.clicksound.play();
-          //  System.out.println("Hit " + hitActor.getClass());
-            //game.setScreen(new OptionsScreen(game,level,bonusScore,game.musicStage,game.soundState));
+        //if(game.soundState)  game.clicksound.play();
+        //  System.out.println("Hit " + hitActor.getClass());
+        //game.setScreen(new OptionsScreen(game,level,bonusScore,game.musicStage,game.soundState));
         //}*/
-       return true;
+        return true;
     }
 
     @Override
@@ -276,4 +257,5 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
     public boolean scrolled(float amountX, float amountY) {
         return false;
     }
+
 }
