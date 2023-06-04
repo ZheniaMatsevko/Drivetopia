@@ -157,7 +157,7 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         soundBtn = new ImageButton(myTexRegionDrawable1);
         soundBtn.setSize(250,150);
         soundBtn.setPosition(GraphicConstants.colWidth*7-soundBtn.getWidth()/2, GraphicConstants.rowHeight*7.3F);
-
+       soundState = 1;
 
         /**це чомусь не працює :(**/
         soundBtn.addListener(new ClickListener() {
