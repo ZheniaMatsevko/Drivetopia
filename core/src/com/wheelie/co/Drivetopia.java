@@ -7,6 +7,7 @@ import com.wheelie.co.Graphics.MainMenuScreen;
 import com.wheelie.co.Graphics.ProfileScreen;
 import com.wheelie.co.levelTemplates.SimpleTextChoiceQuestionScreen;
 import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
+import com.wheelie.co.levels20.IntermediateScreen;
 
 import java.util.ArrayList;
 
@@ -31,11 +32,11 @@ public class Drivetopia extends Game {
 
 		shapeRenderer = new ShapeRenderer();
 		//setScreen(new MainMenuScreen(this,1,1));
-			setScreen(new BeginningScreen(this,1,1));
+			//setScreen(new BeginningScreen(this,1,1));
 //	setScreen(new ProfileScreen(this,1,1));
-		//setScreen(new SimpleTextChoiceQuestionScreen(this,1,q));
-
-	}
+	//setScreen(new SimpleTextChoiceQuestionScreen(this,1,q));
+         setScreen(new IntermediateScreen(this,1,1,0,1,false));
+		}
 
 	/**
 	 * Видаляєм shapeRenderer

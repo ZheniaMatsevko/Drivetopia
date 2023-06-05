@@ -13,6 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 public class MyDialog extends Dialog {
     private Label message;
 
+    public void setMessage(Label message) {
+        this.message = message;
+    }
+
+
+
     public MyDialog(String title, Skin skin) {
         super(title, skin);
         message = new Label("", skin);
@@ -35,6 +41,10 @@ public class MyDialog extends Dialog {
     public void setMessage(String message) {
         this.message.setText(message);
     }
+
+    public String getMessage() {return this.message.getText().toString();};
+
+
 
     @Override
     public float getPrefWidth() {
