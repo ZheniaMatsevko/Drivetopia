@@ -22,6 +22,9 @@ public class FontFactory {
     private BitmapFont verySmallUkr;
     private BitmapFont smallUkrWhite;
 
+    private BitmapFont interUkr;
+
+
     private BitmapFont generateFont(String fontName, String characters, int size, Color color) {
 
         // Configure font parameters
@@ -47,7 +50,11 @@ public class FontFactory {
         else if ("uk".equals(locale.getLanguage()) && numb==6) return verySmallUkr;
         else if ("uk".equals(locale.getLanguage()) && numb==1) return ukrFont;
         else if ("uk".equals(locale.getLanguage()) && numb==4) return smallUkrWhite;
-        else if ("uk".equals(locale.getLanguage())) return smallUkr;
+        else if ("uk".equals(locale.getLanguage()) && numb==3) return interUkr;
+        else if ("uk".equals(locale.getLanguage()) && numb==2) return smallUkr;
+
+        //НЕ ВИКОРИСТОВУЙТЕ НОМЕР 2 НІ В ЯКОМУ РАЗІ ДЛЯ ШРИФТІВ ЯКЩО БУДЕТЕ СТВОРЮВАТИ НОВІ//
+
         else throw new IllegalArgumentException("Not supported language");
     }
     public void initialize() {
@@ -58,6 +65,11 @@ public class FontFactory {
         if (smallUkr != null) ukrFont.dispose();
         if (smallUkrWhite != null) ukrFont.dispose();
         if (verySmallUkr != null) verySmallUkr.dispose();
+        if (smallUkr != null) smallUkr.dispose();
+        if (smallUkrWhite != null) smallUkrWhite.dispose();
+        if (interUkr != null) interUkr.dispose();
+
+
 
 
         smallUkr = generateFont(UKRAINIAN_FONT_NAME, UKRAINIAN_CHARACTERS,70, Color.BLACK);
@@ -65,6 +77,8 @@ public class FontFactory {
 
         smallUkrWhite = generateFont(UKRAINIAN_FONT_NAME, UKRAINIAN_CHARACTERS,70, Color.WHITE);
         enSmallFont = generateFont(ENGLISH_FONT_NAME2, FreeTypeFontGenerator.DEFAULT_CHARS,70, Color.BLACK);
+        interUkr = generateFont(UKRAINIAN_FONT_NAME, UKRAINIAN_CHARACTERS,90, Color.BLACK);
+
         enFont = generateFont(ENGLISH_FONT_NAME, FreeTypeFontGenerator.DEFAULT_CHARS,100, Color.BLACK);
         ukrFont = generateFont(UKRAINIAN_FONT_NAME, UKRAINIAN_CHARACTERS,95, Color.WHITE);
     }

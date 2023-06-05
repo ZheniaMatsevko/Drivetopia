@@ -246,6 +246,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
                 app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion()));
             }
         });
+
         dialog.getButtonTable().add(theoryBtn).size(550f,120f).padRight(10f).padBottom(10f);
         dialog.getButtonTable().add(practiceBtn).size(500f,120f).padLeft(10f).padBottom(10f);
         dialog.setColor(Color.valueOf("#066c35"));
