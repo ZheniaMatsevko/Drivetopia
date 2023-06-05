@@ -17,4 +17,13 @@ public class FileService {
 
         return theory;
     }
+
+    public static String readFile(String path){
+
+        FileHandle fileHandle = Gdx.files.internal(path);
+        String text = fileHandle.readString();
+
+        return text;
+    }
+
 }

@@ -15,13 +15,17 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
+import com.wheelie.co.Tools.FileService;
 import com.wheelie.co.Tools.FontFactory;
 
 import java.util.Locale;
@@ -48,7 +52,7 @@ public class AboutScreen extends ScreenAdapter implements InputProcessor {
     private Locale enLocale;
     private Locale ukrLocale;
     private FontFactory fontFactory;
-    private final GlyphLayout layout;
+    private GlyphLayout layout;
     private TextButton backButton;
 
     private TextButton editButton;
@@ -98,7 +102,12 @@ public class AboutScreen extends ScreenAdapter implements InputProcessor {
         font1=fontFactory.getFont(ukrLocale,1);
         font2=fontFactory.getFont(enLocale,1);
         font3=fontFactory.getFont(ukrLocale,2);
+        BitmapFont verySmall =fontFactory.getFont(ukrLocale,6);
 
+        Skin skinForText = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
+        skinForText.add("font", verySmall);
+
+        skinForText.load(Gdx.files.internal("skin-composer-ui.json"));
 
 
         skin = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
@@ -111,6 +120,25 @@ public class AboutScreen extends ScreenAdapter implements InputProcessor {
 
         skin2.load(Gdx.files.internal("skin-composer-ui.json"));
 
+        ScrollPane scrollPane = new ScrollPane(null);
+        scrollPane.setBounds(10, 10, GraphicConstants.screenWidth - 20, GraphicConstants.rowHeight*6);
+
+        String text = FileService.readFile("about.txt");
+
+        Label label = new Label(text, skinForText);
+        label.setWrap(true);
+
+
+
+        Table table = new Table();
+        table.defaults().pad(10,10,200,10);
+
+
+        table.add(label).width(GraphicConstants.screenWidth-20).row();
+
+        scrollPane.setActor(table);
+        scrollPane.setScrollingDisabled(true, false); // Enable vertical scrolling
+        stage.addActor(scrollPane);
 
 
 
@@ -127,17 +155,13 @@ public class AboutScreen extends ScreenAdapter implements InputProcessor {
         stage.addActor(backButton);
 
 
-        PIB = new Label(" Цей додаток допоможе Вам \n вивчити основи ПДР, або ж \n перевірити свої знання, якщо \n Ви уже є досвіченим водієм!\n\n\n" +
-                " Цей екран можна було б\n скролити вниз, і він має\n містити всю інфу про\n додаток, якби ж я ще знала\n як це робити!",skin);
-        PIB.setSize(40,25);
-        PIB.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,1100);
 
-        stage.addActor(PIB);
+        //stage.addActor(PIB);
 
 
 
 
-        sprite = new Sprite(new Texture(Gdx.files.internal("mountbgr.png")));
+        sprite = new Sprite(new Texture(Gdx.files.internal("white.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(stage);
         layout = new GlyphLayout(font2, "Drivetopia");
