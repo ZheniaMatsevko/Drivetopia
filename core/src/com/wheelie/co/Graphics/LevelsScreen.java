@@ -172,7 +172,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
 
 
 
-        for(int i=0;i<9;i++){
+        for(int i=0;i<20;i++){
             String path = "level" + (i+1) + ".png";
             Texture myTexture = new Texture(Gdx.files.internal(path));
             TextureRegion myTextureRegion = new TextureRegion(myTexture);
@@ -183,17 +183,39 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
             stage.addActor(levelBtn);
             levelsBtns.add(levelBtn);
         }
-        levelsBtns.get(0).setPosition(10,GraphicConstants.rowHeight*6 - 55);
-        levelsBtns.get(1).setPosition(levelsBtns.get(0).getWidth() - 20,GraphicConstants.rowHeight*6 - 55);
-        levelsBtns.get(2).setPosition(levelsBtns.get(0).getWidth()*2 - 40,GraphicConstants.rowHeight*6 - 65);
-        levelsBtns.get(3).setPosition(GraphicConstants.screenWidth-GraphicConstants.colWidth*2,GraphicConstants.rowHeight*5+80);
-        levelsBtns.get(4).setPosition(GraphicConstants.screenWidth-GraphicConstants.colWidth*2,GraphicConstants.rowHeight*4 + 100);
-        levelsBtns.get(5).setPosition(levelsBtns.get(0).getWidth()*2 - 40,GraphicConstants.rowHeight*4);
-        levelsBtns.get(6).setPosition(levelsBtns.get(1).getX()+10,levelsBtns.get(5).getY());
-        levelsBtns.get(7).setPosition(levelsBtns.get(0).getX()+10,levelsBtns.get(5).getY());
-        levelsBtns.get(8).setPosition(-20,GraphicConstants.rowHeight*3+20);
-        levelsBtns.get(8).setSize(290,220);
+        levelsBtns.get(0).setPosition(-10,GraphicConstants.rowHeight*6 - 55);
+        levelsBtns.get(1).setPosition(levelsBtns.get(0).getWidth() - 65,GraphicConstants.rowHeight*6 - 55);
+        levelsBtns.get(2).setPosition(levelsBtns.get(0).getWidth()*2 - 120,GraphicConstants.rowHeight*6 - 65);
+        levelsBtns.get(3).setPosition(GraphicConstants.screenWidth-GraphicConstants.colWidth*2-60,GraphicConstants.rowHeight*5+190);
+        levelsBtns.get(4).setPosition(GraphicConstants.screenWidth-GraphicConstants.colWidth*2,GraphicConstants.rowHeight*4 +215);
+        levelsBtns.get(5).setPosition(levelsBtns.get(0).getWidth()*2 +140,GraphicConstants.rowHeight*4 + 5);
+        levelsBtns.get(6).setPosition(levelsBtns.get(1).getX()+280,levelsBtns.get(5).getY());
+        levelsBtns.get(7).setPosition(levelsBtns.get(0).getX()+300,levelsBtns.get(5).getY());
+        levelsBtns.get(8).setPosition(70,levelsBtns.get(7).getY()-10);
+        levelsBtns.get(8).setSize(280,210);
+        levelsBtns.get(9).setPosition(-25,GraphicConstants.rowHeight*3 + 60);
+        levelsBtns.get(9).setSize(290,220);
+        levelsBtns.get(10).setPosition(-30,GraphicConstants.rowHeight*2+110);
+        levelsBtns.get(10).setSize(290,220);
+        levelsBtns.get(11).setPosition(185,GraphicConstants.rowHeight*2+30);
+        levelsBtns.get(11).setSize(290,220);
+        levelsBtns.get(12).setPosition(GraphicConstants.colWidth*3,GraphicConstants.rowHeight*2+30);
+        levelsBtns.get(12).setSize(290,220);
+        levelsBtns.get(13).setPosition(GraphicConstants.colWidth*5-40,GraphicConstants.rowHeight*2+30);
+        levelsBtns.get(13).setSize(290,220);
+        levelsBtns.get(14).setPosition(GraphicConstants.screenWidth-GraphicConstants.colWidth*2+20,GraphicConstants.rowHeight*2-100);
+        levelsBtns.get(14).setSize(290,220);
 
+        levelsBtns.get(15).setPosition(GraphicConstants.screenWidth-GraphicConstants.colWidth*2,GraphicConstants.rowHeight - 45);
+        levelsBtns.get(15).setSize(290,220);
+        levelsBtns.get(16).setPosition(levelsBtns.get(0).getWidth()*2+60,55);
+        levelsBtns.get(16).setSize(290,220);
+        levelsBtns.get(17).setPosition(levelsBtns.get(0).getWidth()*2 - 165,55);
+        levelsBtns.get(17).setSize(290,220);
+        levelsBtns.get(18).setSize(290,220);
+        levelsBtns.get(18).setPosition(levelsBtns.get(0).getWidth() - 95,50);
+        levelsBtns.get(19).setPosition(-20,50);
+        levelsBtns.get(19).setSize(290,220);
 
 
         sprite = new Sprite(new Texture(Gdx.files.internal("levels1.jpg")));
@@ -239,6 +261,28 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         topics.add("Тема 7. Розташування \nтранспорту на дорозі");
         topics.add("Тема 8. Швидкість руху");
         topics.add("Тема 9. Дистанція, інтервал,\n зустрічний роз'їзд");
+        topics.add("Тема 10. Обгін");
+        topics.add("Тема 11. Зупинка і стоянка");
+        topics.add("Тема 12. Проїзд\n" +
+                "а.перехресть\n" +
+                "б.пішохідних переходів");
+        topics.add("Тема 13. Проїзд ІІ\n" +
+                "а.зупинок\n" +
+                "б.через залізничні переїзди");
+        topics.add("Тема 14. Користування\nсвітловими приладами");
+        topics.add("Тема 15. Перевезення\n" +
+                "а.пасажирів  " +
+                "б.вантажу\n" +
+                "в.інших транспортних засобів");
+        topics.add("Тема 16. Номерні,\nрозпізнавальні знаки,\nнаписи і позначення");
+        topics.add("Тема 17. Технічний стан\nтранспорту та обладнання");
+        topics.add("Тема 18. Дорожні знаки\nі розмітка");
+        topics.add("Тема 19. Рух\n" +
+                "а.житлова/пішохідна зона\n" +
+                "б.по автомагістралях");
+        topics.add("Тема 20. Рух ІІ\n" +
+                "а.по гірських дорогах\n" +
+                "б.міжнародний");
 
         int counter=0;
         for(final String topic: topics){
