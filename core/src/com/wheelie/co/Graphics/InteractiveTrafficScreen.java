@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -22,6 +23,37 @@ import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Tools.FontFactory;
 
 import java.util.Locale;
+
+class TrafficLight extends Actor {
+    Texture green, yellow, red, current;
+    float interval, timer;
+    boolean isGreen;
+
+    public TrafficLight(Texture green, Texture yellow, Texture red, float interval) {
+        this.green = green;
+        this.yellow = yellow;
+        this.red = red;
+        this.interval = interval;
+
+        this.timer = 0f;
+        this.isGreen = false;
+        this.current = red;
+    }
+
+    void updateTrafficLightColor() {
+        if (current == null || current == red) {
+            current = green;
+        } else if (current == green) {
+            current = yellow;
+        } else if (current == yellow) {
+            current = red;
+        }
+    }
+
+    Texture getCurrent() {
+        return current;
+    }
+}
 
 public class InteractiveTrafficScreen extends ScreenAdapter implements InputProcessor {
     Drivetopia app;
@@ -35,12 +67,14 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
     private BitmapFont font3;
 
     private Image car;
+    private TrafficLight light;
     private TextButton moveButton;
     private Skin skin;
     private int score;
     private float carSpeed = 700f;
     private int attemptNum;
     private boolean isMoving = false;
+    private boolean isTrafficGreen = false;
     private Locale enLocale;
     private Locale ukrLocale;
 
@@ -72,33 +106,52 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         font2=fontFactory.getFont(enLocale,1);
         font3=fontFactory.getFont(ukrLocale,4);
 
+        // Setting up Traffic Light (idk what i'm doiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiing)
+        Texture green = new Texture(Gdx.files.internal("traffic-green.png"));
+        Texture yellow = new Texture(Gdx.files.internal("traffic-yellow.png"));
+        Texture red = new Texture(Gdx.files.internal("traffic-red.png"));
+
+        light = new TrafficLight(green, yellow, red, 5f);
+
+        // Setting up the skin
         skin = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
         skin.add("font", font3);
         skin.load(Gdx.files.internal("skin-composer-ui.json"));
 
+        // Drawing and positioning the background
+        sprite = new Sprite(new Texture(Gdx.files.internal("road.png")));
+        sprite.setSize(Gdx.graphics.getWidth()*1.5f, Gdx.graphics.getHeight()*1.5f);
+        sprite.setPosition((Gdx.graphics.getWidth()/2.85f)*(-1), 0);
+
+        // Drawing and positioning the car
         Texture carTexture = new Texture(Gdx.files.internal("car.png"));
         car = new Image(carTexture);
         car.setSize(Gdx.graphics.getWidth()*0.15f, Gdx.graphics.getHeight()*0.15f);
         car.setPosition(GraphicConstants.centerX - (car.getWidth()/2), 0);
         stage.addActor(car);
 
+
+
+        // Drawing and positioning the button to move the car
         moveButton = new TextButton("Рух", skin);
-        moveButton.setPosition(50, 50);
+        moveButton.setPosition(Gdx.graphics.getWidth()-moveButton.getWidth()*1.5f, moveButton.getHeight()*0.5f);
+        // Setting up movement behaviour
         moveButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                // Called when the button is pressed
+                // Moving the car when button is pressed
                 isMoving = true;
-                return true; // Return true to indicate that the event is handled
+                return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                // Called when the button is released
+                // Stopping movement when button is released
                 isMoving = false;
             }
         });
         stage.addActor(moveButton);
+        stage.addActor(light);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -111,10 +164,21 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.begin();
+        sprite.draw(batch);
 
         if(isMoving)
             moveCar();
 
+        light.timer += delta;
+        if(light.timer >= light.interval) {
+            light.timer = 0f;
+            light.updateTrafficLightColor();
+        }
+
+        batch.draw(light.current, GraphicConstants.centerX+light.getCurrent().getWidth()*1.5f, GraphicConstants.centerY-light.getCurrent().getHeight()*0.75f);
+
+        batch.end();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
@@ -123,37 +187,30 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
     public boolean keyDown(int keycode) {
         return false;
     }
-
     @Override
     public boolean keyUp(int keycode) {
         return false;
     }
-
     @Override
     public boolean keyTyped(char character) {
         return false;
     }
-
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         return true;
     }
-
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         return true;
     }
-
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         return false;
     }
-
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
         return false;
     }
-
     @Override
     public boolean scrolled(float amountX, float amountY) {
         return false;
