@@ -12,6 +12,18 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class MyDialog extends Dialog {
     private Label message;
+    private Integer level;
+
+    public Integer getLevel() {
+        return level;
+    }
+    public void increaseLevel() {
+        level++;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
 
     public void setMessage(Label message) {
         this.message = message;
@@ -21,6 +33,7 @@ public class MyDialog extends Dialog {
 
     public MyDialog(String title, Skin skin) {
         super(title, skin);
+        level=0;
         message = new Label("", skin);
         getContentTable().add(message).pad(20f,50f,20f,50f).row();
         TextButton closeButton = new TextButton("Х", skin);
