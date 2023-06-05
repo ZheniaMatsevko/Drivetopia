@@ -40,6 +40,7 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
 
     private Image car;
     private TrafficLight light;
+    private Texture red, yellow, green;
     private TextButton moveButton;
     private Skin skin;
     private int score;
@@ -85,9 +86,9 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         skin.load(Gdx.files.internal("skin-composer-ui.json"));
 
         // Setting up Traffic Light (idk what i'm doiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiing)
-        Texture green = new Texture(Gdx.files.internal("traffic-green.png"));
-        Texture yellow = new Texture(Gdx.files.internal("traffic-yellow.png"));
-        Texture red = new Texture(Gdx.files.internal("traffic-red.png"));
+        green = new Texture(Gdx.files.internal("traffic-green.png"));
+        yellow = new Texture(Gdx.files.internal("traffic-yellow.png"));
+        red = new Texture(Gdx.files.internal("traffic-red.png"));
 
         light = new TrafficLight(green, yellow, red, TRAFFIC_INTERVAL);
         stage.addActor(light);
@@ -151,9 +152,6 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         carBounds = new Rectangle(car.getX(), car.getY(), car.getImageWidth(), car.getImageHeight());
         trafficLightBounds = new Rectangle(light.getX(), light.getY(), light.getCurrent().getWidth(), light.getCurrent().getHeight());
 
-        System.out.println("Car " + carBounds.getY());
-        System.out.println("Light " + trafficLightBounds.getY());
-
         if (carBounds.getY() >= trafficLightBounds.getY() && light.getCurrent() == light.green && !isLightPassed) {
             showDialog("молодець!");
             isLightPassed = true;
@@ -182,6 +180,7 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         dialog.addListener(new InputListener() {
            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                dialog.setVisible(false);
+               app.setScreen(new MainMenuScreen(app, 1, 1));
                return true;
            }
         });
@@ -225,7 +224,7 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
 }
 
 class TrafficLight extends Actor {
-    Texture green, yellow, red, current;
+    Texture green, yellow, red, current, previous;
     float interval, timer;
     boolean isGreen;
 
@@ -238,20 +237,31 @@ class TrafficLight extends Actor {
         this.timer = 0f;
         this.isGreen = false;
         this.current = red;
+        this.previous = null;
     }
 
     void updateTrafficLight(float interval) {
         if (current == null || current == red) {
-            current = green;
-            this.interval = interval;
-        } else if (current == green) {
+            previous = current;
             current = yellow;
-            this.interval = interval*0.25f;
+            this.interval = interval * 0.25f;
         } else if (current == yellow) {
-            current = red;
-            this.interval = interval;
+            if (previous == red) {
+                previous = current;
+                current = green;
+                this.interval = interval;
+            } else if (previous == green) {
+                previous = current;
+                current = red;
+                this.interval = interval;
+            }
+        } else if (current == green) {
+            previous = current;
+            current = yellow;
+            this.interval = interval * 0.5f;
         }
     }
+
 
     Texture getCurrent() {
         return current;
