@@ -33,14 +33,11 @@ public class Drivetopia extends Game {
 
 		shapeRenderer = new ShapeRenderer();
 		//setScreen(new MainMenuScreen(this,1,1));
-			setScreen(new BeginningScreen(this,1,1));
+			setScreen(new InteractiveTrafficScreen(this,1,1));
 //	setScreen(new ProfileScreen(this,1,1));
 		//setScreen(new SimpleTextChoiceQuestionScreen(this,1,q));
 
-		//setScreen(new BeginningScreen(this,1,1));
-		//setScreen(new ProfileScreen(this,1,1));
-		//setScreen(new SimpleTextChoiceQuestionScreen(this,1,q));
-		setScreen(new InteractiveTrafficScreen(this, 1, 1));
+
 	}
 
 	/**

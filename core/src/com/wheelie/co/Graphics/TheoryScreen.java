@@ -158,7 +158,7 @@ public class TheoryScreen extends ScreenAdapter implements InputProcessor {
 
         backButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                app.setScreen(new MainMenuScreen(app,1,1));
+                app.setScreen(new LevelsScreen(app,1,1));
             }
         });
 
