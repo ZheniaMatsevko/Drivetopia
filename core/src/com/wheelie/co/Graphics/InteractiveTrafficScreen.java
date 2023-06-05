@@ -11,8 +11,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -21,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Tools.FontFactory;
+import com.wheelie.co.Tools.MyDialog;
 
 import java.util.Locale;
 
@@ -41,8 +44,10 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
     private Skin skin;
     private int score;
     private float carSpeed = 700f;
+    private Rectangle carBounds, trafficLightBounds;
     private static final float TRAFFIC_INTERVAL = 5F;
     private boolean isMoving = false;
+    private boolean isLightPassed = false;
     private Locale enLocale;
     private Locale ukrLocale;
 
@@ -74,17 +79,19 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         font2=fontFactory.getFont(enLocale,1);
         font3=fontFactory.getFont(ukrLocale,4);
 
+        // Setting up the skin
+        skin = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
+        skin.add("font", font3);
+        skin.load(Gdx.files.internal("skin-composer-ui.json"));
+
         // Setting up Traffic Light (idk what i'm doiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiing)
         Texture green = new Texture(Gdx.files.internal("traffic-green.png"));
         Texture yellow = new Texture(Gdx.files.internal("traffic-yellow.png"));
         Texture red = new Texture(Gdx.files.internal("traffic-red.png"));
 
         light = new TrafficLight(green, yellow, red, TRAFFIC_INTERVAL);
+        stage.addActor(light);
 
-        // Setting up the skin
-        skin = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
-        skin.add("font", font3);
-        skin.load(Gdx.files.internal("skin-composer-ui.json"));
 
         // Drawing and positioning the background
         sprite = new Sprite(new Texture(Gdx.files.internal("road.png")));
@@ -98,7 +105,7 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         car.setPosition(GraphicConstants.centerX - (car.getWidth()/2), 0);
         stage.addActor(car);
 
-
+        light.setPosition(GraphicConstants.centerX+light.getCurrent().getWidth()*1.5f, GraphicConstants.centerY-light.getCurrent().getHeight()*0.75f);
 
         // Drawing and positioning the button to move the car
         moveButton = new TextButton("Рух", skin);
@@ -119,13 +126,8 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
             }
         });
         stage.addActor(moveButton);
-        stage.addActor(light);
 
         Gdx.input.setInputProcessor(stage);
-    }
-
-    private void moveCar() {
-        car.setY(car.getY() + carSpeed * Gdx.graphics.getDeltaTime());
     }
 
     @Override
@@ -146,9 +148,46 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
 
         batch.draw(light.current, GraphicConstants.centerX+light.getCurrent().getWidth()*1.5f, GraphicConstants.centerY-light.getCurrent().getHeight()*0.75f);
 
+        carBounds = new Rectangle(car.getX(), car.getY(), car.getImageWidth(), car.getImageHeight());
+        trafficLightBounds = new Rectangle(light.getX(), light.getY(), light.getCurrent().getWidth(), light.getCurrent().getHeight());
+
+        System.out.println("Car " + carBounds.getY());
+        System.out.println("Light " + trafficLightBounds.getY());
+
+        if (carBounds.getY() >= trafficLightBounds.getY() && light.getCurrent() == light.green && !isLightPassed) {
+            showDialog("молодець!");
+            isLightPassed = true;
+        } else if (carBounds.getY() >= trafficLightBounds.getY() && light.getCurrent() != light.green && !isLightPassed) {
+            showDialog("шо ти робиш");
+            isLightPassed = true;
+        } else if (carBounds.getY() < trafficLightBounds.getY()) {
+            isLightPassed = false;
+        }
+
         batch.end();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+    }
+
+    private void moveCar() {
+        car.setY(car.getY() + carSpeed * Gdx.graphics.getDeltaTime());
+    }
+
+    private void showDialog(String message) {
+        final MyDialog dialog = new MyDialog("результат", skin);
+        dialog.setMessage(message);
+        dialog.getButtonTable().add("ок");
+        dialog.setColor(Color.BLACK);
+
+        dialog.addListener(new InputListener() {
+           public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+               dialog.setVisible(false);
+               return true;
+           }
+        });
+
+        dialog.setVisible(true);
+        dialog.show(stage);
     }
 
     @Override
