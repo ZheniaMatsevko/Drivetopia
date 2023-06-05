@@ -24,37 +24,6 @@ import com.wheelie.co.Tools.FontFactory;
 
 import java.util.Locale;
 
-class TrafficLight extends Actor {
-    Texture green, yellow, red, current;
-    float interval, timer;
-    boolean isGreen;
-
-    public TrafficLight(Texture green, Texture yellow, Texture red, float interval) {
-        this.green = green;
-        this.yellow = yellow;
-        this.red = red;
-        this.interval = interval;
-
-        this.timer = 0f;
-        this.isGreen = false;
-        this.current = red;
-    }
-
-    void updateTrafficLightColor() {
-        if (current == null || current == red) {
-            current = green;
-        } else if (current == green) {
-            current = yellow;
-        } else if (current == yellow) {
-            current = red;
-        }
-    }
-
-    Texture getCurrent() {
-        return current;
-    }
-}
-
 public class InteractiveTrafficScreen extends ScreenAdapter implements InputProcessor {
     Drivetopia app;
     private SpriteBatch batch;
@@ -72,9 +41,8 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
     private Skin skin;
     private int score;
     private float carSpeed = 700f;
-    private int attemptNum;
+    private static final float TRAFFIC_INTERVAL = 5F;
     private boolean isMoving = false;
-    private boolean isTrafficGreen = false;
     private Locale enLocale;
     private Locale ukrLocale;
 
@@ -111,7 +79,7 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         Texture yellow = new Texture(Gdx.files.internal("traffic-yellow.png"));
         Texture red = new Texture(Gdx.files.internal("traffic-red.png"));
 
-        light = new TrafficLight(green, yellow, red, 5f);
+        light = new TrafficLight(green, yellow, red, TRAFFIC_INTERVAL);
 
         // Setting up the skin
         skin = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
@@ -173,7 +141,7 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         light.timer += delta;
         if(light.timer >= light.interval) {
             light.timer = 0f;
-            light.updateTrafficLightColor();
+            light.updateTrafficLight(TRAFFIC_INTERVAL);
         }
 
         batch.draw(light.current, GraphicConstants.centerX+light.getCurrent().getWidth()*1.5f, GraphicConstants.centerY-light.getCurrent().getHeight()*0.75f);
@@ -214,5 +182,39 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
     @Override
     public boolean scrolled(float amountX, float amountY) {
         return false;
+    }
+}
+
+class TrafficLight extends Actor {
+    Texture green, yellow, red, current;
+    float interval, timer;
+    boolean isGreen;
+
+    public TrafficLight(Texture green, Texture yellow, Texture red, float interval) {
+        this.green = green;
+        this.yellow = yellow;
+        this.red = red;
+        this.interval = interval;
+
+        this.timer = 0f;
+        this.isGreen = false;
+        this.current = red;
+    }
+
+    void updateTrafficLight(float interval) {
+        if (current == null || current == red) {
+            current = green;
+            this.interval = interval;
+        } else if (current == green) {
+            current = yellow;
+            this.interval = interval*0.25f;
+        } else if (current == yellow) {
+            current = red;
+            this.interval = interval;
+        }
+    }
+
+    Texture getCurrent() {
+        return current;
     }
 }
