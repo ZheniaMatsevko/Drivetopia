@@ -121,6 +121,11 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         finalTestBtn = new TextButton("Фінальний тест",skin);
         finalTestBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
         finalTestBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,aboutBtn.getY()-startBtn.getHeight()*1.2F);
+        finalTestBtn.addListener(new ClickListener() {
+            public void clicked(InputEvent event,float x, float y) {
+                app.setScreen(new InteractiveTrafficScreen(app,1,1));
+            }
+        });
         stage.addActor(finalTestBtn);
 
 

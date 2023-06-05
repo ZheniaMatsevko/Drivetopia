@@ -14,6 +14,8 @@ public class FontFactory {
     public static final String ENGLISH_FONT_NAME2 = "f3.ttf";
     public static final String UKRAINIAN_CHARACTERS = "АаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщьЮюЯя"
             + "1234567890.,:;_¡!¿?\"'+-*/()[]={}";
+    public static final String ALL_CHARACTERS = "АаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщьЮюЯя"
+            + "QqWwEeRrTtYyUuIiOoPpAaSsDdFfGgHhJjKkLlZzXxCcVvBbNnMm1234567890.,:;_¡!¿?\"'+-*/()[]={}";
     private BitmapFont enFont;
     private BitmapFont enSmallFont;
     private BitmapFont ukrFont;
@@ -73,7 +75,7 @@ public class FontFactory {
 
 
         smallUkr = generateFont(UKRAINIAN_FONT_NAME, UKRAINIAN_CHARACTERS,70, Color.BLACK);
-        verySmallUkr = generateFont(UKRAINIAN_FONT_NAME2, UKRAINIAN_CHARACTERS,55, Color.BLACK);
+        verySmallUkr = generateFont(UKRAINIAN_FONT_NAME2, ALL_CHARACTERS,55, Color.BLACK);
 
         smallUkrWhite = generateFont(UKRAINIAN_FONT_NAME, UKRAINIAN_CHARACTERS,70, Color.WHITE);
         enSmallFont = generateFont(ENGLISH_FONT_NAME2, FreeTypeFontGenerator.DEFAULT_CHARS,70, Color.BLACK);

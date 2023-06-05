@@ -61,7 +61,7 @@ public class TheoryScreen extends ScreenAdapter implements InputProcessor {
 
 
 
-    public TheoryScreen(final Drivetopia app, int level, int score, int chosenLevel) {
+    public TheoryScreen(final Drivetopia app, String title, int level, int score, int chosenLevel) {
         // Initialize FontFactory
         this.chosenLevel=chosenLevel;
         fontFactory = new FontFactory();
@@ -107,8 +107,7 @@ public class TheoryScreen extends ScreenAdapter implements InputProcessor {
         skin2.load(Gdx.files.internal("skin-composer-ui.json"));
 
         //final ScrollPane scrollPane = new ScrollPane(null); // Set null as the content for now
-        stage.addActor(new TheoryScrollPane(skin,skinForText,null,null,null).scrollPane);
-
+        stage.addActor(new TheoryScrollPane(chosenLevel,title,skin,skinForText,null,null,null).scrollPane);
 
         backButton = new TextButton("Готово",skin2);
         backButton.setSize(GraphicConstants.colWidth*5,GraphicConstants.rowHeight*0.7F);

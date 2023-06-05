@@ -235,7 +235,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 dialog.hide();
-                app.setScreen(new TheoryScreen(app,1,1,dialog.getLevel()));
+                app.setScreen(new TheoryScreen(app,dialog.getMessage(),1,1,dialog.getLevel()));
 
             }
         });
