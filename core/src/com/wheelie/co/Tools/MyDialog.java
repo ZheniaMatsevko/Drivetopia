@@ -29,6 +29,12 @@ public class MyDialog extends Dialog {
         this.level = level;
     }
 
+    public void setMessage(Label message) {
+        this.message = message;
+    }
+
+
+
     public MyDialog(String title, Skin skin) {
         super(title, skin);
         level=0;
@@ -52,6 +58,10 @@ public class MyDialog extends Dialog {
     public void setMessage(String message) {
         this.message.setText(message);
     }
+
+    public String getMessage() {return this.message.getText().toString();};
+
+
 
     @Override
     public float getPrefWidth() {

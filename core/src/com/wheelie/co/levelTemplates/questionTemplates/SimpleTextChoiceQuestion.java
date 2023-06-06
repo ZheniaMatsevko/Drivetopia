@@ -42,6 +42,9 @@ public class SimpleTextChoiceQuestion {
 
     private LinkedList<String> wrongAnswers;
 
+
+
+    //констр. за замовчуванням, підходитиме для 1 завдання 1 рівню
     public SimpleTextChoiceQuestion() {
 
         LinkedList<String> list = new LinkedList<>();
