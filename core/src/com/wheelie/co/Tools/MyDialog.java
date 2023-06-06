@@ -14,9 +14,6 @@ public class MyDialog extends Dialog {
     private Label message;
     private Integer level;
 
-    public String getMessage(){
-        return message.getText().toString();
-    }
 
     public Integer getLevel() {
         return level;
