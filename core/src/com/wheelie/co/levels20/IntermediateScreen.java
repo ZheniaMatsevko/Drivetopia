@@ -24,6 +24,8 @@ import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Graphics.GraphicConstants;
 import com.wheelie.co.Graphics.MainMenuScreen;
 import com.wheelie.co.Tools.FontFactory;
+import com.wheelie.co.levelTemplates.SimpleTextChoiceQuestionScreen;
+import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 
 import java.util.Locale;
 
@@ -61,6 +63,7 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
   //  private Level theLevel;
     private Label label;
 
+    private boolean failure;
 
 
  //state
@@ -75,13 +78,14 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
 
     //failure - якщо це проміжний рівень, вказує чи попередню таску було пройдено чи ні
 
-    public IntermediateScreen(final Drivetopia app, int level, int score, int state, int taskNubmber, boolean failure) {
+    public IntermediateScreen(final Drivetopia app, int level, int score, final int state, int taskNubmber, final boolean failure) {
         // Initialize FontFactory
 
         fontFactory = new FontFactory();
         fontFactory.initialize();
 
         //this.theLevel=new level1(app);
+        this.failure=failure;
         this.level =level;
         this.app = app;
         this.score = score;
@@ -138,7 +142,8 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
 
         nextButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                app.setScreen(new MainMenuScreen(app,1,1));
+            if(state!=0)    app.setScreen(new MainMenuScreen(app,1,1));
+            else  app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion()));
             }
         });
 
@@ -170,6 +175,10 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
 
             //після завершення практики
             case 2:
+                String message;
+                if(failure) message="\nПрактику провалено!\nПеречитайте теорію.\n";
+                else message="\nПрактику успішно\n завершено!\n" + score + "/35";
+             label.setText(message);
 
 
                 break;
@@ -196,8 +205,8 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
         if(state==0) {
             font4.draw(batch, label.getText(), GraphicConstants.centerX - label.getWidth() / 2, Gdx.graphics.getHeight() / 4F * 2);
         }
-          else{
-            font3.draw(batch, label.getText(), GraphicConstants.centerX - label.getWidth() / 2, Gdx.graphics.getHeight() / 4F * 2);
+          else {
+            font3.draw(batch, label.getText(), GraphicConstants.centerX - label.getWidth() /2, Gdx.graphics.getHeight() / 4F * 2);
         }
         batch.end();
         stage.act(Gdx.graphics.getDeltaTime());

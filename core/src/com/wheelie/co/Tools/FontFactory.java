@@ -81,6 +81,8 @@ public class FontFactory {
         interUkr = generateFont(UKRAINIAN_FONT_NAME, UKRAINIAN_CHARACTERS,90, Color.BLACK);
 
         enSmallFont = generateFont(ENGLISH_FONT_NAME2, FreeTypeFontGenerator.DEFAULT_CHARS,70, Color.BLACK);
+        interUkr = generateFont(UKRAINIAN_FONT_NAME, UKRAINIAN_CHARACTERS,90, Color.BLACK);
+
         enFont = generateFont(ENGLISH_FONT_NAME, FreeTypeFontGenerator.DEFAULT_CHARS,100, Color.BLACK);
         ukrFont = generateFont(UKRAINIAN_FONT_NAME, UKRAINIAN_CHARACTERS,95, Color.WHITE);
     }

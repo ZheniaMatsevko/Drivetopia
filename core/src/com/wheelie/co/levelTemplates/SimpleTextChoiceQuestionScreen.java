@@ -24,6 +24,7 @@ import com.wheelie.co.Graphics.GraphicConstants;
 import com.wheelie.co.Graphics.MainMenuScreen;
 import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
+import com.wheelie.co.levels20.IntermediateScreen;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -143,9 +144,28 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
                         //Але це поки не прописано.
                         //в кожному рівні (наприклад клас level1) буде список-послідовність екранів, ось правильна кнопка буде
                         //відправляти на екран наступного завдання.
-                        app.setScreen(new MainMenuScreen(app, 1, 1));
+
+                        switch(question.getLevel()) {
+                            case 1:
+                                app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion(2)));
+                                break;
+                            case 2:
+                                app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion(3)));
+                                break;
+                            case 3:
+                                app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion(4)));
+                                break;
+                            case 4:
+                                app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion(5)));
+                                break;
+                            case 5:
+                                app.setScreen(new IntermediateScreen(app,1,35,2,4,false));
+                                break;
+                        }
+                      //  app.setScreen(new MainMenuScreen(app, 1, 1));
                     } else {
-                        answerButtons[buttonIndex].setText("Ну ти лошара");
+                        app.setScreen(new IntermediateScreen(app,1,35,2,question.getLevel(),true));
+                        //answerButtons[buttonIndex].setText("Ну ти лошара");
 
                     }
                 }

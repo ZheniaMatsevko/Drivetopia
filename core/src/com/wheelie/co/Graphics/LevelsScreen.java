@@ -35,6 +35,7 @@ import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.Tools.MyDialog;
 import com.wheelie.co.levelTemplates.SimpleTextChoiceQuestionScreen;
 import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
+import com.wheelie.co.levels20.IntermediateScreen;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -243,7 +244,9 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         practiceBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion()));
+                if(dialog.getLevel()==1)
+                    app.setScreen(new IntermediateScreen(app,1,0,0,0,false));
+                   // app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion()));
             }
         });
 
