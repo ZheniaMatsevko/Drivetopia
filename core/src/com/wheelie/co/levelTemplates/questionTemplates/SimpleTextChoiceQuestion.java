@@ -51,16 +51,10 @@ public class SimpleTextChoiceQuestion {
     public SimpleTextChoiceQuestion() {
 this.level = 1;
         LinkedList<String> list = new LinkedList<>();
-        list.add("автомагістраль");
-        list.add("головна дорога");
-   //     list.add("Пєчкурова");
-        list.add("Глибовець");
-        list.add("велосипед");
-        list.add("велосипедист");
-   //     list.add("Корнійчук");
-        list.add("дедлайн");
         list.add("президент");
-    //    list.add("президент НаУКМА");
+        list.add("місцева влада");
+        list.add("Глибовець");
+        list.add("спілка водіїв");
 
         this.wrongAnswers=list;
         this.correctAnswer="поліція";
