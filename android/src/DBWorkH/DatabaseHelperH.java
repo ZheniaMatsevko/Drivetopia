@@ -33,7 +33,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         // Create the "user" table
 
         String createUsersTable = "CREATE TABLE IF NOT EXISTS users (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "id INTEGER PRIMARY KEY NOT NULL, " +
                 "name TEXT NOT NULL, " +
                 "surname TEXT NOT NULL, " +
                 "fathername TEXT, " +
@@ -52,9 +52,6 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
                 "password TEXT NOT NULL" +
                 ")";
         db.execSQL(createInfoTable);
-
-        // Insert initial data
-        insertInitialData(db);
 
         // Create "theory" table
         String createTheoryTable = "CREATE TABLE IF NOT EXISTS theory (" +
@@ -76,21 +73,32 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
     }
 
-    private void insertInitialData(SQLiteDatabase db) {
+    public void insertInitialData(SQLiteDatabase db) {
         // Insert initial data into the "user" table
         ContentValues values = new ContentValues();
-        values.put("name", "John");
-        values.put("surname", "Doe");
-        values.put("fathername", "Smith");
+        values.put("id", "1");
+        values.put("name", "Тест");
+        values.put("surname", "Тестович");
+        values.put("fathername", "Тестовенко");
         values.put("score", 0);
         values.put("dateOfBirth", "1990-01-01");
         values.put("failures", 0);
         values.put("pass", 0);
 
-        long newRowId = db.insert("users", null, values);
+        long newRowId = db.insertWithOnConflict("users", null, values,SQLiteDatabase.CONFLICT_REPLACE);
 
-        if (newRowId == -1) {
-            // Handle the failure to insert the initial data
-        }
+        ContentValues values2 = new ContentValues();
+
+        values2.put("id", "2");
+        values2.put("name", "Олена");
+        values2.put("surname", "Пєчкурова");
+        values2.put("fathername", "Миколаївна");
+        values2.put("score", 700);
+        values2.put("dateOfBirth", "1996-02-03");
+        values2.put("failures", 1);
+        values2.put("pass", 1);
+
+        newRowId = db.insertWithOnConflict("users", null, values2,SQLiteDatabase.CONFLICT_REPLACE);
+
     }
 }

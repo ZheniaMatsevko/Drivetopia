@@ -22,6 +22,8 @@ public class AndroidLauncher extends AndroidApplication {
 		DatabaseHelperH dbHelper = DatabaseHelperH.getInstance(this);
 		SQLiteDatabase database = dbHelper.getWritableDatabase();
 
+		database.delete("users", "id IN (?, ?)", new String[]{"1", "2"});
+        dbHelper.insertInitialData(database);
 
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();

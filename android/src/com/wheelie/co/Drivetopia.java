@@ -1,6 +1,9 @@
 package com.wheelie.co;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -10,15 +13,22 @@ import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 
 import java.util.ArrayList;
 
+import DBWorkH.DatabaseHelperH;
+
 public class Drivetopia extends Game {
 
 	private SQLiteDatabase database;
+
 
 	private ShapeRenderer shapeRenderer;
 	public Drivetopia(SQLiteDatabase database) {
 		this.database = database;
 	}
 
+
+	public SQLiteDatabase getDatabase() {
+		return database;
+	}
 
 	/**
 	 * Запускаєм початковий екран
@@ -46,6 +56,9 @@ public class Drivetopia extends Game {
 
 
 	}
+
+
+
 
 	/**
 	 * Видаляєм shapeRenderer

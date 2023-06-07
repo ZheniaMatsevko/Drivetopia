@@ -1,5 +1,9 @@
 package com.wheelie.co.Graphics;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
@@ -67,8 +71,8 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
 
 
 
-
     public ProfileScreen(final Drivetopia app, int level, int score) {
+         final SQLiteDatabase db = app.getDatabase();
         // Initialize FontFactory
         fontFactory = new FontFactory();
         fontFactory.initialize();
@@ -140,6 +144,45 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         stage.addActor(backButton);
 
 
+
+
+
+
+
+
+
+        String[] columns = {"name", "surname", "fathername"};
+        String selection = "id = ?";
+        String[] selectionArgs = {"2"};
+
+        Cursor cursor = db.query("users", columns, selection, selectionArgs, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            String[] columnNames = cursor.getColumnNames();
+            for (String columnName : columnNames) {
+                Log.d("Column", columnName);
+            }
+
+            String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+            String surname = cursor.getString(cursor.getColumnIndexOrThrow("surname"));
+            String fathername = cursor.getString(cursor.getColumnIndexOrThrow("fathername"));
+
+            String userInfo = name + " " + surname + " " + fathername;
+            Log.d("User Info", userInfo);
+            PIBBD = userInfo;
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+      //  app.getDatabase().close();
+
+
+
+
+
+
         PIB = new Label("ПІБ: \n" + PIBBD,skin);
         age = new Label(ageBD + " років",skin);
         failures = new Label("Кількість перездач: " + failuresBD,skin);
@@ -157,7 +200,7 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         sprite = new Sprite(new Texture(Gdx.files.internal("white.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(stage);
-        layout = new GlyphLayout(font2, "User profile");
+        layout = new GlyphLayout(font2, "User Profile");
 
 
     }
