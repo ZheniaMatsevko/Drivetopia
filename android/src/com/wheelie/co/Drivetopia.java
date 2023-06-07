@@ -1,5 +1,7 @@
 package com.wheelie.co;
 
+import android.database.sqlite.SQLiteDatabase;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.wheelie.co.Graphics.BeginningScreen;
@@ -10,7 +12,13 @@ import java.util.ArrayList;
 
 public class Drivetopia extends Game {
 
+	private SQLiteDatabase database;
+
 	private ShapeRenderer shapeRenderer;
+	public Drivetopia(SQLiteDatabase database) {
+		this.database = database;
+	}
+
 
 	/**
 	 * Запускаєм початковий екран

@@ -82,7 +82,8 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86_64"
-
+        implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
+        implementation "org.xerial:sqlite-jdbc:3.34.0"
      }
 }
 
@@ -95,7 +96,7 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        implementation "org.xerial:sqlite-jdbc:3.34.0"
+
 
     }
 }

@@ -12,13 +12,20 @@ import DBWorkH.DatabaseHelperH;
 
 public class AndroidLauncher extends AndroidApplication {
 
+	private SQLiteDatabase database;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		DatabaseHelperH dbHelper = DatabaseHelperH.getInstance(this);
+		SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new Drivetopia(), config);
+		initialize(new Drivetopia(database), config);
 
 		// Perform database operations as needed
 	}
