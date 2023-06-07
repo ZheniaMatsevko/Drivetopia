@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -16,26 +15,22 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.wheelie.co.Drivetopia;
+import com.wheelie.co.Tools.FileService;
 import com.wheelie.co.Tools.FontFactory;
-import com.wheelie.co.Tools.TheoryScrollPane;
 
 import java.util.Locale;
 
-public class TheoryScreen extends ScreenAdapter implements InputProcessor {
+/**Марина: поки що це просто копія екрану профіля,якщо воно так і залишено це значить що я ще не доробила**/
+public class AboutScreen extends ScreenAdapter implements InputProcessor {
     Drivetopia app;
     private SpriteBatch batch;
     private Sprite sprite;
@@ -52,25 +47,48 @@ public class TheoryScreen extends ScreenAdapter implements InputProcessor {
 
     private Skin skin2;
     private int score;
+    private int backgroundOffset;
     private Locale enLocale;
     private Locale ukrLocale;
     private FontFactory fontFactory;
-    private final GlyphLayout layout;
+    private GlyphLayout layout;
     private TextButton backButton;
-    private int chosenLevel;
+
+    private TextButton editButton;
+
+    private Label PIB;
+
+    private Label age;
+
+    private Label failures;
+
+    private Integer ageBD = 19;
+
+    private String PIBBD = "Зубенко Михайло Петрович";
+
+    private Integer failuresBD = 1;
 
 
 
-    public TheoryScreen(final Drivetopia app, String title, int level, int score, int chosenLevel) {
+
+
+    public AboutScreen(final Drivetopia app, int level, int score) {
         // Initialize FontFactory
-        this.chosenLevel=chosenLevel;
         fontFactory = new FontFactory();
         fontFactory.initialize();
 
         this.level =level;
         this.app = app;
         this.score = score;
+        backgroundOffset=0;
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Zyana.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 135;
+        parameter.borderWidth = 1.5F;
 
+        parameter.color=Color.BLACK;
+        parameter.borderColor = Color.BLACK;
+        font = generator.generateFont(parameter);
         stage = new Stage(new ScreenViewport());
 
 
@@ -81,7 +99,7 @@ public class TheoryScreen extends ScreenAdapter implements InputProcessor {
         enLocale = new Locale("en", "US");
         ukrLocale = new Locale("uk", "UA");
         font1=fontFactory.getFont(ukrLocale,1);
-        font2=fontFactory.getFont(enLocale,5);
+        font2=fontFactory.getFont(enLocale,1);
         font3=fontFactory.getFont(ukrLocale,2);
         BitmapFont verySmall =fontFactory.getFont(ukrLocale,6);
 
@@ -90,36 +108,55 @@ public class TheoryScreen extends ScreenAdapter implements InputProcessor {
 
         skinForText.load(Gdx.files.internal("skin-composer-ui.json"));
 
+
         skin = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
         skin.add("font", font3);
 
         skin.load(Gdx.files.internal("skin-composer-ui.json"));
-
-        Skin skin1 = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
-        skin1.add("font", font2);
-
-        skin1.load(Gdx.files.internal("skin-composer-ui.json"));
-
 
         skin2 = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
         skin2.add("font", font1);
 
         skin2.load(Gdx.files.internal("skin-composer-ui.json"));
 
-        //final ScrollPane scrollPane = new ScrollPane(null); // Set null as the content for now
-        stage.addActor(new TheoryScrollPane(chosenLevel,title,skin,skinForText,null,null,null).scrollPane);
+        ScrollPane scrollPane = new ScrollPane(null);
+        scrollPane.setBounds(10, 10, GraphicConstants.screenWidth - 20, GraphicConstants.rowHeight*6);
 
-        backButton = new TextButton("Готово",skin2);
+        String text = FileService.readFile("about.txt");
+
+        Label label = new Label(text, skinForText);
+        label.setWrap(true);
+
+
+
+        Table table = new Table();
+        table.defaults().pad(10,10,200,10);
+
+
+        table.add(label).width(GraphicConstants.screenWidth-20).row();
+
+        scrollPane.setActor(table);
+        scrollPane.setScrollingDisabled(true, false); // Enable vertical scrolling
+        stage.addActor(scrollPane);
+
+
+
+        backButton = new TextButton("Назад",skin2);
         backButton.setSize(GraphicConstants.colWidth*5,GraphicConstants.rowHeight*0.7F);
         backButton.setPosition(GraphicConstants.centerX- backButton.getWidth()/2,300- backButton.getHeight()*1.2F);
 
         backButton.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y) {
-                app.setScreen(new LevelsScreen(app,1,1));
+            public void clicked(InputEvent event,float x, float y) {
+                app.setScreen(new MainMenuScreen(app,1,1));
             }
         });
 
         stage.addActor(backButton);
+
+
+
+        //stage.addActor(PIB);
+
 
 
 
@@ -141,7 +178,7 @@ public class TheoryScreen extends ScreenAdapter implements InputProcessor {
         batch.begin();
         sprite.draw(batch);
         //font2.draw(batch, "DRIVETOPIA", Gdx.graphics.getWidth()/6,Gdx.graphics.getHeight()/4*3);
-        //font2.draw(batch, layout, GraphicConstants.centerX-layout.width/2,GraphicConstants.rowHeight*6.8F);
+        font2.draw(batch, layout, GraphicConstants.centerX-layout.width/2,GraphicConstants.rowHeight*6.8F);
 
         //fontFactory.getFont(ukrLocale).draw(batch, "Приав", Gdx.graphics.getWidth()/4-20,Gdx.graphics.getHeight()/4*3+200);
 
@@ -200,6 +237,4 @@ public class TheoryScreen extends ScreenAdapter implements InputProcessor {
     public boolean scrolled(float amountX, float amountY) {
         return false;
     }
-
-
 }

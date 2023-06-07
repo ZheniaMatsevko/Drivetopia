@@ -1,7 +1,6 @@
 package com.wheelie.co.Tools;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -10,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.wheelie.co.Graphics.GraphicConstants;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public class TheoryScrollPane {
     public final ScrollPane scrollPane  = new ScrollPane(null);

@@ -1,7 +1,5 @@
 package com.wheelie.co.levels20;
 
-import static com.badlogic.gdx.Gdx.app;
-
 import com.badlogic.gdx.ScreenAdapter;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.levelTemplates.SimpleTextChoiceQuestionScreen;

@@ -1,7 +1,5 @@
 package com.wheelie.co.levelTemplates.questionTemplates;
 
-import com.wheelie.co.levelTemplates.SimpleTextChoiceQuestionScreen;
-
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Random;

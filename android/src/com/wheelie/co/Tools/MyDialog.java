@@ -2,11 +2,9 @@ package com.wheelie.co.Tools;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
@@ -24,10 +22,6 @@ public class MyDialog extends Dialog {
 
     public void setLevel(Integer level) {
         this.level = level;
-    }
-
-    public void setMessage(Label message) {
-        this.message = message;
     }
 
 
