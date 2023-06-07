@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -45,7 +46,7 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
     private Skin skin;
     private int score;
     private float carSpeed = 700f;
-    private Rectangle carBounds, trafficLightBounds;
+    private Rectangle carBounds;
     private static final float TRAFFIC_INTERVAL = 5F;
     private boolean isMoving = false;
     private boolean isLightPassed = false;
@@ -92,7 +93,7 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
 
         light = new TrafficLight(green, yellow, red, TRAFFIC_INTERVAL);
         stage.addActor(light);
-
+        light.setBounds(GraphicConstants.centerX+light.getCurrent().getWidth()*1.5f, GraphicConstants.centerY-light.getCurrent().getHeight()*0.75f);
 
         // Drawing and positioning the background
         sprite = new Sprite(new Texture(Gdx.files.internal("road.png")));
@@ -106,7 +107,6 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         car.setPosition(GraphicConstants.centerX - (car.getWidth()/2), 0);
         stage.addActor(car);
 
-        light.setPosition(GraphicConstants.centerX+light.getCurrent().getWidth()*1.5f, GraphicConstants.centerY-light.getCurrent().getHeight()*0.75f);
 
         // Drawing and positioning the button to move the car
         moveButton = new TextButton("Рух", skin);
@@ -149,22 +149,25 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
 
         batch.draw(light.current, GraphicConstants.centerX+light.getCurrent().getWidth()*1.5f, GraphicConstants.centerY-light.getCurrent().getHeight()*0.75f);
 
-        carBounds = new Rectangle(car.getX(), car.getY(), car.getImageWidth(), car.getImageHeight());
-        trafficLightBounds = new Rectangle(light.getX(), light.getY(), light.getCurrent().getWidth(), light.getCurrent().getHeight());
-
-        if (carBounds.getY() >= trafficLightBounds.getY() && light.getCurrent() == light.green && !isLightPassed) {
-            showDialog("молодець!");
-            isLightPassed = true;
-        } else if (carBounds.getY() >= trafficLightBounds.getY() && light.getCurrent() != light.green && !isLightPassed) {
-            showDialog("шо ти робиш");
-            isLightPassed = true;
-        } else if (carBounds.getY() < trafficLightBounds.getY()) {
-            isLightPassed = false;
-        }
+        verifyCarPassedTraffic();
 
         batch.end();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+    }
+
+    private void verifyCarPassedTraffic() {
+        carBounds = new Rectangle(car.getX(), car.getY(), car.getImageWidth(), car.getImageHeight());
+
+        if (carBounds.getY() >= light.bounds.getY() && light.getCurrent() == light.green && !isLightPassed) {
+            showDialog("молодець!");
+            isLightPassed = true;
+        } else if (carBounds.getY() >= light.bounds.getY() && light.getCurrent() != light.green && !isLightPassed) {
+            showDialog("шо ти робиш");
+            isLightPassed = true;
+        } else if (carBounds.getY() < light.bounds.getY()) {
+            isLightPassed = false;
+        }
     }
 
     private void moveCar() {
@@ -228,6 +231,8 @@ class TrafficLight extends Actor {
     float interval, timer;
     boolean isGreen;
 
+    Rectangle bounds;
+
     public TrafficLight(Texture green, Texture yellow, Texture red, float interval) {
         this.green = green;
         this.yellow = yellow;
@@ -238,6 +243,7 @@ class TrafficLight extends Actor {
         this.isGreen = false;
         this.current = red;
         this.previous = null;
+        this.bounds = new Rectangle(this.getX(), this.getY(), this.getCurrent().getWidth(), this.getCurrent().getHeight());
     }
 
     void updateTrafficLight(float interval) {
@@ -260,8 +266,11 @@ class TrafficLight extends Actor {
             current = yellow;
             this.interval = interval * 0.5f;
         }
-    }
 
+    }
+    void setBounds(float x, float y) {
+        this.bounds = new Rectangle(x, y, this.getCurrent().getWidth(), this.getCurrent().getHeight());
+    }
 
     Texture getCurrent() {
         return current;
