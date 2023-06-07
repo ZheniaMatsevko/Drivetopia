@@ -15,23 +15,17 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
-import com.wheelie.co.Tools.FileService;
 import com.wheelie.co.Tools.FontFactory;
 
 import java.util.Locale;
 
-/**Марина: поки що це просто копія екрану профіля,якщо воно так і залишено це значить що я ще не доробила**/
-public class AboutScreen extends ScreenAdapter implements InputProcessor {
+public class BeginningScreen extends ScreenAdapter implements InputProcessor {
     Drivetopia app;
     private SpriteBatch batch;
     private Sprite sprite;
@@ -39,41 +33,22 @@ public class AboutScreen extends ScreenAdapter implements InputProcessor {
     private int level;
 
     private BitmapFont font;
-
-    private BitmapFont font1;
     private BitmapFont font2;
     private BitmapFont font3;
 
     private Skin skin;
-
-    private Skin skin2;
     private int score;
     private int backgroundOffset;
     private Locale enLocale;
     private Locale ukrLocale;
     private FontFactory fontFactory;
-    private GlyphLayout layout;
-    private TextButton backButton;
-
-    private TextButton editButton;
-
-    private Label PIB;
-
-    private Label age;
-
-    private Label failures;
-
-    private Integer ageBD = 19;
-
-    private String PIBBD = "Зубенко Михайло Петрович";
-
-    private Integer failuresBD = 1;
+    private final GlyphLayout layout;
+    private TextButton startBtn;
 
 
+    private TextButton regBtn;
 
-
-
-    public AboutScreen(final Drivetopia app, int level, int score) {
+    public BeginningScreen(final Drivetopia app, int level, int score) {
         // Initialize FontFactory
         fontFactory = new FontFactory();
         fontFactory.initialize();
@@ -99,73 +74,43 @@ public class AboutScreen extends ScreenAdapter implements InputProcessor {
         // Initialize locales
         enLocale = new Locale("en", "US");
         ukrLocale = new Locale("uk", "UA");
-        font1=fontFactory.getFont(ukrLocale,1);
         font2=fontFactory.getFont(enLocale,1);
-        font3=fontFactory.getFont(ukrLocale,2);
-        BitmapFont verySmall =fontFactory.getFont(ukrLocale,6);
+        font3=fontFactory.getFont(ukrLocale,1);
 
-        Skin skinForText = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
-        skinForText.add("font", verySmall);
-
-        skinForText.load(Gdx.files.internal("skin-composer-ui.json"));
 
 
         skin = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
         skin.add("font", font3);
 
         skin.load(Gdx.files.internal("skin-composer-ui.json"));
+        startBtn = new TextButton("Авторизація",skin);
+        startBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
+        startBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,GraphicConstants.rowHeight*5);
 
-        skin2 = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
-        skin2.add("font", font1);
-
-        skin2.load(Gdx.files.internal("skin-composer-ui.json"));
-
-        ScrollPane scrollPane = new ScrollPane(null);
-        scrollPane.setBounds(10, 10, GraphicConstants.screenWidth - 20, GraphicConstants.rowHeight*6);
-
-        String text = FileService.readFile("about.txt");
-
-        Label label = new Label(text, skinForText);
-        label.setWrap(true);
-
-
-
-        Table table = new Table();
-        table.defaults().pad(10,10,200,10);
-
-
-        table.add(label).width(GraphicConstants.screenWidth-20).row();
-
-        scrollPane.setActor(table);
-        scrollPane.setScrollingDisabled(true, false); // Enable vertical scrolling
-        stage.addActor(scrollPane);
-
-
-
-        backButton = new TextButton("Назад",skin2);
-        backButton.setSize(GraphicConstants.colWidth*5,GraphicConstants.rowHeight*0.7F);
-        backButton.setPosition(GraphicConstants.centerX- backButton.getWidth()/2,300- backButton.getHeight()*1.2F);
-
-        backButton.addListener(new ClickListener() {
+        startBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
                 app.setScreen(new MainMenuScreen(app,1,1));
             }
         });
 
-        stage.addActor(backButton);
+        stage.addActor(startBtn);
+        regBtn = new TextButton("Реєстрація",skin);
+        regBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
+        regBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,startBtn.getY()-startBtn.getHeight()*1.2F);
+
+        regBtn.addListener(new ClickListener() {
+            public void clicked(InputEvent event,float x, float y) {
+                app.setScreen(new MainMenuScreen(app,1,1));
+            }
+        });
+
+        stage.addActor(regBtn);
 
 
-
-        //stage.addActor(PIB);
-
-
-
-
-        sprite = new Sprite(new Texture(Gdx.files.internal("white.jpg")));
+        sprite = new Sprite(new Texture(Gdx.files.internal("b13.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(stage);
-        layout = new GlyphLayout(font2, "Drivetopia");
-
+        layout = new GlyphLayout(font2, "DRIVETOPIA");
 
 
     }
@@ -212,7 +157,7 @@ public class AboutScreen extends ScreenAdapter implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector2 coord = stage.screenToStageCoordinates(new Vector2((float)screenX,(float) screenY));
         Actor hitActor = stage.hit(coord.x,coord.y,true);
-        if(hitActor== backButton){
+        if(hitActor==startBtn){
             System.out.println("Hit " + hitActor.getClass());
             app.setScreen(new MainMenuScreen(app,1,1));
         }
