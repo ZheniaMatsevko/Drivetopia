@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Tools.FontFactory;
+import com.wheelie.co.Tools.InteractiveCarController;
 import com.wheelie.co.Tools.MyDialog;
 
 import java.util.Locale;
@@ -45,14 +46,15 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
     private TextButton moveButton;
     private Skin skin;
     private int score;
-    private float carSpeed = 700f;
+    private float carMovementSpeed = 700f;
+    private float carSteerSpeed = 50f;
     private Rectangle carBounds;
     private static final float TRAFFIC_INTERVAL = 5F;
+    private InteractiveCarController carControl;
     private boolean isMoving = false;
     private boolean isLightPassed = false;
     private Locale enLocale;
     private Locale ukrLocale;
-
     private FontFactory fontFactory;
 
     public InteractiveTrafficScreen(final Drivetopia app, int level, int score) {
@@ -109,25 +111,9 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
 
 
         // Drawing and positioning the button to move the car
-        moveButton = new TextButton("Рух", skin);
-        moveButton.setPosition(Gdx.graphics.getWidth()-moveButton.getWidth()*1.5f, moveButton.getHeight()*0.5f);
-        // Setting up movement behaviour
-        moveButton.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                // Moving the car when button is pressed
-                isMoving = true;
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                // Stopping movement when button is released
-                isMoving = false;
-            }
-        });
-        stage.addActor(moveButton);
-
+        carControl = new InteractiveCarController();
+        //carControl.setPosition(Gdx.graphics.getWidth()-moveButton.getWidth()*1.5f, moveButton.getHeight()*0.5f);
+        stage.addActor(carControl);
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -138,14 +124,9 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         batch.begin();
         sprite.draw(batch);
 
-        if(isMoving)
-            moveCar();
+        processCarMovement();
 
-        light.timer += delta;
-        if(light.timer >= light.interval) {
-            light.timer = 0f;
-            light.updateTrafficLight(TRAFFIC_INTERVAL);
-        }
+        incrementTrafficTimer(delta);
 
         batch.draw(light.current, GraphicConstants.centerX+light.getCurrent().getWidth()*1.5f, GraphicConstants.centerY-light.getCurrent().getHeight()*0.75f);
 
@@ -170,8 +151,27 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         }
     }
 
-    private void moveCar() {
-        car.setY(car.getY() + carSpeed * Gdx.graphics.getDeltaTime());
+    private void incrementTrafficTimer(float delta) {
+        light.timer += delta;
+        if(light.timer >= light.interval) {
+            light.timer = 0f;
+            light.updateTrafficLight(TRAFFIC_INTERVAL);
+        }
+    }
+
+    private void processCarMovement() {
+        if(carControl.isMovingForward()) {
+            car.setY(car.getY() + carMovementSpeed * Gdx.graphics.getDeltaTime());
+        } else if(carControl.isMovingBackward()) {
+            car.setY(car.getY() - (carMovementSpeed*0.5f) * Gdx.graphics.getDeltaTime());
+        }
+
+        if(carControl.isTurningLeft()) {
+            car.setRotation(car.getRotation() + 1f);
+        }
+        if(carControl.isTurningRight()) {
+            car.setRotation(car.getRotation() - 1f);
+        }
     }
 
     private void showDialog(String message) {
