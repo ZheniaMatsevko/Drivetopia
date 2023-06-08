@@ -10,8 +10,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -23,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
+import com.wheelie.co.Tools.Car;
 import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.Tools.InteractiveCarController;
 import com.wheelie.co.Tools.MyDialog;
@@ -40,18 +44,15 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
     private BitmapFont font2;
     private BitmapFont font3;
 
-    private Image car;
+    private Car car;
     private TrafficLight light;
     private Texture red, yellow, green;
-    private TextButton moveButton;
     private Skin skin;
     private int score;
     private float carMovementSpeed = 700f;
-    private float carSteerSpeed = 50f;
-    private Rectangle carBounds;
+    private float carSteerSpeed = 3f;
     private static final float TRAFFIC_INTERVAL = 5F;
     private InteractiveCarController carControl;
-    private boolean isMoving = false;
     private boolean isLightPassed = false;
     private Locale enLocale;
     private Locale ukrLocale;
@@ -92,7 +93,6 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         green = new Texture(Gdx.files.internal("traffic-green.png"));
         yellow = new Texture(Gdx.files.internal("traffic-yellow.png"));
         red = new Texture(Gdx.files.internal("traffic-red.png"));
-
         light = new TrafficLight(green, yellow, red, TRAFFIC_INTERVAL);
         stage.addActor(light);
         light.setBounds(GraphicConstants.centerX+light.getCurrent().getWidth()*1.5f, GraphicConstants.centerY-light.getCurrent().getHeight()*0.75f);
@@ -104,15 +104,16 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
 
         // Drawing and positioning the car
         Texture carTexture = new Texture(Gdx.files.internal("car.png"));
-        car = new Image(carTexture);
+        TextureRegion carReg = new TextureRegion(carTexture);
+        car = new Car(carReg);
+        car.setPosition(GraphicConstants.centerX-(car.getWidth()/5), 0);
         car.setSize(Gdx.graphics.getWidth()*0.15f, Gdx.graphics.getHeight()*0.15f);
-        car.setPosition(GraphicConstants.centerX - (car.getWidth()/2), 0);
+
         stage.addActor(car);
 
 
         // Drawing and positioning the button to move the car
         carControl = new InteractiveCarController();
-        //carControl.setPosition(Gdx.graphics.getWidth()-moveButton.getWidth()*1.5f, moveButton.getHeight()*0.5f);
         stage.addActor(carControl);
         Gdx.input.setInputProcessor(stage);
     }
@@ -138,15 +139,15 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
     }
 
     private void verifyCarPassedTraffic() {
-        carBounds = new Rectangle(car.getX(), car.getY(), car.getImageWidth(), car.getImageHeight());
+        car.setCarBounds(car.getX(), car.getY());
 
-        if (carBounds.getY() >= light.bounds.getY() && light.getCurrent() == light.green && !isLightPassed) {
+        if (car.getCarBounds().getY() >= light.getBounds().getY() && light.getCurrent() == light.green && !isLightPassed) {
             showDialog("молодець!");
             isLightPassed = true;
-        } else if (carBounds.getY() >= light.bounds.getY() && light.getCurrent() != light.green && !isLightPassed) {
+        } else if (car.getCarBounds().getY() >= light.getBounds().getY() && light.getCurrent() != light.green && !isLightPassed) {
             showDialog("шо ти робиш");
             isLightPassed = true;
-        } else if (carBounds.getY() < light.bounds.getY()) {
+        } else if (car.getCarBounds().getY() < light.getBounds().getY()) {
             isLightPassed = false;
         }
     }
@@ -160,17 +161,22 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
     }
 
     private void processCarMovement() {
+        float delta = Gdx.graphics.getDeltaTime();
+        Vector2 direction = new Vector2(-MathUtils.sinDeg(car.getRotation()), MathUtils.cosDeg(car.getRotation())).nor();
+
         if(carControl.isMovingForward()) {
-            car.setY(car.getY() + carMovementSpeed * Gdx.graphics.getDeltaTime());
+            car.setX(car.getX() + direction.x * carMovementSpeed * delta);
+            car.setY(car.getY() + direction.y * carMovementSpeed * delta);
         } else if(carControl.isMovingBackward()) {
-            car.setY(car.getY() - (carMovementSpeed*0.5f) * Gdx.graphics.getDeltaTime());
+            car.setX(car.getX() - direction.x * (carMovementSpeed*0.5f) * delta);
+            car.setY(car.getY() - direction.y * (carMovementSpeed*0.5f) * delta);
         }
 
         if(carControl.isTurningLeft()) {
-            car.setRotation(car.getRotation() + 1f);
+            car.setRotation(car.getRotation() + carSteerSpeed);
         }
         if(carControl.isTurningRight()) {
-            car.setRotation(car.getRotation() - 1f);
+            car.setRotation(car.getRotation() - carSteerSpeed);
         }
     }
 
@@ -230,7 +236,6 @@ class TrafficLight extends Actor {
     Texture green, yellow, red, current, previous;
     float interval, timer;
     boolean isGreen;
-
     Rectangle bounds;
 
     public TrafficLight(Texture green, Texture yellow, Texture red, float interval) {
@@ -270,6 +275,10 @@ class TrafficLight extends Actor {
     }
     void setBounds(float x, float y) {
         this.bounds = new Rectangle(x, y, this.getCurrent().getWidth(), this.getCurrent().getHeight());
+    }
+
+    Rectangle getBounds() {
+        return bounds;
     }
 
     Texture getCurrent() {
