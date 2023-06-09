@@ -76,7 +76,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
     public void insertInitialData(SQLiteDatabase db) {
         // Insert initial data into the "user" table
         ContentValues values = new ContentValues();
-        values.put("id", "1");
+        values.put("id", 1);
         values.put("name", "Тест");
         values.put("surname", "Тестович");
         values.put("fathername", "Тестовенко");
@@ -89,7 +89,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
         ContentValues values2 = new ContentValues();
 
-        values2.put("id", "2");
+        values2.put("id", 2);
         values2.put("name", "Олена");
         values2.put("surname", "Пєчкурова");
         values2.put("fathername", "Миколаївна");

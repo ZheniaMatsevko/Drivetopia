@@ -48,7 +48,7 @@ public class BeginningScreen extends ScreenAdapter implements InputProcessor {
 
     private TextButton regBtn;
 
-    public BeginningScreen(final Drivetopia app, int level, int score) {
+    public BeginningScreen(final Drivetopia app) {
         // Initialize FontFactory
         fontFactory = new FontFactory();
         fontFactory.initialize();
@@ -89,7 +89,8 @@ public class BeginningScreen extends ScreenAdapter implements InputProcessor {
 
         startBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new MainMenuScreen(app,2));
+               // app.setScreen(new MainMenuScreen(app,2));
+                app.setScreen(new AuthorizationScreen(app));
             }
         });
 

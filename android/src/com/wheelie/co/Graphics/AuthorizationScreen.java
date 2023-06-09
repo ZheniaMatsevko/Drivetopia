@@ -1,5 +1,8 @@
 package com.wheelie.co.Graphics;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
@@ -15,6 +18,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -38,9 +42,16 @@ public class AuthorizationScreen extends ScreenAdapter implements InputProcessor
     private BitmapFont font2;
     private BitmapFont font3;
 
+    private BitmapFont fieldFont;
+
+    private BitmapFont prettyFont;
+
+
     private Skin skin;
 
     private Skin fieldSkin;
+
+    private Skin prettySkin;
 
     private int score;
     private int backgroundOffset;
@@ -53,8 +64,11 @@ public class AuthorizationScreen extends ScreenAdapter implements InputProcessor
     private TextField emailField;
     private TextField passwordField;
 
+    private Label wrongCredMes;
+
 
     public AuthorizationScreen(final Drivetopia app) {
+        final SQLiteDatabase db = app.getDatabase();
         // Initialize FontFactory
         fontFactory = new FontFactory();
         fontFactory.initialize();
@@ -80,7 +94,9 @@ public class AuthorizationScreen extends ScreenAdapter implements InputProcessor
         ukrLocale = new Locale("uk", "UA");
         font2=fontFactory.getFont(enLocale,1);
         font3=fontFactory.getFont(ukrLocale,1);
-
+        fieldFont=fontFactory.getFont(enLocale,6);
+        prettyFont=fontFactory.getFont(ukrLocale,10);
+        prettyFont.setColor(Color.RED);
 
 
         skin = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
@@ -88,26 +104,35 @@ public class AuthorizationScreen extends ScreenAdapter implements InputProcessor
 
         skin.load(Gdx.files.internal("skin-composer-ui.json"));
 
-        fieldSkin=new Skin(new TextureAtlas(Gdx.files.internal("uiskin.atlas")));
-        fieldSkin.add("font", font2);
+        fieldSkin=new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
+        fieldSkin.add("font", fieldFont);
 
-        fieldSkin.load(Gdx.files.internal("uiskin.json"));
+        fieldSkin.load(Gdx.files.internal("skin-composer-ui.json"));
+
+        prettySkin=new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
+        prettySkin.add("font", prettyFont);
+
+        prettySkin.load(Gdx.files.internal("skin-composer-ui.json"));
 
         // Create the email input field
         emailField = new TextField("", fieldSkin);
-        emailField.setSize(GraphicConstants.screenWidth/2, GraphicConstants.rowHeight*0.75F);
-        emailField.setPosition(GraphicConstants.centerX - emailField.getWidth()/2, GraphicConstants.rowHeight*4);
+        emailField.setMessageText("email");
+        emailField.setSize(GraphicConstants.screenWidth*0.7F, GraphicConstants.rowHeight*0.55F);
+        emailField.setPosition(GraphicConstants.centerX - emailField.getWidth()/2, GraphicConstants.rowHeight*5);
 
         // Create the password input field
         passwordField = new TextField("", fieldSkin);
-        passwordField.setSize(GraphicConstants.screenWidth/2, GraphicConstants.rowHeight*0.75F);
-        passwordField.setPosition(GraphicConstants.centerX - passwordField.getWidth()/2, GraphicConstants.rowHeight*3 - 50);
+        passwordField.setMessageText("password");
+        passwordField.setSize(GraphicConstants.screenWidth*0.7F, GraphicConstants.rowHeight*0.55F);
+        passwordField.setPosition(GraphicConstants.centerX - passwordField.getWidth()/2, GraphicConstants.rowHeight*4 + passwordField.getHeight()/2);
 
         passwordField.setPasswordMode(true);
         passwordField.setPasswordCharacter('*');
 
 
-
+        wrongCredMes = new Label("Невірні пароль або email.",prettySkin);
+        wrongCredMes.setPosition(GraphicConstants.centerX - passwordField.getWidth()/2, GraphicConstants.rowHeight*4);
+        wrongCredMes.setVisible(false);
 
         loginBtn = new TextButton("Увійти",skin);
         loginBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
@@ -115,7 +140,18 @@ public class AuthorizationScreen extends ScreenAdapter implements InputProcessor
 
         loginBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                app.setScreen(new MainMenuScreen(app,2));
+             /**   boolean i = checkEmailExists(emailField.getText(),db);
+                if(i) emailField.setText("exists");
+                else emailField.setText("loh");
+                app.setScreen(new MainMenuScreen(app,2));**/
+             int i = getCredentialsId(emailField.getText(),passwordField.getText(),db);
+             if(i==-1) {
+                 wrongCredMes.setVisible(true);
+             }
+             else {
+                 wrongCredMes.setVisible(false);
+                 app.setScreen(new MainMenuScreen(app,i));
+             }
             }
         });
 
@@ -123,6 +159,7 @@ public class AuthorizationScreen extends ScreenAdapter implements InputProcessor
 
         stage.addActor(emailField);
         stage.addActor(passwordField);
+        stage.addActor(wrongCredMes);
 
         sprite = new Sprite(new Texture(Gdx.files.internal("b13.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -152,6 +189,43 @@ public class AuthorizationScreen extends ScreenAdapter implements InputProcessor
         stage.draw();
     }
 
+
+
+
+    public boolean checkEmailExists(String email, SQLiteDatabase db) {
+        String[] columns = {"email"};
+        String selection = "email = ?";
+        String[] selectionArgs = {email};
+
+        Cursor cursor = db.query("userInfo", columns, selection, selectionArgs, null, null, null);
+
+        boolean exists = cursor.moveToFirst();
+
+        cursor.close();
+
+        return exists;
+    }
+
+    public int getCredentialsId(String email, String password, SQLiteDatabase db) {
+        String[] columns = {"id"};
+        String selection = "email = ? AND password = ?";
+        String[] selectionArgs = {email, password};
+
+        Cursor cursor = db.query("userInfo", columns, selection, selectionArgs, null, null, null);
+
+        int credentialsId = -1;
+
+        if (cursor.moveToFirst()) {
+            int columnIndex = cursor.getColumnIndexOrThrow("id");
+            credentialsId = cursor.getInt(columnIndex);
+        }
+
+        cursor.close();
+
+        return credentialsId;
+    }
+
+
     @Override
     public boolean keyDown(int keycode) {
         return false;
@@ -172,12 +246,12 @@ public class AuthorizationScreen extends ScreenAdapter implements InputProcessor
      */
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector2 coord = stage.screenToStageCoordinates(new Vector2((float)screenX,(float) screenY));
+      /**  Vector2 coord = stage.screenToStageCoordinates(new Vector2((float)screenX,(float) screenY));
         Actor hitActor = stage.hit(coord.x,coord.y,true);
         if(hitActor== loginBtn){
             System.out.println("Hit " + hitActor.getClass());
             app.setScreen(new MainMenuScreen(app,2));
-        }
+        }**/
         return true;
     }
 

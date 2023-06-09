@@ -174,7 +174,8 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
 
         String[] columns = {"name", "surname", "fathername", "failures", "score","dateOfBirth"};
         String selection = "id = ?";
-        String[] selectionArgs = {"2"};
+        String arg= String.valueOf(userId);
+        String[] selectionArgs = {arg};
 
         Cursor cursor = db.query("users", columns, selection, selectionArgs, null, null, null);
 

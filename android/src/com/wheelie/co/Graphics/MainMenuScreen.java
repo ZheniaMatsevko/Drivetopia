@@ -133,7 +133,7 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         exitBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,finalTestBtn.getY()-startBtn.getHeight()*1.2F);
         exitBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new BeginningScreen(app,1,1));
+                app.setScreen(new BeginningScreen(app));
             }
         });
         stage.addActor(exitBtn);
