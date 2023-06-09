@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -38,25 +39,27 @@ public class AuthorizationScreen extends ScreenAdapter implements InputProcessor
     private BitmapFont font3;
 
     private Skin skin;
+
+    private Skin fieldSkin;
+
     private int score;
     private int backgroundOffset;
     private Locale enLocale;
     private Locale ukrLocale;
     private FontFactory fontFactory;
     private final GlyphLayout layout;
-    private TextButton startBtn;
+    private TextButton loginBtn;
+
+    private TextField emailField;
+    private TextField passwordField;
 
 
-    private TextButton regBtn;
-
-    public AuthorizationScreen(final Drivetopia app, int level, int score) {
+    public AuthorizationScreen(final Drivetopia app) {
         // Initialize FontFactory
         fontFactory = new FontFactory();
         fontFactory.initialize();
 
-        this.level =level;
         this.app = app;
-        this.score = score;
         backgroundOffset=0;
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Zyana.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -84,29 +87,42 @@ public class AuthorizationScreen extends ScreenAdapter implements InputProcessor
         skin.add("font", font3);
 
         skin.load(Gdx.files.internal("skin-composer-ui.json"));
-        startBtn = new TextButton("Авторизація",skin);
-        startBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
-        startBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,GraphicConstants.rowHeight*5);
 
-        startBtn.addListener(new ClickListener() {
+        fieldSkin=new Skin(new TextureAtlas(Gdx.files.internal("uiskin.atlas")));
+        fieldSkin.add("font", font2);
+
+        fieldSkin.load(Gdx.files.internal("uiskin.json"));
+
+        // Create the email input field
+        emailField = new TextField("", fieldSkin);
+        emailField.setSize(GraphicConstants.screenWidth/2, GraphicConstants.rowHeight*0.75F);
+        emailField.setPosition(GraphicConstants.centerX - emailField.getWidth()/2, GraphicConstants.rowHeight*4);
+
+        // Create the password input field
+        passwordField = new TextField("", fieldSkin);
+        passwordField.setSize(GraphicConstants.screenWidth/2, GraphicConstants.rowHeight*0.75F);
+        passwordField.setPosition(GraphicConstants.centerX - passwordField.getWidth()/2, GraphicConstants.rowHeight*3 - 50);
+
+        passwordField.setPasswordMode(true);
+        passwordField.setPasswordCharacter('*');
+
+
+
+
+        loginBtn = new TextButton("Увійти",skin);
+        loginBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
+        loginBtn.setPosition(GraphicConstants.centerX- loginBtn.getWidth()/2,GraphicConstants.rowHeight - loginBtn.getHeight()/2);
+
+        loginBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 app.setScreen(new MainMenuScreen(app,2));
             }
         });
 
-        stage.addActor(startBtn);
-        regBtn = new TextButton("Реєстрація",skin);
-        regBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
-        regBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,startBtn.getY()-startBtn.getHeight()*1.2F);
+        stage.addActor(loginBtn);
 
-        regBtn.addListener(new ClickListener() {
-            public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new MainMenuScreen(app,2));
-            }
-        });
-
-        stage.addActor(regBtn);
-
+        stage.addActor(emailField);
+        stage.addActor(passwordField);
 
         sprite = new Sprite(new Texture(Gdx.files.internal("b13.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -158,7 +174,7 @@ public class AuthorizationScreen extends ScreenAdapter implements InputProcessor
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector2 coord = stage.screenToStageCoordinates(new Vector2((float)screenX,(float) screenY));
         Actor hitActor = stage.hit(coord.x,coord.y,true);
-        if(hitActor==startBtn){
+        if(hitActor== loginBtn){
             System.out.println("Hit " + hitActor.getClass());
             app.setScreen(new MainMenuScreen(app,2));
         }

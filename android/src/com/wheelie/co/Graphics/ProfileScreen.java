@@ -47,9 +47,13 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
     private BitmapFont font2;
     private BitmapFont font3;
 
+    private BitmapFont emailFont;
+
     private Skin skin;
 
     private Skin skin2;
+
+    private Skin emailSkin;
     private int score;
     private int backgroundOffset;
     private Locale enLocale;
@@ -113,7 +117,7 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         font1=fontFactory.getFont(ukrLocale,1);
         font2=fontFactory.getFont(enLocale,1);
         font3=fontFactory.getFont(ukrLocale,2);
-
+        emailFont=fontFactory.getFont(enLocale,5);
 
 
         skin = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
@@ -125,6 +129,11 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         skin2.add("font", font1);
 
         skin2.load(Gdx.files.internal("skin-composer-ui.json"));
+
+        emailSkin = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
+        emailSkin.add("font", emailFont);
+
+        emailSkin.load(Gdx.files.internal("skin-composer-ui.json"));
 
 
         editButton = new TextButton("Редагувати",skin2);
@@ -217,24 +226,28 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         age = new Label(ageBD + " років",skin);
         points = new Label("Кількість очок (практика): " + pointsBD,skin);
         failures = new Label("Кількість перездач: " + failuresBD,skin);
+        email = new Label(emailBD,emailSkin);
+
         PIB.setSize(40,25);
         PIB.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,1500);
-        age.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,1250);
-        points.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,750);
-        failures.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,650);
+        email.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,1250);
+        age.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,1150);
+        points.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,1000);
+        failures.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,900);
 
         stage.addActor(PIB);
         stage.addActor(age);
         stage.addActor(failures);
         stage.addActor(points);
+        stage.addActor(email);
 
 
 
 
-        sprite = new Sprite(new Texture(Gdx.files.internal("white.jpg")));
+        sprite = new Sprite(new Texture(Gdx.files.internal("mountbgr.png")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(stage);
-        layout = new GlyphLayout(font2, "User Profile");
+        layout = new GlyphLayout(font2, "User profile");
 
 
     }

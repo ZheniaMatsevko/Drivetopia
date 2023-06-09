@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.wheelie.co.Graphics.AuthorizationScreen;
 import com.wheelie.co.Graphics.BeginningScreen;
 import com.wheelie.co.Graphics.LevelsScreen;
 import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
@@ -42,9 +43,11 @@ public class Drivetopia extends Game {
 		list.add("Пєчкурова");
 		SimpleTextChoiceQuestion q = new SimpleTextChoiceQuestion();
 
+
 		shapeRenderer = new ShapeRenderer();
+		setScreen(new AuthorizationScreen(this));
 		//setScreen(new MainMenuScreen(this,1,1));
-			setScreen(new BeginningScreen(this,1,1));
+	//		setScreen(new BeginningScreen(this,1,1));
 //	setScreen(new ProfileScreen(this,1,1));
 	//setScreen(new SimpleTextChoiceQuestionScreen(this,1,q));
 		//setScreen(new LevelsScreen(this,1,1));
