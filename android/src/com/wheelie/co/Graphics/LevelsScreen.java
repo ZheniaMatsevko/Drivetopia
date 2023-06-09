@@ -105,7 +105,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         mainMenuBtn.setPosition(0, GraphicConstants.rowHeight*7.3F);
         mainMenuBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new MainMenuScreen(app,1,1));
+                app.setScreen(new MainMenuScreen(app,2));
             }
         });
         stage.addActor(mainMenuBtn);

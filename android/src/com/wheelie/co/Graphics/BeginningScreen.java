@@ -89,7 +89,7 @@ public class BeginningScreen extends ScreenAdapter implements InputProcessor {
 
         startBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new MainMenuScreen(app,1,1));
+                app.setScreen(new MainMenuScreen(app,2));
             }
         });
 
@@ -100,7 +100,7 @@ public class BeginningScreen extends ScreenAdapter implements InputProcessor {
 
         regBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new MainMenuScreen(app,1,1));
+                app.setScreen(new MainMenuScreen(app,2));
             }
         });
 
@@ -159,7 +159,7 @@ public class BeginningScreen extends ScreenAdapter implements InputProcessor {
         Actor hitActor = stage.hit(coord.x,coord.y,true);
         if(hitActor==startBtn){
             System.out.println("Hit " + hitActor.getClass());
-            app.setScreen(new MainMenuScreen(app,1,1));
+            app.setScreen(new MainMenuScreen(app,2));
         }
         return true;
     }

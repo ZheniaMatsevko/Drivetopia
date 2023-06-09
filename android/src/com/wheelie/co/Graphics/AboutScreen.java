@@ -147,7 +147,7 @@ public class AboutScreen extends ScreenAdapter implements InputProcessor {
 
         backButton.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new MainMenuScreen(app,1,1));
+                app.setScreen(new MainMenuScreen(app,2));
             }
         });
 
@@ -213,7 +213,7 @@ public class AboutScreen extends ScreenAdapter implements InputProcessor {
         Actor hitActor = stage.hit(coord.x,coord.y,true);
         if(hitActor== backButton){
             System.out.println("Hit " + hitActor.getClass());
-            app.setScreen(new MainMenuScreen(app,1,1));
+            app.setScreen(new MainMenuScreen(app,2));
         }
         return true;
     }

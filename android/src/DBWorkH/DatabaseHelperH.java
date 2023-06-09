@@ -95,10 +95,25 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         values2.put("fathername", "Миколаївна");
         values2.put("score", 700);
         values2.put("dateOfBirth", "1996-02-03");
-        values2.put("failures", 1);
+        values2.put("failures", 3);
         values2.put("pass", 1);
 
         newRowId = db.insertWithOnConflict("users", null, values2,SQLiteDatabase.CONFLICT_REPLACE);
+
+        // Insert email and password into the "userInfo" table
+        ContentValues userInfoValues1 = new ContentValues();
+        userInfoValues1.put("id", 1); // Use the newly inserted row ID from the "users" table
+        userInfoValues1.put("email", "test@example.com");
+        userInfoValues1.put("password", "12345678");
+
+        db.insertWithOnConflict("userInfo", null, userInfoValues1, SQLiteDatabase.CONFLICT_REPLACE);
+
+        ContentValues userInfoValues2 = new ContentValues();
+        userInfoValues2.put("id", 2); // Use the next row ID
+        userInfoValues2.put("email", "pyechkurova@ukma.edu.ua");
+        userInfoValues2.put("password", "ilovecats1234");
+
+        db.insertWithOnConflict("userInfo", null, userInfoValues2, SQLiteDatabase.CONFLICT_REPLACE);
 
     }
 }

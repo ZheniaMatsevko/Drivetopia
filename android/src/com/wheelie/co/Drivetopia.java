@@ -40,17 +40,14 @@ public class Drivetopia extends Game {
 		list.add("автомагістраль");
 		list.add("головна дорога");
 		list.add("Пєчкурова");
-
-
-
 		SimpleTextChoiceQuestion q = new SimpleTextChoiceQuestion();
 
 		shapeRenderer = new ShapeRenderer();
 		//setScreen(new MainMenuScreen(this,1,1));
-			//setScreen(new BeginningScreen(this,1,1));
+			setScreen(new BeginningScreen(this,1,1));
 //	setScreen(new ProfileScreen(this,1,1));
 	//setScreen(new SimpleTextChoiceQuestionScreen(this,1,q));
-         setScreen(new LevelsScreen(this,1,1));
+		//setScreen(new LevelsScreen(this,1,1));
 
 		//setScreen(new SimpleTextChoiceQuestionScreen(this,1,q));
 

@@ -180,7 +180,7 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         dialog.addListener(new InputListener() {
            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                dialog.setVisible(false);
-               app.setScreen(new MainMenuScreen(app, 1, 1));
+               app.setScreen(new MainMenuScreen(app, 2));
                return true;
            }
         });

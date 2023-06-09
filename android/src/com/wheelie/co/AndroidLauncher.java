@@ -22,6 +22,10 @@ public class AndroidLauncher extends AndroidApplication {
 		DatabaseHelperH dbHelper = DatabaseHelperH.getInstance(this);
 		SQLiteDatabase database = dbHelper.getWritableDatabase();
 
+		
+		//перші два юзери в БД - тестові, і беруться з insertInitialData
+		//тут вони видаляються щоб можна було редагувати інфу про них прямо в
+		//DatabaseHelperH і вона одразу оновлювалась
 		database.delete("users", "id IN (?, ?)", new String[]{"1", "2"});
         dbHelper.insertInitialData(database);
 

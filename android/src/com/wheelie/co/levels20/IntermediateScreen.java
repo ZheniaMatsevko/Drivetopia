@@ -142,7 +142,7 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
 
         nextButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-            if(state!=0)    app.setScreen(new MainMenuScreen(app,1,1));
+            if(state!=0)    app.setScreen(new MainMenuScreen(app,2));
             else  app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion()));
             }
         });
@@ -237,7 +237,7 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
         Actor hitActor = stage.hit(coord.x,coord.y,true);
         if(hitActor== nextButton){
             System.out.println("Hit " + hitActor.getClass());
-            app.setScreen(new MainMenuScreen(app,1,1));
+            app.setScreen(new MainMenuScreen(app,2));
         }
         return true;
     }

@@ -28,6 +28,10 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Tools.FontFactory;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class ProfileScreen extends ScreenAdapter implements InputProcessor {
@@ -62,16 +66,24 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
 
     private Label failures;
 
+    private Label points;
+
+    private Label email;
+
     private Integer ageBD = 19;
 
     private String PIBBD = "Зубенко Михайло Петрович";
 
     private Integer failuresBD = 1;
 
+    private Integer pointsBD = 0;
+
+    private String emailBD = "zubenko@gmail.com";
 
 
 
-    public ProfileScreen(final Drivetopia app, int level, int score) {
+
+    public ProfileScreen(final Drivetopia app, int userId) {
          final SQLiteDatabase db = app.getDatabase();
         // Initialize FontFactory
         fontFactory = new FontFactory();
@@ -79,7 +91,7 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
 
         this.level =level;
         this.app = app;
-        this.score = score;
+        this.score = userId;
         backgroundOffset=0;
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Zyana.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -122,7 +134,7 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
 
         editButton.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new MainMenuScreen(app,1,1));
+                app.setScreen(new MainMenuScreen(app,2));
             }
         });
 
@@ -137,7 +149,7 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
 
         backButton.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new MainMenuScreen(app,1,1));
+                app.setScreen(new MainMenuScreen(app,2));
             }
         });
 
@@ -151,7 +163,7 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
 
 
 
-        String[] columns = {"name", "surname", "fathername"};
+        String[] columns = {"name", "surname", "fathername", "failures", "score","dateOfBirth"};
         String selection = "id = ?";
         String[] selectionArgs = {"2"};
 
@@ -166,11 +178,29 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
             String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
             String surname = cursor.getString(cursor.getColumnIndexOrThrow("surname"));
             String fathername = cursor.getString(cursor.getColumnIndexOrThrow("fathername"));
+            int failures = cursor.getInt(cursor.getColumnIndexOrThrow("failures"));
+            int points = cursor.getInt(cursor.getColumnIndexOrThrow("score"));
+            String dateOfBirth = cursor.getString(cursor.getColumnIndexOrThrow("dateOfBirth"));
+
 
             String userInfo = name + " " + surname + " " + fathername;
             Log.d("User Info", userInfo);
             PIBBD = userInfo;
+            failuresBD = failures;
+            pointsBD = points;
+
+            //вирахування віку
+            ageBD=calculateAge(dateOfBirth);
+
+            emailBD = getEmailById(userId,db);
+
         }
+
+
+
+
+
+
 
         if (cursor != null) {
             cursor.close();
@@ -185,15 +215,19 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
 
         PIB = new Label("ПІБ: \n" + PIBBD,skin);
         age = new Label(ageBD + " років",skin);
+        points = new Label("Кількість очок (практика): " + pointsBD,skin);
         failures = new Label("Кількість перездач: " + failuresBD,skin);
         PIB.setSize(40,25);
-        PIB.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,1400);
-        age.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,1150);
+        PIB.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,1500);
+        age.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,1250);
+        points.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,750);
         failures.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,650);
 
         stage.addActor(PIB);
         stage.addActor(age);
         stage.addActor(failures);
+        stage.addActor(points);
+
 
 
 
@@ -225,6 +259,57 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         stage.draw();
     }
 
+    /**Розраховує вік користувача**/
+    public int calculateAge(String dateOfBirth) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date birthDate;
+        try {
+            birthDate = dateFormat.parse(dateOfBirth);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return -1; // Return -1 to indicate an error occurred
+        }
+
+        Calendar birthCalendar = Calendar.getInstance();
+        birthCalendar.setTime(birthDate);
+
+        Calendar currentCalendar = Calendar.getInstance();
+
+        int age = currentCalendar.get(Calendar.YEAR) - birthCalendar.get(Calendar.YEAR);
+
+        // Check if the current date is before the birth date in the current year
+        // to account for cases where the user's birthday hasn't occurred yet
+        if (currentCalendar.get(Calendar.MONTH) < birthCalendar.get(Calendar.MONTH) ||
+                (currentCalendar.get(Calendar.MONTH) == birthCalendar.get(Calendar.MONTH) &&
+                        currentCalendar.get(Calendar.DAY_OF_MONTH) < birthCalendar.get(Calendar.DAY_OF_MONTH))) {
+            age--;
+        }
+
+        return age;
+    }
+
+
+    public String getEmailById(int userId, SQLiteDatabase db) {
+        String email = "email";
+
+        String[] columns = {"email"};
+        String selection = "id = ?";
+        String[] selectionArgs = {String.valueOf(userId)};
+
+        Cursor cursor = db.query("userInfo", columns, selection, selectionArgs, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            int columnIndex = cursor.getColumnIndexOrThrow("email");
+            email = cursor.getString(columnIndex);
+        }
+
+        cursor.close();
+
+        return email;
+    }
+
+
+
     @Override
     public boolean keyDown(int keycode) {
         return false;
@@ -249,7 +334,7 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         Actor hitActor = stage.hit(coord.x,coord.y,true);
         if(hitActor== backButton){
             System.out.println("Hit " + hitActor.getClass());
-            app.setScreen(new MainMenuScreen(app,1,1));
+            app.setScreen(new MainMenuScreen(app,2));
         }
         return true;
     }
@@ -274,3 +359,4 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         return false;
     }
 }
+

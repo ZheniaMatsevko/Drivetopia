@@ -43,7 +43,7 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
     private BitmapFont font3;
 
     private Skin skin;
-    private int score;
+    private int userId =2;
     private int backgroundOffset;
     private Locale enLocale;
     private Locale ukrLocale;
@@ -59,14 +59,13 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
 
     private int soundState = 1;
 
-    public MainMenuScreen(final Drivetopia app, int level, int score) {
+    public MainMenuScreen(final Drivetopia app, int userId) {
         // Initialize FontFactory
         fontFactory = new FontFactory();
         fontFactory.initialize();
 
-        this.level =level;
         this.app = app;
-        this.score = score;
+        this.userId = userId;
         backgroundOffset=0;
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Zyana.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -148,7 +147,7 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         profileBtn.setPosition(10, GraphicConstants.rowHeight*7.3F);
         profileBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new ProfileScreen(app,1,1));
+                app.setScreen(new ProfileScreen(app,userId));
             }
         });
         stage.addActor(profileBtn);
