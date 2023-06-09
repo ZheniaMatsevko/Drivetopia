@@ -140,10 +140,6 @@ public class AuthorizationScreen extends ScreenAdapter implements InputProcessor
 
         loginBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-             /**   boolean i = checkEmailExists(emailField.getText(),db);
-                if(i) emailField.setText("exists");
-                else emailField.setText("loh");
-                app.setScreen(new MainMenuScreen(app,2));**/
              int i = getCredentialsId(emailField.getText(),passwordField.getText(),db);
              if(i==-1) {
                  wrongCredMes.setVisible(true);
@@ -246,12 +242,6 @@ public class AuthorizationScreen extends ScreenAdapter implements InputProcessor
      */
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-      /**  Vector2 coord = stage.screenToStageCoordinates(new Vector2((float)screenX,(float) screenY));
-        Actor hitActor = stage.hit(coord.x,coord.y,true);
-        if(hitActor== loginBtn){
-            System.out.println("Hit " + hitActor.getClass());
-            app.setScreen(new MainMenuScreen(app,2));
-        }**/
         return true;
     }
 
