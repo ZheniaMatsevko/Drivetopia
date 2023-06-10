@@ -27,6 +27,7 @@ public class AndroidLauncher extends AndroidApplication {
 		//тут вони видаляються щоб можна було редагувати інфу про них прямо в
 		//DatabaseHelperH і вона одразу оновлювалась
 		database.delete("users", "id IN (?, ?)", new String[]{"1", "2"});
+		database.delete("userInfo", "id IN (?, ?)", new String[]{"1", "2"});
         dbHelper.insertInitialData(database);
 
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

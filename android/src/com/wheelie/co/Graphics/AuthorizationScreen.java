@@ -202,7 +202,7 @@ public class AuthorizationScreen extends ScreenAdapter implements InputProcessor
         return exists;
     }
 
-    public int getCredentialsId(String email, String password, SQLiteDatabase db) {
+    public static int getCredentialsId(String email, String password, SQLiteDatabase db) {
         String[] columns = {"id"};
         String selection = "email = ? AND password = ?";
         String[] selectionArgs = {email, password};

@@ -31,6 +31,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Create the "user" table
+        //інформація про юзерів: ПІБ, дата народження, кількість очок за практику, кількість завалів фінального тесту, чи пройшов тест
 
         String createUsersTable = "CREATE TABLE IF NOT EXISTS users (" +
                 "id INTEGER PRIMARY KEY NOT NULL, " +
@@ -46,6 +47,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
 
         // Create "userInfo" table
+        //емейли та паролі юзерів
         String createInfoTable = "CREATE TABLE IF NOT EXISTS userInfo (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                 "email TEXT NOT NULL, " +
@@ -54,6 +56,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         db.execSQL(createInfoTable);
 
         // Create "theory" table
+        //таблиця для збереження інформації для кожного екрану теорії
         String createTheoryTable = "CREATE TABLE IF NOT EXISTS theory (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                 "levelNumb INTEGER NOT NULL, " +
