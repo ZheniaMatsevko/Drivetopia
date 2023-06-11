@@ -1,7 +1,5 @@
 package com.wheelie.co.levels20;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.wheelie.co.Drivetopia;
 
@@ -27,7 +25,12 @@ public abstract class Level {
 
     public int maximumScore = 35;
 
-    public int neededScore = 30;
+    /**скільки очок потрібно втратити для провалу**/
+    public int failureScore = 5;
+
+    /**підрахунок втрачених очок**/
+
+    public int failureScoreCount = 0;
 
     public LinkedList<ScreenAdapter> tasks;
 

@@ -147,7 +147,7 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
                 /**якщо це екран завершення практики, повертати в головне меню**/
             if(state!=0)    app.setScreen(new MainMenuScreen(app,userId));
             /**якщо це початок практики, запускати перший таск рівня**/
-            else app.setScreen(level.getTasks().get(1));
+            else app.setScreen(level.getTasks().get(0));
             //else  app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion()));
             }
         });

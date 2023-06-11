@@ -2,13 +2,11 @@ package com.wheelie.co.levels20;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.ScreenAdapter;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.levelTemplates.SimpleTextChoiceQuestionScreen;
 import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Random;
@@ -31,7 +29,9 @@ public class level1 extends Level {
         this.tasks=new LinkedList<>();
         this.app = app;
         this.currentscore = 0;
-        this.maximumScore = 20;
+        this.maximumScore = 15;
+        this.failureScore = 6;
+
 
 
 
@@ -39,13 +39,12 @@ public class level1 extends Level {
      LinkedList<SimpleTextChoiceQuestion> choiceQuestions = SimpleTextChoiceQuestion.extractSimpleTextChoiceQuestionsFromDB(db,1);
 
      /**Обираємо 5 сердед них**/
-    // LinkedList<SimpleTextChoiceQuestion> finalChoiceQuestions = selectRandomSimpleChoiceQuestions(choiceQuestions,5);
+    LinkedList<SimpleTextChoiceQuestion> finalChoiceQuestions = selectRandomSimpleChoiceQuestions(choiceQuestions,5);
 
-
-
+        Collections.shuffle(finalChoiceQuestions);
     // LinkedList<SimpleTextChoiceQuestionScreen> simpleScreens = new LinkedList<>();
      /**Створюємо екрани для кожного запитання з вибором і додаємо в список екранів рівня**/
-        for (SimpleTextChoiceQuestion q: choiceQuestions
+        for (SimpleTextChoiceQuestion q: finalChoiceQuestions
              ) {
             tasks.add(new SimpleTextChoiceQuestionScreen(app,q,this,userID));
         }

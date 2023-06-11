@@ -241,7 +241,9 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         practiceBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(dialog.getLevel()==1) new level1(app,userID);
+                if(dialog.getLevel()==1) {
+                    app.setScreen(new IntermediateScreen(app,new level1(app,userID),userID,0,false));
+                }
                 //    app.setScreen(new IntermediateScreen(app,new level1(app,userID),userID,0,false));
                    // app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion()));
             }

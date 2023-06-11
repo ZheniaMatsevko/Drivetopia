@@ -148,7 +148,7 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
                         /**Якщо це ще не останнє питання рівню, збільшує номер поточного завдання в рівні на 1 і відкриває наступне завдання**/
                         if(level.getTasks().size()!=level.currentTaskNumber()) {
                             level.increaseTaskCounter();
-                            level.currentscore+=5;
+                            level.currentscore+=3;
                            app.setScreen(level.tasks.get(level.currentTaskNumber()-1));
 //                           Gdx.input.setInputProcessor((SimpleTextChoiceQuestionScreen)level.tasks.get(level.currentTaskNumber()-1));
 
@@ -156,6 +156,7 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
                         }
                         /**Якщо це останнє питання, відкриває IntermediateScreen з результатами**/
                         else {
+                            level.currentscore+=3;
                             app.setScreen(new IntermediateScreen(app,level,userId,2,false));
 
                         }
@@ -165,7 +166,19 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
                     }
                     /**якщо відповідь неправильна**/
                     else {
-                        app.setScreen(new IntermediateScreen(app,level,userId,2,true));
+                       level.failureScoreCount+=3;
+                       if (level.failureScoreCount>=level.failureScore)app.setScreen(new IntermediateScreen(app,level,userId,2,true));
+                       else {
+                           if(level.getTasks().size()==level.currentTaskNumber()){
+                               app.setScreen(new IntermediateScreen(app,level,userId,2,false));
+                           }
+                           else {
+                               level.increaseTaskCounter();
+                               app.setScreen(level.tasks.get(level.currentTaskNumber()-1));
+
+                           }
+
+                       }
                        // answerButtons[buttonIndex].setText("Ну ти лошара");
 
                     }
@@ -183,7 +196,7 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
 
         sprite = new Sprite(new Texture(Gdx.files.internal("white.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.input.setInputProcessor(stage);
+       // Gdx.input.setInputProcessor(stage);
         layout = new GlyphLayout(font2, "Level "+ level.levelNumb);
 
 
@@ -217,6 +230,7 @@ private LinkedList<String> generateRandomOrder() {
         batch.end();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+        Gdx.input.setInputProcessor(stage);
     }
 
 

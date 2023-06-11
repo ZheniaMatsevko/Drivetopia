@@ -56,17 +56,17 @@ public class Drivetopia extends Game {
 
 		shapeRenderer = new ShapeRenderer();
 
-		LinkedList<SimpleTextChoiceQuestion> q = SimpleTextChoiceQuestion.extractSimpleTextChoiceQuestionsFromDB(database,1);
+		//LinkedList<SimpleTextChoiceQuestion> q = SimpleTextChoiceQuestion.extractSimpleTextChoiceQuestionsFromDB(database,1);
 		//setScreen(new SimpleTextChoiceQuestionScreen(this,q.get(0),new level1(this,1),1));
         //level1 l = new level1(this,1);
 		//setScreen(l.tasks.get(0));
-	   setScreen(new SimpleTextChoiceQuestionScreen(this,q.get(0),new level1(this,1),1));
+	  // setScreen(new SimpleTextChoiceQuestionScreen(this,q.get(0),new level1(this,1),1));
        // setScreen(new IntermediateScreen())
 
 		//setScreen(new RegistrationScreen(this));
 
 		//setScreen(new AuthorizationScreen(this));
-		//setScreen(new MainMenuScreen(this,1));
+		setScreen(new MainMenuScreen(this,1));
 		//setScreen(new BeginningScreen(this));
 //	setScreen(new ProfileScreen(this,1,1));
 	//setScreen(new SimpleTextChoiceQuestionScreen(this,1,q));
