@@ -1,4 +1,6 @@
 package com.wheelie.co.levelTemplates;
+import android.database.sqlite.SQLiteDatabase;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
@@ -23,6 +25,7 @@ import com.wheelie.co.Graphics.GraphicConstants;
 import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 import com.wheelie.co.levels20.IntermediateScreen;
+import com.wheelie.co.levels20.Level;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -34,7 +37,6 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
     private SpriteBatch batch;
     private Sprite sprite;
     private Stage stage;
-    private int level;
 
     private BitmapFont font;
 
@@ -54,6 +56,10 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
 
     private Label textQuestion;
 
+    private Level level;
+
+    private int userId;
+
 
 /*    private TextButton answer1;
 
@@ -66,10 +72,10 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
 
     SimpleTextChoiceQuestion question;
 
-    public SimpleTextChoiceQuestionScreen(final Drivetopia app, int level, final SimpleTextChoiceQuestion question) {
-
-        this.question = new SimpleTextChoiceQuestion();
-        System.out.println(question.getText());
+    public SimpleTextChoiceQuestionScreen(final Drivetopia app, final SimpleTextChoiceQuestion question, Level level, int userId) {
+        this.userId = userId;
+        this.question = question;
+        //System.out.println(question.getText());
 
         LinkedList<String> wrA = question.generateWrongAnswers(question.getWrongAnswers());
         wrA.add(question.getCorrectAnswer());
@@ -137,32 +143,27 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
             final int buttonIndex = i;
             answerButtons[i].addListener(new ClickListener() {
                 public void clicked(InputEvent event, float x, float y) {
+                    /**якщо натиснуто на правильну відповідь**/
                     if (answerButtons[buttonIndex].getText().toString().equals(question.getCorrectAnswer())) {
-                        // Після натиснення правильної відповіді, має відправляти на наступний скрін, а не в мейн скрін.
-                        //Але це поки не прописано.
-                        //в кожному рівні (наприклад клас level1) буде список-послідовність екранів, ось правильна кнопка буде
-                        //відправляти на екран наступного завдання.
 
-                        switch(question.getLevel()) {
-                            case 1:
-                                app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion(2)));
-                                break;
-                            case 2:
-                                app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion(3)));
-                                break;
-                            case 3:
-                                app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion(4)));
-                                break;
-                            case 4:
-                                app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion(5)));
-                                break;
-                            case 5:
-                                app.setScreen(new IntermediateScreen(app,1,35,2,4,false));
-                                break;
+                        /**Якщо це ще не останнє питання рівню, збільшує номер поточного завдання в рівні на 1 і відкриває наступне завдання**/
+                        if(level.getTasks().size()!=level.currentTaskNumber()) {
+                            level.increaseTaskCounter();
+                            level.currentscore+=5;
+                            app.setScreen(level.getTasks().get(level.currentTaskNumber()));
                         }
-                      //  app.setScreen(new MainMenuScreen(app, 1, 1));
-                    } else {
-                        app.setScreen(new IntermediateScreen(app,1,35,2,question.getLevel(),true));
+                        /**Якщо це останнє питання, відкриває IntermediateScreen з результатами**/
+                        else {
+                            app.setScreen(new IntermediateScreen(app,level,userId,2,false));
+
+                        }
+
+
+
+                    }
+                    /**якщо відповідь неправильна**/
+                    else {
+                        app.setScreen(new IntermediateScreen(app,level,userId,2,true));
                         //answerButtons[buttonIndex].setText("Ну ти лошара");
 
                     }
@@ -215,6 +216,7 @@ private LinkedList<String> generateRandomOrder() {
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
+
 
 
 

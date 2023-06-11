@@ -24,11 +24,13 @@ import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Graphics.GraphicConstants;
 import com.wheelie.co.Graphics.MainMenuScreen;
 import com.wheelie.co.Tools.FontFactory;
-import com.wheelie.co.levelTemplates.SimpleTextChoiceQuestionScreen;
-import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 
 import java.util.Locale;
 
+
+/**
+ * Цей екран використовується для початку практики і виведення результатів після закінчення практики.
+ */
 public class IntermediateScreen extends ScreenAdapter implements InputProcessor {
 
 
@@ -37,7 +39,7 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
     private SpriteBatch batch;
     private Sprite sprite;
     private Stage stage;
-    private int level;
+    private Level level;
 
     private BitmapFont font;
 
@@ -51,7 +53,7 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
     private Skin skin;
 
     private Skin skin2;
-    private int score;
+    private int userId;
     private int backgroundOffset;
     private Locale enLocale;
     private Locale ukrLocale;
@@ -78,7 +80,7 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
 
     //failure - якщо це проміжний рівень, вказує чи попередню таску було пройдено чи ні
 
-    public IntermediateScreen(final Drivetopia app, int level, int score, final int state, int taskNubmber, final boolean failure) {
+    public IntermediateScreen(final Drivetopia app, Level level, int userId, final int state, final boolean failure) {
         // Initialize FontFactory
 
         fontFactory = new FontFactory();
@@ -88,7 +90,7 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
         this.failure=failure;
         this.level =level;
         this.app = app;
-        this.score = score;
+        this.userId = userId;
         this.state = state;
         backgroundOffset=0;
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Zyana.ttf"));
@@ -142,8 +144,11 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
 
         nextButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
+                /**якщо це екран завершення практики, повертати в головне меню**/
             if(state!=0)    app.setScreen(new MainMenuScreen(app,2));
-            else  app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion()));
+            /**якщо це початок практики, запускати перший таск рівня**/
+            else app.setScreen(level.getTasks().get(1));
+            //else  app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion()));
             }
         });
 
@@ -151,7 +156,7 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
 
 
 
-        label = new Label("Практика рівню " + level,skin);
+        label = new Label("Практика рівню " + level.levelNumb,skin);
 
 
 
@@ -163,6 +168,7 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
                 break;
 
             //після звичайної таски
+            // upd 11.06: ми не використовуємо це.
             case 1:
             if (failure) {
                label = new Label("Провал!",skin);
@@ -171,13 +177,14 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
                 label = new Label("Правильно!",skin);
 
             }
+            break;
 
 
             //після завершення практики
             case 2:
                 String message;
                 if(failure) message="\nПрактику провалено!\nПеречитайте теорію.\n";
-                else message="\nПрактику успішно\n завершено!\n" + score + "/35";
+                else message="\nПрактику успішно\n завершено!\n" + userId + "/" + level.maximumScore;
              label.setText(message);
 
 

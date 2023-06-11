@@ -4,7 +4,7 @@ import com.badlogic.gdx.ScreenAdapter;
 
 import java.util.LinkedList;
 
-public class level3 implements Level{
+public class level3 extends Level{
     @Override
     public void start() {
 

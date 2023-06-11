@@ -30,6 +30,8 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL("PRAGMA foreign_keys = ON;");
+
         // Create the "user" table
         //інформація про юзерів: ПІБ, дата народження, кількість очок за практику, кількість завалів фінального тесту, чи пройшов тест
 
@@ -55,6 +57,21 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
                 ")";
         db.execSQL(createInfoTable);
 
+
+        // Create "scores" table
+        //набрана кількість очок за кожну практику
+        String createScoresTable = "CREATE TABLE IF NOT EXISTS scores (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "userId INTEGER NOT NULL, " +
+                "levelNumb INTEGER NOT NULL, " +
+                "score INTEGER NOT NULL, " +
+                "FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE" +
+                ")";
+
+        db.execSQL(createScoresTable);
+
+
+
         // Create "theory" table
         //таблиця для збереження інформації для кожного екрану теорії
         String createTheoryTable = "CREATE TABLE IF NOT EXISTS theory (" +
@@ -64,6 +81,35 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
                 "texts TEXT NOT NULL" +
                 ")";
         db.execSQL(createTheoryTable);
+
+
+
+
+        // Create "simpleChoiceQuestion" table
+        //таблиця для збереження інформації про кожні прості тести з вибором
+        String createSimpleChoiceQuestion = "CREATE TABLE IF NOT EXISTS simpleChoiceQuestion (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "levelNumb INTEGER NOT NULL, " +
+                "text TEXT NOT NULL, " +
+                "answer TEXT NOT NULL, " +
+                "picture TEXT" +
+                ")";
+        db.execSQL(createSimpleChoiceQuestion);
+
+
+        // Create "wrongChoices" table
+        //таблиця для збереження інформації про неправильні відповіді у тестах
+        String createWrongChoices = "CREATE TABLE IF NOT EXISTS wrongChoices (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "wrongAnswer TEXT NOT NULL, " +
+                "questionId INTEGER NOT NULL, " +
+                "FOREIGN KEY (questionId) REFERENCES simpleChoiceQuestion(id) ON DELETE CASCADE" +
+                ")";
+
+        db.execSQL(createWrongChoices);
+
+
+
 
         // Insert initial data
         insertInitialData(db);
@@ -77,6 +123,10 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
     }
 
     public void insertInitialData(SQLiteDatabase db) {
+
+
+        /**Заповнюємо інформацію про юзерів (айді 1,2)**/
+
         // Insert initial data into the "user" table
         ContentValues values = new ContentValues();
         values.put("id", 1);
@@ -117,6 +167,245 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         userInfoValues2.put("password", "ilovecats1234");
 
         db.insertWithOnConflict("userInfo", null, userInfoValues2, SQLiteDatabase.CONFLICT_REPLACE);
+
+
+
+
+
+
+
+
+
+        /**Заповнюємо інформацію про рівні**/
+
+
+
+
+        /**1) Тестові питання з варіантами відповіді**/
+
+
+        /**рівень 1**/
+        ContentValues simpleValues = new ContentValues();
+        simpleValues.put("levelNumb", 1);
+        simpleValues.put("text", "Дозволи на будівництво та експлуатацію об'єктів біля доріг видають органи дорожнього управління, а платить і погоджує їх:");
+        simpleValues.put("answer", "поліція");
+        simpleValues.put("picture", "noPicture");
+
+         long questionId = db.insert("simpleChoiceQuestion", null, simpleValues);
+
+
+
+            ContentValues wrongChoiceValues = new ContentValues();
+            wrongChoiceValues.put("questionId", 1);
+            wrongChoiceValues.put("wrongAnswer", "президент");
+            db.insert("wrongChoices", null, wrongChoiceValues);
+
+            wrongChoiceValues.clear();
+
+            wrongChoiceValues.put("questionId", 1);
+            wrongChoiceValues.put("wrongAnswer", "місцева влада");
+            db.insert("wrongChoices", null, wrongChoiceValues);
+            wrongChoiceValues.clear();
+
+            wrongChoiceValues.put("questionId", 1);
+            wrongChoiceValues.put("wrongAnswer", "спілка водіїв");
+            db.insert("wrongChoices", null, wrongChoiceValues);
+
+            wrongChoiceValues.clear();
+            wrongChoiceValues.put("questionId", 1);
+            wrongChoiceValues.put("wrongAnswer", "Глибовець");
+            db.insert("wrongChoices", null, wrongChoiceValues);
+            wrongChoiceValues.clear();
+
+
+
+
+
+
+        simpleValues = new ContentValues();
+        simpleValues.put("levelNumb", 1);
+        simpleValues.put("text", "Які статті Закону України “Про автомобільні дороги” стосуються використання доріг не за їх призначенням?");
+        simpleValues.put("answer", "Статті 36-38");
+        simpleValues.put("picture", "noPicture");
+
+       questionId = db.insert("simpleChoiceQuestion", null, simpleValues);
+
+
+         wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", 2);
+        wrongChoiceValues.put("wrongAnswer", "Усі");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 2);
+        wrongChoiceValues.put("wrongAnswer", "Ніякі");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 2);
+        wrongChoiceValues.put("wrongAnswer", "Статті 91-93");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 2);
+        wrongChoiceValues.put("wrongAnswer", "Статті 4-5");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 2);
+        wrongChoiceValues.put("wrongAnswer", "Статті 45-46");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 2);
+        wrongChoiceValues.put("wrongAnswer", "Статті 52-53");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 2);
+        wrongChoiceValues.put("wrongAnswer", "Статті 1-10");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+
+
+
+
+
+
+        simpleValues = new ContentValues();
+        simpleValues.put("levelNumb", 1);
+        simpleValues.put("text", "Переміщення одним транспортним засобом іншого, яке не належить до експлуатації автопоїздів, це:");
+        simpleValues.put("answer", "буксирування");
+        simpleValues.put("picture", "noPicture");
+
+        db.insert("simpleChoiceQuestion", null, simpleValues);
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", 3);
+        wrongChoiceValues.put("wrongAnswer", "випередження");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 3);
+        wrongChoiceValues.put("wrongAnswer", "гальмування");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 3);
+        wrongChoiceValues.put("wrongAnswer", "засліплення");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 3);
+        wrongChoiceValues.put("wrongAnswer", "сесія");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+
+        wrongChoiceValues.put("questionId", 3);
+        wrongChoiceValues.put("wrongAnswer", "аварія");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 3);
+        wrongChoiceValues.put("wrongAnswer", "зупинка");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 3);
+        wrongChoiceValues.put("wrongAnswer", "обгін");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+
+
+
+        simpleValues = new ContentValues();
+        simpleValues.put("levelNumb", 1);
+        simpleValues.put("text", "Автомобіль з кількістю місць для сидіння більше дев'яти з місцем водія включно, призначений для перевезення пасажирів:");
+        simpleValues.put("answer", "автобус");
+        simpleValues.put("picture", "noPicture");
+
+        db.insert("simpleChoiceQuestion", null, simpleValues);
+
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", 4);
+        wrongChoiceValues.put("wrongAnswer", "потяг");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 4);
+        wrongChoiceValues.put("wrongAnswer", "катафалк");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 4);
+        wrongChoiceValues.put("wrongAnswer", "мопед");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 4);
+        wrongChoiceValues.put("wrongAnswer", "легковик");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 4);
+        wrongChoiceValues.put("wrongAnswer", "грузовик");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 4);
+        wrongChoiceValues.put("wrongAnswer", "велосипед");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+
+
+        simpleValues = new ContentValues();
+        simpleValues.put("levelNumb", 1);
+        simpleValues.put("text", "Випередження одного або кількох транспортних засобів, пов'язане з виїздом на смугу зустрічного руху:");
+        simpleValues.put("answer", "обгін");
+        simpleValues.put("picture", "noPicture");
+
+        db.insert("simpleChoiceQuestion", null, simpleValues);
+
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", 5);
+        wrongChoiceValues.put("wrongAnswer", "гальмування");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 5);
+        wrongChoiceValues.put("wrongAnswer", "зупинка");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 5);
+        wrongChoiceValues.put("wrongAnswer", "естакада");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 5);
+        wrongChoiceValues.put("wrongAnswer", "перавага");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", 5);
+        wrongChoiceValues.put("wrongAnswer", "засліплення");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+
+
+
+
+
+
+
+
 
     }
 }

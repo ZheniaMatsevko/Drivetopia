@@ -30,6 +30,7 @@ import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.Tools.MyDialog;
 import com.wheelie.co.levels20.IntermediateScreen;
+import com.wheelie.co.levels20.level1;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -48,7 +49,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
     private BitmapFont font3;
 
     private Skin skin;
-    private int score;
+    private int userID;
     private Locale enLocale;
     private Locale ukrLocale;
     private FontFactory fontFactory;
@@ -60,14 +61,13 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
 
     private int soundState = 1;
 
-    public LevelsScreen(final Drivetopia app, int level, int score) {
+    public LevelsScreen(final Drivetopia app, int userID) {
         // Initialize FontFactory
         fontFactory = new FontFactory();
         fontFactory.initialize();
 
-        this.level =level;
         this.app = app;
-        this.score = score;
+        this.userID = userID;
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Zyana.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -235,11 +235,14 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
             }
         });
 
+
+
+       /**Запуск практики**/
         practiceBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(dialog.getLevel()==1)
-                    app.setScreen(new IntermediateScreen(app,1,0,0,0,false));
+                if(dialog.getLevel()==1) new level1(app,userID);
+                //    app.setScreen(new IntermediateScreen(app,new level1(app,userID),userID,0,false));
                    // app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion()));
             }
         });
