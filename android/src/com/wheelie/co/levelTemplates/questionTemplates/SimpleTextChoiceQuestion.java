@@ -116,7 +116,7 @@ this.wrongAnswers=wrongAnswers;
                 Log.d("Column", columnName);
             }
 
-            while (cursor.moveToNext()) {
+            do {
                 int questionId = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
                 String text = cursor.getString(cursor.getColumnIndexOrThrow("text"));
                 String answer = cursor.getString(cursor.getColumnIndexOrThrow("answer"));
@@ -127,7 +127,7 @@ this.wrongAnswers=wrongAnswers;
                 SimpleTextChoiceQuestion s = new SimpleTextChoiceQuestion(text, answer, picture,wrongAnswers);
                 list.add(s);
 
-            }
+            } while (cursor.moveToNext());
             // Close the cursor
             cursor.close();
 

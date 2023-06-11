@@ -68,8 +68,7 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
 
     private TextButton answer4;*/
 
-    private LinkedList<TextButton> answerButtons = new LinkedList<>();
-
+    private TextButton[] answerButtons;
     SimpleTextChoiceQuestion question;
 
     public SimpleTextChoiceQuestionScreen(final Drivetopia app, final SimpleTextChoiceQuestion question, Level level, int userId) {
@@ -84,7 +83,7 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
         fontFactory = new FontFactory();
         fontFactory.initialize();
 
-        this.level =level;
+       // this.level =level;
         this.app = app;
         this.score = score;
         backgroundOffset=0;
@@ -123,7 +122,7 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
 
 
 
-        final TextButton[] answerButtons = new TextButton[4];
+          answerButtons = new TextButton[4];
 
 
 // Create the answer buttons
@@ -150,7 +149,10 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
                         if(level.getTasks().size()!=level.currentTaskNumber()) {
                             level.increaseTaskCounter();
                             level.currentscore+=5;
-                            app.setScreen(level.getTasks().get(level.currentTaskNumber()));
+                           app.setScreen(level.tasks.get(level.currentTaskNumber()-1));
+//                           Gdx.input.setInputProcessor((SimpleTextChoiceQuestionScreen)level.tasks.get(level.currentTaskNumber()-1));
+
+
                         }
                         /**Якщо це останнє питання, відкриває IntermediateScreen з результатами**/
                         else {
@@ -164,7 +166,7 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
                     /**якщо відповідь неправильна**/
                     else {
                         app.setScreen(new IntermediateScreen(app,level,userId,2,true));
-                        //answerButtons[buttonIndex].setText("Ну ти лошара");
+                       // answerButtons[buttonIndex].setText("Ну ти лошара");
 
                     }
                 }
@@ -182,7 +184,7 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
         sprite = new Sprite(new Texture(Gdx.files.internal("white.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(stage);
-        layout = new GlyphLayout(font2, "Level "+ level);
+        layout = new GlyphLayout(font2, "Level "+ level.levelNumb);
 
 
 

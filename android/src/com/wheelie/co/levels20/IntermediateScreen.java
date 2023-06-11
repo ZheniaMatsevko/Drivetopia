@@ -145,7 +145,7 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
         nextButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 /**якщо це екран завершення практики, повертати в головне меню**/
-            if(state!=0)    app.setScreen(new MainMenuScreen(app,2));
+            if(state!=0)    app.setScreen(new MainMenuScreen(app,userId));
             /**якщо це початок практики, запускати перший таск рівня**/
             else app.setScreen(level.getTasks().get(1));
             //else  app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion()));
@@ -184,7 +184,7 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
             case 2:
                 String message;
                 if(failure) message="\nПрактику провалено!\nПеречитайте теорію.\n";
-                else message="\nПрактику успішно\n завершено!\n" + userId + "/" + level.maximumScore;
+                else message="\nПрактику успішно\n завершено!\n" + level.currentscore + "/" + level.maximumScore;
              label.setText(message);
 
 
@@ -244,7 +244,7 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
         Actor hitActor = stage.hit(coord.x,coord.y,true);
         if(hitActor== nextButton){
             System.out.println("Hit " + hitActor.getClass());
-            app.setScreen(new MainMenuScreen(app,2));
+            app.setScreen(new MainMenuScreen(app,userId));
         }
         return true;
     }
