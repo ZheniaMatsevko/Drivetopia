@@ -1,5 +1,8 @@
 package com.wheelie.co.levels20;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
@@ -22,6 +25,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Graphics.GraphicConstants;
+import com.wheelie.co.Graphics.LevelsScreen;
 import com.wheelie.co.Graphics.MainMenuScreen;
 import com.wheelie.co.Tools.FontFactory;
 
@@ -145,7 +149,19 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
         nextButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 /**якщо це екран завершення практики, повертати в головне меню**/
-            if(state!=0)    app.setScreen(new MainMenuScreen(app,userId));
+            if(state!=0)  {
+
+               if(getUserScoreForLevel(app.getDatabase(),userId,level.levelNumb)<level.currentscore && !failure) {
+                   updateUserScoreForLevel(app.getDatabase(),userId, level.levelNumb, level.currentscore);
+               }
+
+
+
+                app.setScreen(new LevelsScreen(app,userId));
+
+
+
+            }
             /**якщо це початок практики, запускати перший таск рівня**/
             else app.setScreen(level.getTasks().get(0));
             //else  app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion()));
@@ -219,6 +235,33 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
+    public void updateUserScoreForLevel(SQLiteDatabase database, int userId, int levelNumb, int newScore) {
+        String query = "UPDATE scores SET score = ? WHERE userId = ? AND levelNumb = ?";
+        Object[] args = {newScore, userId, levelNumb};
+
+        database.execSQL(query, args);
+    }
+
+    public int getUserScoreForLevel(SQLiteDatabase database, int userId, int levelNumb) {
+        String query = "SELECT score FROM scores WHERE userId = ? AND levelNumb = ?";
+        String[] selectionArgs = {String.valueOf(userId), String.valueOf(levelNumb)};
+        int score = 0;
+
+        Cursor cursor = database.rawQuery(query, selectionArgs);
+        if (cursor != null && cursor.moveToFirst()) {
+            int scoreIndex = cursor.getColumnIndex("score");
+            if (scoreIndex != -1) {
+                score = cursor.getInt(scoreIndex);
+            }
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        return score;
+    }
+
 
     @Override
     public boolean keyDown(int keycode) {

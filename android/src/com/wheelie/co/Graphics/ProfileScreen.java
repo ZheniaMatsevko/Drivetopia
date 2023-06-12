@@ -39,7 +39,6 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
     private SpriteBatch batch;
     private Sprite sprite;
     private Stage stage;
-    private int level;
 
     private BitmapFont font;
 
@@ -93,7 +92,6 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         fontFactory = new FontFactory();
         fontFactory.initialize();
 
-        this.level =level;
         this.app = app;
         this.score = userId;
         backgroundOffset=0;
@@ -197,7 +195,7 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
             Log.d("User Info", userInfo);
             PIBBD = userInfo;
             failuresBD = failures;
-            pointsBD = points;
+            pointsBD = calculateTotalScoreForUser(db,userId);
 
             //вирахування віку
             ageBD=calculateAge(dateOfBirth);
@@ -351,6 +349,19 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
             app.setScreen(new MainMenuScreen(app,2));
         }
         return true;
+    }
+
+    public int calculateTotalScoreForUser(SQLiteDatabase database, int userId) {
+        String query = "SELECT SUM(score) FROM scores WHERE userId = ?";
+        int totalScore = 0;
+
+        Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(userId)});
+        if (cursor.moveToFirst()) {
+            totalScore = cursor.getInt(0);
+        }
+        cursor.close();
+
+        return totalScore;
     }
 
     @Override

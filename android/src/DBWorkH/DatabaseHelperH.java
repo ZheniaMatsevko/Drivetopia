@@ -2,6 +2,7 @@ package DBWorkH;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -168,6 +169,20 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
         db.insertWithOnConflict("userInfo", null, userInfoValues2, SQLiteDatabase.CONFLICT_REPLACE);
 
+        for (int userId = 1; userId <= 2; userId++) {
+            for (int levelNumb = 1; levelNumb <= 10; levelNumb++) {
+                ContentValues valuess = new ContentValues();
+                valuess.put("userId", userId);
+                valuess.put("levelNumb", levelNumb);
+                valuess.put("score", 0);
+
+                long rowId = db.insert("scores", null, valuess);
+
+                if (rowId == -1) {
+                    // Failed to insert the row, handle the error if needed
+                }
+            }
+        }
 
 
 
@@ -389,7 +404,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         wrongChoiceValues.clear();
 
         wrongChoiceValues.put("questionId", 5);
-        wrongChoiceValues.put("wrongAnswer", "перавага");
+        wrongChoiceValues.put("wrongAnswer", "перевага");
         db.insert("wrongChoices", null, wrongChoiceValues);
         wrongChoiceValues.clear();
 
@@ -408,4 +423,8 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
 
     }
+
+
+
+
 }

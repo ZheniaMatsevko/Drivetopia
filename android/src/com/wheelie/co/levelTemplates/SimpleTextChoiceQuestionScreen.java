@@ -150,7 +150,6 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
                             level.increaseTaskCounter();
                             level.currentscore+=3;
                            app.setScreen(level.tasks.get(level.currentTaskNumber()-1));
-//                           Gdx.input.setInputProcessor((SimpleTextChoiceQuestionScreen)level.tasks.get(level.currentTaskNumber()-1));
 
 
                         }
@@ -191,7 +190,8 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
 
         textQuestion = new Label(question.getText(),skin);
         textQuestion.setWrap(true);
-        textQuestion.setPosition(0,GraphicConstants.centerY);
+        textQuestion.setWidth(GraphicConstants.screenWidth-GraphicConstants.screenWidth*0.05F);
+        textQuestion.setPosition(GraphicConstants.screenWidth*0.025F,GraphicConstants.centerY + GraphicConstants.rowHeight/2);
         stage.addActor(textQuestion);
 
         sprite = new Sprite(new Texture(Gdx.files.internal("white.jpg")));
