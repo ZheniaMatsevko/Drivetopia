@@ -48,7 +48,7 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputPr
     private boolean isDudePassed = false;
     private float roadLeftEdge, roadRightEdge;
     private Skin skin;
-    private int score;
+    private int userID;
     private float carMovementSpeed = 700f;
     private float carSteerSpeed = 3f;
     private InteractiveCarController carControl;
@@ -56,13 +56,13 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputPr
     private Locale ukrLocale;
     private FontFactory fontFactory;
 
-    public InteractiveCrosswalkScreen(final Drivetopia app, int level, int score) {
+    public InteractiveCrosswalkScreen(final Drivetopia app, int level, int userID) {
         fontFactory = new FontFactory();
         fontFactory.initialize();
 
         this.level = level;
         this.app = app;
-        this.score = score;
+        this.userID = userID;
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Zyana.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -186,7 +186,7 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputPr
         dialog.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 dialog.setVisible(false);
-                app.setScreen(new MainMenuScreen(app, 1, 1));
+                app.setScreen(new MainMenuScreen(app, userID));
                 return true;
             }
         });
