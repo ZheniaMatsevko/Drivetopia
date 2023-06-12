@@ -153,7 +153,7 @@ public class NormalFlashCardQuestionScreen extends ScreenAdapter implements Inpu
 
         exitButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                app.setScreen(new LevelsScreen(app,1,1));
+                app.setScreen(new LevelsScreen(app,1));
             }
         });
 
