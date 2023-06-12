@@ -29,6 +29,7 @@ import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.Tools.MyDialog;
 import com.wheelie.co.levelTemplates.questionTemplates.HardPictureQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalFlashCardQuestion;
+import com.wheelie.co.levels20.Level;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -39,7 +40,7 @@ public class NormalFlashCardQuestionScreen extends ScreenAdapter implements Inpu
     private SpriteBatch batch;
     private Sprite sprite;
     private Stage stage;
-    private int level;
+    private Level level;
 
     private BitmapFont font1;
     private BitmapFont font2;
@@ -49,33 +50,25 @@ public class NormalFlashCardQuestionScreen extends ScreenAdapter implements Inpu
 
 
     private Skin skin2;
-    private int score;
     private Locale enLocale;
     private Locale ukrLocale;
     private FontFactory fontFactory;
     private final GlyphLayout layout;
-    private final GlyphLayout layoutUkr;
-    private TextButton exitButton;
-    private int chosenLevel;
+    //private final GlyphLayout layoutUkr;
     private NormalFlashCardQuestion question;
 
-    public NormalFlashCardQuestionScreen(NormalFlashCardQuestion question1,final Drivetopia app, String title, int level, int score, int chosenLevel) {
+    public NormalFlashCardQuestionScreen(final Drivetopia app,NormalFlashCardQuestion question1,  Level level, int userId) {
 
         question=question1;
-        this.chosenLevel=chosenLevel;
         fontFactory = new FontFactory();
         fontFactory.initialize();
 
         this.level =level;
         this.app = app;
-        this.score = score;
 
         stage = new Stage(new ScreenViewport());
 
-
         batch = new SpriteBatch();
-
-
 
         enLocale = new Locale("en", "US");
         ukrLocale = new Locale("uk", "UA");
@@ -141,31 +134,23 @@ public class NormalFlashCardQuestionScreen extends ScreenAdapter implements Inpu
 
         stage.addActor(table);
 
+        Label taskLabel = new Label(question.getQuestion(),skinForText);
+        taskLabel.setPosition(30,GraphicConstants.rowHeight*0.4f);
+        taskLabel.setSize(GraphicConstants.screenWidth-50,GraphicConstants.rowHeight*1.5f);
+        taskLabel.setWrap(true);
 
 
 
-        //stage.addActor(label);
 
-
-        exitButton = new TextButton("Рятуйте!",skin2);
-        exitButton.setSize(GraphicConstants.colWidth*5,GraphicConstants.rowHeight*0.7F);
-        exitButton.setPosition(GraphicConstants.centerX- exitButton.getWidth()/2,300- exitButton.getHeight()*1.2F);
-
-        exitButton.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y) {
-                app.setScreen(new LevelsScreen(app,1));
-            }
-        });
-
-        stage.addActor(exitButton);
+        stage.addActor(taskLabel);
 
 
 
         sprite = new Sprite(new Texture(Gdx.files.internal("white.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(stage);
-        layout = new GlyphLayout(font2, "Level "+ level);
-        layoutUkr = new GlyphLayout(font3, question.getQuestion());
+        layout = new GlyphLayout(font2, "Level "+ level.levelNumb);
+        //layoutUkr = new GlyphLayout(font3, question.getQuestion());
 
 
     }
@@ -196,7 +181,7 @@ public class NormalFlashCardQuestionScreen extends ScreenAdapter implements Inpu
         sprite.draw(batch);
         //font2.draw(batch, "DRIVETOPIA", Gdx.graphics.getWidth()/6,Gdx.graphics.getHeight()/4*3);
         font2.draw(batch, layout, GraphicConstants.centerX-layout.width/2,GraphicConstants.rowHeight*7.2F);
-        font3.draw(batch, layoutUkr, GraphicConstants.centerX-layoutUkr.width/2,GraphicConstants.rowHeight*1.9F);
+        //font3.draw(batch, layoutUkr, GraphicConstants.centerX-layoutUkr.width/2,GraphicConstants.rowHeight*1.9F);
 
         //fontFactory.getFont(ukrLocale).draw(batch, "Приав", Gdx.graphics.getWidth()/4-20,Gdx.graphics.getHeight()/4*3+200);
 

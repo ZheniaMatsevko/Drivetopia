@@ -98,6 +98,15 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
                 ")";
         db.execSQL(createSimpleChoiceQuestion);
 
+        // Create "normalTextInputQuestion" table
+        String createNormalTextInputQuestion = "CREATE TABLE IF NOT EXISTS normalTextInputQuestion (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "levelNumb INTEGER NOT NULL, " +
+                "text TEXT NOT NULL, " +
+                "answer TEXT NOT NULL " +
+                ")";
+        db.execSQL(createNormalTextInputQuestion);
+
 
         // Create "wrongChoices" table
         //таблиця для збереження інформації про неправильні відповіді у тестах
@@ -197,9 +206,37 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
 
 
+
+
+        ContentValues normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 1);
+        normalInputValues.put("text", "Будівництво спортивних споруд, автозаправних станцій та інших об'єктів на дорогах можливе лише з дозволу державних органів та погодженням з ...");
+        normalInputValues.put("answer", "поліцією");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 1);
+        normalInputValues.put("text", "Чи потрібен дозвіл від центрального органу влади з дорожнього господарства для проведення спортивних змагань на недержавних дорогах?");
+        normalInputValues.put("answer", "ні");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 1);
+        normalInputValues.put("text", "Хто вимагає оплату за видання дозволу на будівництво об’єктів коло доріг?");
+        normalInputValues.put("answer", "Орган дорожнього управління");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 1);
+        normalInputValues.put("text", "Як називаються статті 36-38 Закону України, в яких прописані вимоги використання доріг не за їх призначенням? (без лапок)");
+        normalInputValues.put("answer", "Про автомобільні дороги");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
         /**1) Тестові питання з варіантами відповіді**/
-
-
         /**рівень 1**/
         ContentValues simpleValues = new ContentValues();
         simpleValues.put("levelNumb", 1);

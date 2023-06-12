@@ -21,7 +21,7 @@ public class NormalFlashCardQuestion {
 
     private void initialize(int level) {
         //read from Database
-        question="Пішохідний перехід";
+        question="Пішохідний перехід шрівв сірс ді д іщ іщ щідісдісдоясдояясдодч одо в";
         objects = new LinkedList<>();
         for(int i=1;i<4;i++){
             Texture myTexture = new Texture(Gdx.files.internal("sign"+i+".png"));
