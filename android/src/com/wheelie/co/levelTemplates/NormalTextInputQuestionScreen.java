@@ -30,6 +30,8 @@ import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.Tools.MyDialog;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalRelationsQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalTextInputQuestion;
+import com.wheelie.co.levels20.IntermediateScreen;
+import com.wheelie.co.levels20.Level;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +42,7 @@ public class NormalTextInputQuestionScreen extends ScreenAdapter implements Inpu
     private SpriteBatch batch;
     private Sprite sprite;
     private Stage stage;
-    private int level;
+    private Level level;
 
     private BitmapFont font1;
     private BitmapFont font2;
@@ -56,13 +58,12 @@ public class NormalTextInputQuestionScreen extends ScreenAdapter implements Inpu
     private FontFactory fontFactory;
     private final GlyphLayout layout;
     private TextButton exitButton;
-    private int chosenLevel;
     private NormalTextInputQuestion question;
 
-    public NormalTextInputQuestionScreen(NormalTextInputQuestion question1, final Drivetopia app, String title, int level, int score, int chosenLevel) {
+    public NormalTextInputQuestionScreen(final Drivetopia app, NormalTextInputQuestion question1, Level level  , int userId) {
 
         question=question1;
-        this.chosenLevel=chosenLevel;
+
         fontFactory = new FontFactory();
         fontFactory.initialize();
 
@@ -114,7 +115,7 @@ public class NormalTextInputQuestionScreen extends ScreenAdapter implements Inpu
         textTable.setSize(GraphicConstants.screenWidth - 10, GraphicConstants.screenHeight - GraphicConstants.rowHeight*3.3f);
 
         textTable.add(label).width(GraphicConstants.screenWidth-20).row();
-        textTable.add(answer).width(GraphicConstants.screenWidth/2).height(GraphicConstants.rowHeight*0.5f).row();
+        textTable.add(answer).width(GraphicConstants.screenWidth/1.2f).height(GraphicConstants.rowHeight*0.5f).row();
         stage.addActor(textTable);
 
 
@@ -125,10 +126,41 @@ public class NormalTextInputQuestionScreen extends ScreenAdapter implements Inpu
         exitButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 String newText = answer.getText();
-                if(newText.toLowerCase().equals(question.getAnswer().toLowerCase()))
-                    showDialog("Молодець");
-                else
-                    showDialog("Подумай краще");
+
+                if (newText.toLowerCase().equals(question.getAnswer().toLowerCase())) {
+
+                    /**Якщо це ще не останнє питання рівню, збільшує номер поточного завдання в рівні на 1 і відкриває наступне завдання**/
+                    if(level.getTasks().size()!=level.currentTaskNumber()) {
+                        level.increaseTaskCounter();
+                        level.currentscore+=5;
+                        app.setScreen(level.tasks.get(level.currentTaskNumber()-1));
+
+                    }
+                    /**Якщо це останнє питання, відкриває IntermediateScreen з результатами**/
+                    else {
+                        level.currentscore+=5;
+                        app.setScreen(new IntermediateScreen(app,level,userId,2,false));
+
+                    }
+                }
+                /**якщо відповідь неправильна**/
+                else {
+                    level.failureScoreCount+=5;
+                    if (level.failureScoreCount>=level.failureScore)app.setScreen(new IntermediateScreen(app,level,userId,2,true));
+                    else {
+                        if(level.getTasks().size()==level.currentTaskNumber()){
+                            app.setScreen(new IntermediateScreen(app,level,userId,2,false));
+                        }
+                        else {
+                            level.increaseTaskCounter();
+                            app.setScreen(level.tasks.get(level.currentTaskNumber()-1));
+
+                        }
+
+                    }
+                    // answerButtons[buttonIndex].setText("Ну ти лошара");
+
+                }
 
             }
         });
@@ -139,8 +171,8 @@ public class NormalTextInputQuestionScreen extends ScreenAdapter implements Inpu
 
         sprite = new Sprite(new Texture(Gdx.files.internal("white.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.input.setInputProcessor(stage);
-        layout = new GlyphLayout(font2, "Level "+ level);
+
+        layout = new GlyphLayout(font2, "Level "+ level.levelNumb);
 
 
 
@@ -160,6 +192,7 @@ public class NormalTextInputQuestionScreen extends ScreenAdapter implements Inpu
 
         dialog.setVisible(true);
         dialog.show(stage);
+
     }
 
     /**
@@ -180,6 +213,7 @@ public class NormalTextInputQuestionScreen extends ScreenAdapter implements Inpu
         batch.end();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+        Gdx.input.setInputProcessor(stage);
     }
     @Override
     public boolean keyDown(int keycode) {

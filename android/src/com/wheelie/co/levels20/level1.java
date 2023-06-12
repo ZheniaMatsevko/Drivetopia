@@ -3,7 +3,9 @@ package com.wheelie.co.levels20;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.wheelie.co.Drivetopia;
+import com.wheelie.co.levelTemplates.NormalTextInputQuestionScreen;
 import com.wheelie.co.levelTemplates.SimpleTextChoiceQuestionScreen;
+import com.wheelie.co.levelTemplates.questionTemplates.NormalTextInputQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 
 import java.util.Collections;
@@ -29,7 +31,7 @@ public class level1 extends Level {
         this.tasks=new LinkedList<>();
         this.app = app;
         this.currentscore = 0;
-        this.maximumScore = 15;
+        this.maximumScore = 25;
         this.failureScore = 6;
 
 
@@ -48,6 +50,20 @@ public class level1 extends Level {
              ) {
             tasks.add(new SimpleTextChoiceQuestionScreen(app,q,this,userID));
         }
+
+        LinkedList<NormalTextInputQuestion> inputQuestions = NormalTextInputQuestion.extractNormalTextInputQuestionsFromDB(db,1);
+
+        /**Обираємо 5 серед них**/
+        LinkedList<NormalTextInputQuestion> finalInputQuestions = selectRandomInputQuestions(inputQuestions,2);
+
+        Collections.shuffle(finalInputQuestions);
+        // LinkedList<SimpleTextChoiceQuestionScreen> simpleScreens = new LinkedList<>();
+        /**Створюємо екрани для кожного запитання з вибором і додаємо в список екранів рівня**/
+        for (NormalTextInputQuestion q: finalInputQuestions
+        ) {
+            tasks.add(new NormalTextInputQuestionScreen(app,q,this,userID));
+        }
+        Collections.shuffle(tasks);
 
 
         this.numberOfTasks = tasks.size();
@@ -71,6 +87,30 @@ public class level1 extends Level {
 
     public static LinkedList<SimpleTextChoiceQuestion> selectRandomSimpleChoiceQuestions(LinkedList<SimpleTextChoiceQuestion> questions, int c) {
         LinkedList<SimpleTextChoiceQuestion> selectedQuestions = new LinkedList<>();
+
+        if (questions.size() <= c) {
+            selectedQuestions.addAll(questions);
+        } else {
+            // Create a random number generator
+            Random random = new Random();
+
+            // Create a set to keep track of selected indices
+            Set<Integer> selectedIndices = new HashSet<>();
+
+            // Select 5 random questions
+            while (selectedIndices.size() < c) {
+                int randomIndex = random.nextInt(questions.size());
+                if (!selectedIndices.contains(randomIndex)) {
+                    selectedQuestions.add(questions.get(randomIndex));
+                    selectedIndices.add(randomIndex);
+                }
+            }
+        }
+
+        return selectedQuestions;
+    }
+    public static LinkedList<NormalTextInputQuestion> selectRandomInputQuestions(LinkedList<NormalTextInputQuestion> questions, int c) {
+        LinkedList<NormalTextInputQuestion> selectedQuestions = new LinkedList<>();
 
         if (questions.size() <= c) {
             selectedQuestions.addAll(questions);
