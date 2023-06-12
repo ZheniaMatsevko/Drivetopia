@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DatabaseHelperH extends SQLiteOpenHelper {
     private static DatabaseHelperH instance;
@@ -179,7 +180,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
                 long rowId = db.insert("scores", null, valuess);
 
                 if (rowId == -1) {
-                    // Failed to insert the row, handle the error if needed
+                    Log.d("scores insert failure","-1");// Failed to insert the row, handle the error if needed
                 }
             }
         }

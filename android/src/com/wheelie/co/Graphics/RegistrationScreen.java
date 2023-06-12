@@ -3,6 +3,7 @@ package com.wheelie.co.Graphics;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -281,6 +282,22 @@ public class RegistrationScreen extends ScreenAdapter implements InputProcessor 
         basicValues.put("pass", 0);
 
         db.insert("users",null,basicValues);
+
+
+
+        /**створюємо рядки рівень-кількість балів для нового юзера**/
+        for (int levelNumb = 1; levelNumb <= 10; levelNumb++) {
+            ContentValues valuess = new ContentValues();
+            valuess.put("userId", userId);
+            valuess.put("levelNumb", levelNumb);
+            valuess.put("score", 0);
+
+            long rowId = db.insert("scores", null, valuess);
+
+            if (rowId == -1) {
+                Log.d("scores insert failure","-1");// Failed to insert the row, handle the error if needed
+            }
+        }
 
 
  return userId;
