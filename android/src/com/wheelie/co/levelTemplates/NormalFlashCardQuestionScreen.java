@@ -29,6 +29,7 @@ import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.Tools.MyDialog;
 import com.wheelie.co.levelTemplates.questionTemplates.HardPictureQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalFlashCardQuestion;
+import com.wheelie.co.levels20.IntermediateScreen;
 import com.wheelie.co.levels20.Level;
 
 import java.util.Collections;
@@ -102,16 +103,42 @@ public class NormalFlashCardQuestionScreen extends ScreenAdapter implements Inpu
         for(int i=0;i<3;i++){
             buttons.get(i).addListener(new ClickListener() {
                 public void clicked(InputEvent event, float x, float y) {
-                    System.out.println("Hit");
-                    showDialog("Подумай краще");
-                }
+                        level.failureScoreCount+=5;
+                        if (level.failureScoreCount>=level.failureScore)app.setScreen(new IntermediateScreen(app,level,userId,2,true));
+                        else {
+                            if(level.getTasks().size()==level.currentTaskNumber()){
+                                app.setScreen(new IntermediateScreen(app,level,userId,2,false));
+                            }
+                            else {
+                                level.increaseTaskCounter();
+                                app.setScreen(level.tasks.get(level.currentTaskNumber()-1));
+
+                            }
+
+                        }
+                        // answerButtons[buttonIndex].setText("Ну ти лошара");
+
+                    }
             });
         }
 
         question.getCorrectAnswer().addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
-                System.out.println("Hit");
-                showDialog("Молодець");
+
+                    /**Якщо це ще не останнє питання рівню, збільшує номер поточного завдання в рівні на 1 і відкриває наступне завдання**/
+                    if(level.getTasks().size()!=level.currentTaskNumber()) {
+                        level.increaseTaskCounter();
+                        level.currentscore+=5;
+                        app.setScreen(level.tasks.get(level.currentTaskNumber()-1));
+
+                    }
+                    /**Якщо це останнє питання, відкриває IntermediateScreen з результатами**/
+                    else {
+                        level.currentscore+=5;
+                        app.setScreen(new IntermediateScreen(app,level,userId,2,false));
+
+                    }
+
             }
         });
 
@@ -148,7 +175,7 @@ public class NormalFlashCardQuestionScreen extends ScreenAdapter implements Inpu
 
         sprite = new Sprite(new Texture(Gdx.files.internal("white.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.input.setInputProcessor(stage);
+
         layout = new GlyphLayout(font2, "Level "+ level.levelNumb);
         //layoutUkr = new GlyphLayout(font3, question.getQuestion());
 
@@ -169,6 +196,7 @@ public class NormalFlashCardQuestionScreen extends ScreenAdapter implements Inpu
 
         dialog.setVisible(true);
         dialog.show(stage);
+
     }
 
     /**
@@ -190,6 +218,7 @@ public class NormalFlashCardQuestionScreen extends ScreenAdapter implements Inpu
         batch.end();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+        Gdx.input.setInputProcessor(stage);
     }
     @Override
     public boolean keyDown(int keycode) {

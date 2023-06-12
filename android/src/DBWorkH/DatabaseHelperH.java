@@ -2,7 +2,6 @@ package DBWorkH;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -119,6 +118,26 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
         db.execSQL(createWrongChoices);
 
+        String createFlashCardQuestion = "CREATE TABLE IF NOT EXISTS normalFlashCardQuestion (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "levelNumb INTEGER NOT NULL, " +
+                "text TEXT NOT NULL, " +
+                "answer TEXT NOT NULL, " +
+                "type TEXT NOT NULL " +
+                ")";
+        db.execSQL(createFlashCardQuestion);
+
+
+        // Create "wrongChoices" table
+        //таблиця для збереження інформації про неправильні відповіді у тестах
+        String createImagesForFlashCards = "CREATE TABLE IF NOT EXISTS flashCardImages (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "image TEXT NOT NULL, " +
+                "type TEXT NOT NULL " +
+                ")";
+
+        db.execSQL(createImagesForFlashCards);
+
 
 
 
@@ -203,9 +222,61 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
         /**Заповнюємо інформацію про рівні**/
 
+        ContentValues flashCardValues = new ContentValues();
+        flashCardValues.put("levelNumb", 4);
+        flashCardValues.put("text", "На якій картинці зображений знак 'Пішохідний перехід'?");
+        flashCardValues.put("answer", "sign15.png");
+        flashCardValues.put("type", "sign");
+
+        db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
+
+        flashCardValues = new ContentValues();
+        flashCardValues.put("levelNumb", 4);
+        flashCardValues.put("text", "На якій картинці зображений знак 'Кінець велосипедної смуги'?");
+        flashCardValues.put("answer", "sign1.png");
+        flashCardValues.put("type", "sign");
+
+        db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
+
+        flashCardValues = new ContentValues();
+        flashCardValues.put("levelNumb", 4);
+        flashCardValues.put("text", "На якій картинці зображений знак 'Кінець пішохідної зони'?");
+        flashCardValues.put("answer", "sign14.png");
+        flashCardValues.put("type", "sign");
+
+        db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
+
+        flashCardValues = new ContentValues();
+        flashCardValues.put("levelNumb", 4);
+        flashCardValues.put("text", "На якій картинці зображений знак 'Смуга руху для аварійної зупинки'?");
+        flashCardValues.put("answer", "sign13.png");
+        flashCardValues.put("type", "sign");
+
+        db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
+
+        flashCardValues = new ContentValues();
+        flashCardValues.put("levelNumb", 4);
+        flashCardValues.put("text", "На якій картинці зображений знак 'Дорога з одностороннім рухом'?");
+        flashCardValues.put("answer", "sign11.png");
+        flashCardValues.put("type", "sign");
+
+        db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
+
+        flashCardValues = new ContentValues();
+        flashCardValues.put("levelNumb", 4);
+        flashCardValues.put("text", "На якій картинці зображений знак 'Дорога із зустрічною велосипедною смугою'?");
+        flashCardValues.put("answer", "sign10.png");
+        flashCardValues.put("type", "sign");
+
+        db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
 
 
-
+        for(int i=1;i<16;i++){
+            ContentValues flashCardImageValues = new ContentValues();
+            flashCardImageValues.put("image", "sign"+i+".png");
+            flashCardImageValues.put("type", "sign");
+            db.insert(DBConstants.FLASHCARD_IMAGES_TABLE, null, flashCardImageValues);
+        }
 
 
         ContentValues normalInputValues = new ContentValues();
