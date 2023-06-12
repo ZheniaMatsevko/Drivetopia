@@ -10,31 +10,41 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Graphics.GraphicConstants;
 import com.wheelie.co.Graphics.LevelsScreen;
+import com.wheelie.co.Graphics.MainMenuScreen;
+import com.wheelie.co.Graphics.ProfileScreen;
+import com.wheelie.co.Graphics.TheoryScreen;
+import com.wheelie.co.Tools.FileService;
 import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.Tools.MyDialog;
+import com.wheelie.co.Tools.TheoryScrollPane;
 import com.wheelie.co.levelTemplates.questionTemplates.HardPictureQuestion;
-import com.wheelie.co.levelTemplates.questionTemplates.NormalFlashCardQuestion;
+import com.wheelie.co.levels20.IntermediateScreen;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Locale;
 
-public class NormalFlashCardQuestionScreen extends ScreenAdapter implements InputProcessor {
+public class HardPictureQuestionScreen extends ScreenAdapter implements InputProcessor {
+
     Drivetopia app;
     private SpriteBatch batch;
     private Sprite sprite;
@@ -54,12 +64,13 @@ public class NormalFlashCardQuestionScreen extends ScreenAdapter implements Inpu
     private Locale ukrLocale;
     private FontFactory fontFactory;
     private final GlyphLayout layout;
-    private final GlyphLayout layoutUkr;
     private TextButton exitButton;
     private int chosenLevel;
-    private NormalFlashCardQuestion question;
+    private HardPictureQuestion question;
 
-    public NormalFlashCardQuestionScreen(NormalFlashCardQuestion question1,final Drivetopia app, String title, int level, int score, int chosenLevel) {
+
+
+    public HardPictureQuestionScreen(HardPictureQuestion question1,final Drivetopia app, String title, int level, int score, int chosenLevel) {
 
         question=question1;
         this.chosenLevel=chosenLevel;
@@ -102,17 +113,38 @@ public class NormalFlashCardQuestionScreen extends ScreenAdapter implements Inpu
 
         skin2.load(Gdx.files.internal("skin-composer-ui.json"));
 
+        //ScrollPane scrollPane  = new ScrollPane(null);
+        //scrollPane.setBounds(10, 10, GraphicConstants.screenWidth - 20, GraphicConstants.screenHeight - 20);
+        Image image = new Image(new Texture(question.getBackgroundImagePath()));
+        image.setSize(2000f,1000);
+
         String text = question.getQuestion();
 
+        Label label = new Label(text, skinForText);
+        label.setWrap(true);
+
+
+        Table table = new Table();
+        table.defaults().pad(10,10,150,10);
+        table.setPosition(10, 10); // Replace x and y with the desired coordinates
+        table.setSize(GraphicConstants.screenWidth, GraphicConstants.screenHeight);
+
+        table.add(image).width(GraphicConstants.screenWidth-20).row();
+        table.add(label).width(GraphicConstants.screenWidth-20).row();
+        //scrollPane.setActor(table);
+        //scrollPane.setScrollingDisabled(true, false); // Enable vertical scrolling
+
+        stage.addActor(table);
 
         LinkedList<ImageButton> buttons = question.getObjects();
-        for(int i=0;i<3;i++){
-            buttons.get(i).addListener(new ClickListener() {
-                public void clicked(InputEvent event, float x, float y) {
+        for(ImageButton b : buttons){
+            b.addListener(new ClickListener() {
+                public void clicked(InputEvent event,float x, float y) {
                     System.out.println("Hit");
                     showDialog("Подумай краще");
                 }
             });
+            stage.addActor(b);
         }
 
         question.getCorrectAnswer().addListener(new ClickListener() {
@@ -122,30 +154,7 @@ public class NormalFlashCardQuestionScreen extends ScreenAdapter implements Inpu
             }
         });
 
-        Collections.shuffle(buttons);
-
-        Table table = new Table();
-        table.defaults().pad(10,10,150,10);
-        table.setPosition(10, 10); // Replace x and y with the desired coordinates
-        table.setSize(GraphicConstants.screenWidth, GraphicConstants.screenHeight);
-
-
-        table.add(buttons.get(0));
-        table.add(buttons.get(1));
-        table.row();
-        table.add(buttons.get(2));
-        table.add(buttons.get(3));
-        table.row();
-        //table.add(label).padLeft(50f).padTop(20).row();
-
-
-        stage.addActor(table);
-
-
-
-
-        //stage.addActor(label);
-
+        stage.addActor(question.getCorrectAnswer());
 
         exitButton = new TextButton("Рятуйте!",skin2);
         exitButton.setSize(GraphicConstants.colWidth*5,GraphicConstants.rowHeight*0.7F);
@@ -165,7 +174,7 @@ public class NormalFlashCardQuestionScreen extends ScreenAdapter implements Inpu
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(stage);
         layout = new GlyphLayout(font2, "Level "+ level);
-        layoutUkr = new GlyphLayout(font3, question.getQuestion());
+
 
 
     }
@@ -196,7 +205,6 @@ public class NormalFlashCardQuestionScreen extends ScreenAdapter implements Inpu
         sprite.draw(batch);
         //font2.draw(batch, "DRIVETOPIA", Gdx.graphics.getWidth()/6,Gdx.graphics.getHeight()/4*3);
         font2.draw(batch, layout, GraphicConstants.centerX-layout.width/2,GraphicConstants.rowHeight*7.2F);
-        font3.draw(batch, layoutUkr, GraphicConstants.centerX-layoutUkr.width/2,GraphicConstants.rowHeight*1.9F);
 
         //fontFactory.getFont(ukrLocale).draw(batch, "Приав", Gdx.graphics.getWidth()/4-20,Gdx.graphics.getHeight()/4*3+200);
 
