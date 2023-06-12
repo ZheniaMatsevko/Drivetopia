@@ -6,12 +6,14 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -20,10 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Tools.Car;
@@ -33,9 +32,10 @@ import com.wheelie.co.Tools.MyDialog;
 
 import java.util.Locale;
 
-public class InteractiveTrafficScreen extends ScreenAdapter implements InputProcessor {
+public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputProcessor {
     Drivetopia app;
     private SpriteBatch batch;
+    private ShapeRenderer shapes;
     private Sprite sprite;
     private Stage stage;
     private int level;
@@ -43,28 +43,26 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
     private BitmapFont font;
     private BitmapFont font2;
     private BitmapFont font3;
-
     private Car car;
-    private TrafficLight light;
-    private Texture red, yellow, green;
+    private Pedestrian justSomeDude;
+    private boolean isDudePassed = false;
+    private float roadLeftEdge, roadRightEdge;
     private Skin skin;
-    private int userID;
+    private int score;
     private float carMovementSpeed = 700f;
     private float carSteerSpeed = 3f;
-    private static final float TRAFFIC_INTERVAL = 5F;
     private InteractiveCarController carControl;
-    private boolean isLightPassed = false;
     private Locale enLocale;
     private Locale ukrLocale;
     private FontFactory fontFactory;
 
-    public InteractiveTrafficScreen(final Drivetopia app, int level, int userID) {
+    public InteractiveCrosswalkScreen(final Drivetopia app, int level, int score) {
         fontFactory = new FontFactory();
         fontFactory.initialize();
 
         this.level = level;
         this.app = app;
-        this.userID = userID;
+        this.score = score;
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Zyana.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -78,6 +76,8 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
 
         batch = new SpriteBatch();
 
+        shapes = new ShapeRenderer();
+
         // Initialize locales
         enLocale = new Locale("en", "US");
         ukrLocale = new Locale("uk", "UA");
@@ -89,30 +89,39 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         skin.add("font", font3);
         skin.load(Gdx.files.internal("skin-composer-ui.json"));
 
-        // Setting up Traffic Light (idk what i'm doiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiing)
-        green = new Texture(Gdx.files.internal("traffic-green.png"));
-        yellow = new Texture(Gdx.files.internal("traffic-yellow.png"));
-        red = new Texture(Gdx.files.internal("traffic-red.png"));
-        light = new TrafficLight(green, yellow, red, TRAFFIC_INTERVAL);
-        stage.addActor(light);
-        light.setBounds(GraphicConstants.centerX+light.getCurrent().getWidth()*1.5f, GraphicConstants.centerY-light.getCurrent().getHeight()*0.75f);
-
         // Drawing and positioning the background
-        sprite = new Sprite(new Texture(Gdx.files.internal("road.png")));
-        sprite.setSize(Gdx.graphics.getWidth()*1.5f, Gdx.graphics.getHeight()*1.5f);
-        sprite.setPosition((Gdx.graphics.getWidth()/2.85f)*(-1), 0);
+        sprite = new Sprite(new Texture(Gdx.files.internal("crosswalk.png")));
+        sprite.setSize(sprite.getWidth()*2, sprite.getHeight()*2);
+        sprite.setPosition(-GraphicConstants.centerX/1.5f, GraphicConstants.screenHeight/1.5f);
+        sprite.setRotation(270);
+        roadLeftEdge = 0;
+        roadRightEdge = sprite.getRegionWidth()/1.5f;
+        System.out.println(roadLeftEdge + " " + roadRightEdge);
 
-        // Drawing and positioning the car
+        Texture guyTexture = new Texture(Gdx.files.internal("justSomeGuy.png"));
+        TextureRegion guyReg = new TextureRegion(guyTexture);
+        justSomeDude = new Pedestrian(guyReg, roadLeftEdge, roadRightEdge);
+        float pedestrianWidth = Gdx.graphics.getWidth() / 7.5f;
+        float pedestrianHeight = Gdx.graphics.getHeight() / 7.5f;
+        justSomeDude.setSize(pedestrianWidth, pedestrianHeight);
+        justSomeDude.setPosition(0, GraphicConstants.centerY * 1.05f);
+        justSomeDude.setPedestrianBounds(justSomeDude.getX(), justSomeDude.getY(), pedestrianWidth, pedestrianHeight);
+
+        stage.addActor(justSomeDude);
+
         Texture carTexture = new Texture(Gdx.files.internal("car.png"));
         TextureRegion carReg = new TextureRegion(carTexture);
         car = new Car(carReg);
-        car.setPosition(GraphicConstants.centerX-(car.getWidth()/5), 0);
-        car.setSize(Gdx.graphics.getWidth()*0.15f, Gdx.graphics.getHeight()*0.15f);
+        car.setPosition(GraphicConstants.centerX - (car.getWidth() / 5), 0);
+        float carWidth = Gdx.graphics.getWidth() * 0.15f;
+        float carHeight = Gdx.graphics.getHeight() * 0.15f;
+        car.setSize(carWidth, carHeight);
+        car.setCarBounds(car.getX(), car.getY(), carWidth, carHeight);
 
         stage.addActor(car);
 
 
-        // Drawing and positioning the button to move the car
+        // Drawing and positioning the buttons to move the car
         carControl = new InteractiveCarController();
         stage.addActor(carControl);
         Gdx.input.setInputProcessor(stage);
@@ -120,43 +129,29 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(86/255f, 168/255f, 50/255f, 1);
+        Gdx.gl.glClearColor(166/255f, 166/255f, 166/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         sprite.draw(batch);
 
         processCarMovement();
 
-        incrementTrafficTimer(delta);
-
-        batch.draw(light.current, GraphicConstants.centerX+light.getCurrent().getWidth()*1.5f, GraphicConstants.centerY-light.getCurrent().getHeight()*0.75f);
-
-        verifyCarPassedTraffic();
+        checkPedestrianCollision();
 
         batch.end();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
 
-    private void verifyCarPassedTraffic() {
-        car.setCarBounds(car.getX(), car.getY(), car.getWidth(), car.getHeight());
+    private void checkPedestrianCollision() {
+        justSomeDude.setPedestrianBounds(justSomeDude.getX(), justSomeDude.getY(), justSomeDude.getWidth(), justSomeDude.getHeight());
 
-        if (car.getCarBounds().getY() >= light.getBounds().getY() && light.getCurrent() == light.green && !isLightPassed) {
+        if (car.getCarBounds().overlaps(justSomeDude.getPedestrianBounds()) && !isDudePassed) {
+            showDialog("як ти смієш");
+            isDudePassed = true;
+        } else if (car.getY() >= justSomeDude.getY() + justSomeDude.getHeight() && !isDudePassed) {
             showDialog("молодець!");
-            isLightPassed = true;
-        } else if (car.getCarBounds().getY() >= light.getBounds().getY() && light.getCurrent() != light.green && !isLightPassed) {
-            showDialog("шо ти робиш");
-            isLightPassed = true;
-        } else if (car.getCarBounds().getY() < light.getBounds().getY()) {
-            isLightPassed = false;
-        }
-    }
-
-    private void incrementTrafficTimer(float delta) {
-        light.timer += delta;
-        if(light.timer >= light.interval) {
-            light.timer = 0f;
-            light.updateTrafficLight(TRAFFIC_INTERVAL);
+            isDudePassed = true;
         }
     }
 
@@ -164,12 +159,14 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         float delta = Gdx.graphics.getDeltaTime();
         Vector2 direction = new Vector2(-MathUtils.sinDeg(car.getRotation()), MathUtils.cosDeg(car.getRotation())).nor();
 
-        if(carControl.isMovingForward()) {
+        if (carControl.isMovingForward()) {
+            car.setCarBounds(car.getX() + direction.x * carMovementSpeed * delta, car.getY() + direction.y * carMovementSpeed * delta, car.getWidth(), car.getHeight());
             car.setX(car.getX() + direction.x * carMovementSpeed * delta);
             car.setY(car.getY() + direction.y * carMovementSpeed * delta);
-        } else if(carControl.isMovingBackward()) {
-            car.setX(car.getX() - direction.x * (carMovementSpeed*0.5f) * delta);
-            car.setY(car.getY() - direction.y * (carMovementSpeed*0.5f) * delta);
+        } else if (carControl.isMovingBackward()) {
+            car.setCarBounds(car.getX() - direction.x * (carMovementSpeed * 0.5f) * delta, car.getY() - direction.y * (carMovementSpeed * 0.5f) * delta, car.getWidth(), car.getHeight());
+            car.setX(car.getX() - direction.x * (carMovementSpeed * 0.5f) * delta);
+            car.setY(car.getY() - direction.y * (carMovementSpeed * 0.5f) * delta);
         }
 
         if(carControl.isTurningLeft()) {
@@ -187,11 +184,11 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         dialog.setColor(Color.BLACK);
 
         dialog.addListener(new InputListener() {
-           public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-               dialog.setVisible(false);
-               app.setScreen(new MainMenuScreen(app, userID));
-               return true;
-           }
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                dialog.setVisible(false);
+                app.setScreen(new MainMenuScreen(app, 1, 1));
+                return true;
+            }
         });
 
         dialog.setVisible(true);
@@ -200,11 +197,11 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
 
     @Override
     public boolean keyDown(int keycode) {
-        return false;
+        return true;
     }
     @Override
     public boolean keyUp(int keycode) {
-        return false;
+        return true;
     }
     @Override
     public boolean keyTyped(char character) {
@@ -212,11 +209,11 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
     }
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return true;
+        return false;
     }
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return true;
+        return false;
     }
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
@@ -232,56 +229,61 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
     }
 }
 
-class TrafficLight extends Actor {
-    Texture green, yellow, red, current, previous;
-    float interval, timer;
-    boolean isGreen;
-    Rectangle bounds;
+class Pedestrian extends Actor {
+    private boolean isGoingRight;
+    private float moveSpeed;
+    private float roadLeftEdge, roadRightEdge;
+    private TextureRegion region;
+    private Image img;
+    private Rectangle bounds;
+    private Texture tempTexture;
 
-    public TrafficLight(Texture green, Texture yellow, Texture red, float interval) {
-        this.green = green;
-        this.yellow = yellow;
-        this.red = red;
-        this.interval = interval;
+    public Pedestrian(TextureRegion pedestrianTexture, float leftEdge, float rightEdge) {
+        this.region = pedestrianTexture;
+        this.img = new Image(this.region);
 
-        this.timer = 0f;
-        this.isGreen = false;
-        this.current = red;
-        this.previous = null;
-        this.bounds = new Rectangle(this.getX(), this.getY(), this.getCurrent().getWidth(), this.getCurrent().getHeight());
+        tempTexture = region.getTexture();
+        this.bounds = new Rectangle(0, 0, tempTexture.getWidth(), tempTexture.getHeight());
+        //this.bounds = new Rectangle();
+
+        isGoingRight = true;
+        moveSpeed = 200f;
+        roadLeftEdge = leftEdge; roadRightEdge = rightEdge;
+
+        this.setPosition(0, 0);
+        this.setSize(this.img.getImageWidth(), this.img.getImageHeight());
     }
 
-    void updateTrafficLight(float interval) {
-        if (current == null || current == red) {
-            previous = current;
-            current = yellow;
-            this.interval = interval * 0.25f;
-        } else if (current == yellow) {
-            if (previous == red) {
-                previous = current;
-                current = green;
-                this.interval = interval;
-            } else if (previous == green) {
-                previous = current;
-                current = red;
-                this.interval = interval;
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+
+        float movementAmount = moveSpeed * delta;
+        if (isGoingRight) {
+            moveBy(movementAmount, 0);
+            if (getX() + getWidth() > roadRightEdge) {
+                isGoingRight = false;
             }
-        } else if (current == green) {
-            previous = current;
-            current = yellow;
-            this.interval = interval * 0.5f;
+        } else {
+            moveBy(-movementAmount, 0);
+            if (getX() < roadLeftEdge) {
+                isGoingRight = true;
+            }
         }
-
-    }
-    void setBounds(float x, float y) {
-        this.bounds = new Rectangle(x, y, this.getCurrent().getWidth(), this.getCurrent().getHeight());
     }
 
-    Rectangle getBounds() {
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        Color color = getColor();
+        batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
+        batch.draw(region, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+    }
+
+    public Rectangle getPedestrianBounds() {
         return bounds;
     }
 
-    Texture getCurrent() {
-        return current;
+    public void setPedestrianBounds(float x, float y, float width, float height) {
+        this.bounds = new Rectangle(x, y, width, height);
     }
 }
