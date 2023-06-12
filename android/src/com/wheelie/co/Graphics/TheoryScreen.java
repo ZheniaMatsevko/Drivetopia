@@ -29,7 +29,6 @@ public class TheoryScreen extends ScreenAdapter implements InputProcessor {
     private SpriteBatch batch;
     private Sprite sprite;
     private Stage stage;
-    private int level;
 
     private BitmapFont font;
 
@@ -40,7 +39,7 @@ public class TheoryScreen extends ScreenAdapter implements InputProcessor {
     private Skin skin;
 
     private Skin skin2;
-    private int score;
+    private int userID;
     private Locale enLocale;
     private Locale ukrLocale;
     private FontFactory fontFactory;
@@ -50,15 +49,14 @@ public class TheoryScreen extends ScreenAdapter implements InputProcessor {
 
 
 
-    public TheoryScreen(final Drivetopia app, String title, int level, int score, int chosenLevel) {
+    public TheoryScreen(final Drivetopia app, String title, int userID, int chosenLevel) {
         // Initialize FontFactory
         this.chosenLevel=chosenLevel;
         fontFactory = new FontFactory();
         fontFactory.initialize();
 
-        this.level =level;
         this.app = app;
-        this.score = score;
+        this.userID = userID;
 
         stage = new Stage(new ScreenViewport());
 
@@ -104,7 +102,7 @@ public class TheoryScreen extends ScreenAdapter implements InputProcessor {
 
         backButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                app.setScreen(new LevelsScreen(app,1));
+                app.setScreen(new LevelsScreen(app,userID));
             }
         });
 
@@ -161,12 +159,12 @@ public class TheoryScreen extends ScreenAdapter implements InputProcessor {
      */
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector2 coord = stage.screenToStageCoordinates(new Vector2((float)screenX,(float) screenY));
+      /**  Vector2 coord = stage.screenToStageCoordinates(new Vector2((float)screenX,(float) screenY));
         Actor hitActor = stage.hit(coord.x,coord.y,true);
         if(hitActor== backButton){
             System.out.println("Hit " + hitActor.getClass());
             app.setScreen(new MainMenuScreen(app,2));
-        }
+        }**/
         return true;
     }
 

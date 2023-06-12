@@ -46,7 +46,7 @@ public class AboutScreen extends ScreenAdapter implements InputProcessor {
     private Skin skin;
 
     private Skin skin2;
-    private int score;
+    private int userID;
     private int backgroundOffset;
     private Locale enLocale;
     private Locale ukrLocale;
@@ -72,14 +72,13 @@ public class AboutScreen extends ScreenAdapter implements InputProcessor {
 
 
 
-    public AboutScreen(final Drivetopia app, int level, int score) {
+    public AboutScreen(final Drivetopia app, int userID) {
         // Initialize FontFactory
         fontFactory = new FontFactory();
         fontFactory.initialize();
 
-        this.level =level;
         this.app = app;
-        this.score = score;
+        this.userID = userID;
         backgroundOffset=0;
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Zyana.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -147,7 +146,7 @@ public class AboutScreen extends ScreenAdapter implements InputProcessor {
 
         backButton.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new MainMenuScreen(app,2));
+                app.setScreen(new MainMenuScreen(app,userID));
             }
         });
 
@@ -213,7 +212,7 @@ public class AboutScreen extends ScreenAdapter implements InputProcessor {
         Actor hitActor = stage.hit(coord.x,coord.y,true);
         if(hitActor== backButton){
             System.out.println("Hit " + hitActor.getClass());
-            app.setScreen(new MainMenuScreen(app,2));
+            app.setScreen(new MainMenuScreen(app,userID));
         }
         return true;
     }

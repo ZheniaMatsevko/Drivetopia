@@ -43,7 +43,7 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
     private Texture red, yellow, green;
     private TextButton moveButton;
     private Skin skin;
-    private int score;
+    private int userID;
     private float carSpeed = 700f;
     private Rectangle carBounds, trafficLightBounds;
     private static final float TRAFFIC_INTERVAL = 5F;
@@ -54,13 +54,13 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
 
     private FontFactory fontFactory;
 
-    public InteractiveTrafficScreen(final Drivetopia app, int level, int score) {
+    public InteractiveTrafficScreen(final Drivetopia app, int level, int userID) {
         fontFactory = new FontFactory();
         fontFactory.initialize();
 
         this.level = level;
         this.app = app;
-        this.score = score;
+        this.userID = userID;
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Zyana.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -180,7 +180,7 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         dialog.addListener(new InputListener() {
            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                dialog.setVisible(false);
-               app.setScreen(new MainMenuScreen(app, 2));
+               app.setScreen(new MainMenuScreen(app, userID));
                return true;
            }
         });
