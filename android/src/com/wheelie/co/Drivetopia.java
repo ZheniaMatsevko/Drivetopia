@@ -12,6 +12,7 @@ import com.wheelie.co.Graphics.BeginningScreen;
 import com.wheelie.co.Graphics.LevelsScreen;
 import com.wheelie.co.Graphics.MainMenuScreen;
 import com.wheelie.co.Graphics.RegistrationScreen;
+import com.wheelie.co.Graphics.UserEditScreen;
 import com.wheelie.co.levelTemplates.SimpleTextChoiceQuestionScreen;
 import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 import com.wheelie.co.levels20.IntermediateScreen;
@@ -66,7 +67,8 @@ public class Drivetopia extends Game {
 		//setScreen(new RegistrationScreen(this));
 
 		//setScreen(new AuthorizationScreen(this));
-		setScreen(new MainMenuScreen(this,1));
+		//setScreen(new MainMenuScreen(this,1));
+		setScreen(new UserEditScreen(this, 1));
 		//setScreen(new BeginningScreen(this));
 //	setScreen(new ProfileScreen(this,1,1));
 	//setScreen(new SimpleTextChoiceQuestionScreen(this,1,q));
