@@ -39,6 +39,7 @@ import com.wheelie.co.Tools.MyDialog;
 import com.wheelie.co.Tools.TheoryScrollPane;
 import com.wheelie.co.levelTemplates.questionTemplates.HardPictureQuestion;
 import com.wheelie.co.levels20.IntermediateScreen;
+import com.wheelie.co.levels20.Level;
 
 import java.util.LinkedList;
 import java.util.Locale;
@@ -49,7 +50,7 @@ public class HardPictureQuestionScreen extends ScreenAdapter implements InputPro
     private SpriteBatch batch;
     private Sprite sprite;
     private Stage stage;
-    private int level;
+    private Level level;
 
     private BitmapFont font1;
     private BitmapFont font2;
@@ -59,27 +60,23 @@ public class HardPictureQuestionScreen extends ScreenAdapter implements InputPro
 
 
     private Skin skin2;
-    private int score;
     private Locale enLocale;
     private Locale ukrLocale;
     private FontFactory fontFactory;
     private final GlyphLayout layout;
     private TextButton exitButton;
-    private int chosenLevel;
     private HardPictureQuestion question;
 
 
 
-    public HardPictureQuestionScreen(HardPictureQuestion question1,final Drivetopia app, String title, int level, int score, int chosenLevel) {
+    public HardPictureQuestionScreen(final Drivetopia app, HardPictureQuestion question1, Level level, int userId) {
 
         question=question1;
-        this.chosenLevel=chosenLevel;
         fontFactory = new FontFactory();
         fontFactory.initialize();
 
         this.level =level;
         this.app = app;
-        this.score = score;
 
         stage = new Stage(new ScreenViewport());
 
@@ -156,7 +153,7 @@ public class HardPictureQuestionScreen extends ScreenAdapter implements InputPro
 
         stage.addActor(question.getCorrectAnswer());
 
-        exitButton = new TextButton("Рятуйте!",skin2);
+        exitButton = new TextButton("Завершити",skin2);
         exitButton.setSize(GraphicConstants.colWidth*5,GraphicConstants.rowHeight*0.7F);
         exitButton.setPosition(GraphicConstants.centerX- exitButton.getWidth()/2,300- exitButton.getHeight()*1.2F);
 
@@ -172,8 +169,8 @@ public class HardPictureQuestionScreen extends ScreenAdapter implements InputPro
 
         sprite = new Sprite(new Texture(Gdx.files.internal("white.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.input.setInputProcessor(stage);
-        layout = new GlyphLayout(font2, "Level "+ level);
+
+        layout = new GlyphLayout(font2, "Level "+ level.levelNumb);
 
 
 
@@ -213,6 +210,7 @@ public class HardPictureQuestionScreen extends ScreenAdapter implements InputPro
         batch.end();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+        Gdx.input.setInputProcessor(stage);
     }
     @Override
     public boolean keyDown(int keycode) {
