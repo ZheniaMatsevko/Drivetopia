@@ -147,6 +147,7 @@ public class AuthorizationScreen extends ScreenAdapter implements InputProcessor
              else {
                  wrongCredMes.setVisible(false);
                  app.setScreen(new MainMenuScreen(app,i));
+                 dispose();
              }
             }
         });

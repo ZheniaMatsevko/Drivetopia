@@ -150,14 +150,14 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
                             level.increaseTaskCounter();
                             level.currentscore+=3;
                            app.setScreen(level.tasks.get(level.currentTaskNumber()-1));
-
+dispose();
 
                         }
                         /**Якщо це останнє питання, відкриває IntermediateScreen з результатами**/
                         else {
                             level.currentscore+=3;
                             app.setScreen(new IntermediateScreen(app,level,userId,2,false));
-
+dispose();
                         }
 
 
@@ -170,11 +170,12 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
                        else {
                            if(level.getTasks().size()==level.currentTaskNumber()){
                                app.setScreen(new IntermediateScreen(app,level,userId,2,false));
+                          dispose();
                            }
                            else {
                                level.increaseTaskCounter();
                                app.setScreen(level.tasks.get(level.currentTaskNumber()-1));
-
+dispose();
                            }
 
                        }

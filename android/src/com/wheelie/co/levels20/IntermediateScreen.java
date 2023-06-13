@@ -158,12 +158,13 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
 
 
                 app.setScreen(new LevelsScreen(app,userId));
-
+dispose();
 
 
             }
             /**якщо це початок практики, запускати перший таск рівня**/
-            else app.setScreen(level.getTasks().get(0));
+            else {app.setScreen(level.getTasks().get(0));
+            dispose();}
             //else  app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion()));
             }
         });

@@ -91,6 +91,7 @@ public class BeginningScreen extends ScreenAdapter implements InputProcessor {
             public void clicked(InputEvent event,float x, float y) {
                // app.setScreen(new MainMenuScreen(app,2));
                 app.setScreen(new AuthorizationScreen(app));
+                dispose();
             }
         });
 
@@ -102,6 +103,7 @@ public class BeginningScreen extends ScreenAdapter implements InputProcessor {
         regBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
                 app.setScreen(new RegistrationScreen(app));
+                dispose();
             }
         });
 

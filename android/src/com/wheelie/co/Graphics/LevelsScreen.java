@@ -110,6 +110,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         mainMenuBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
                 app.setScreen(new MainMenuScreen(app,userID));
+                dispose();
             }
         });
         stage.addActor(mainMenuBtn);
@@ -235,7 +236,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
             public void changed(ChangeEvent event, Actor actor) {
                 dialog.hide();
                 app.setScreen(new TheoryScreen(app,dialog.getMessage(),userID,dialog.getLevel()));
-
+                dispose();
             }
         });
 
@@ -247,18 +248,23 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
             public void changed(ChangeEvent event, Actor actor) {
                 if(dialog.getLevel()==1) {
                     app.setScreen(new IntermediateScreen(app,new level1(app,userID),userID,0,false));
+                    dispose();
                 }
                 if(dialog.getLevel()==2) {
                     app.setScreen(new IntermediateScreen(app,new level2(app,userID),userID,0,false));
+                    dispose();
                 }
                 if(dialog.getLevel()==4) {
                     app.setScreen(new IntermediateScreen(app,new level4(app,userID),userID,0,false));
+                    dispose();
                 }
                 if(dialog.getLevel()==5) {
                     app.setScreen(new IntermediateScreen(app,new level5(app,userID),userID,0,false));
+                    dispose();
                 }
                 if(dialog.getLevel()==12) {
                     app.setScreen(new IntermediateScreen(app,new level12(app,userID),userID,0,false));
+               dispose();
                 }
                 //    app.setScreen(new IntermediateScreen(app,new level1(app,userID),userID,0,false));
                    // app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion()));

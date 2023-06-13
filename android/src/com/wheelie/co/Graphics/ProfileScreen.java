@@ -142,6 +142,7 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         editButton.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
                 app.setScreen(new UserEditScreen(app,userId));
+                dispose();
             }
         });
 
@@ -157,6 +158,7 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         backButton.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
                 app.setScreen(new MainMenuScreen(app,userId));
+                dispose();
             }
         });
 

@@ -134,13 +134,13 @@ public class NormalTextInputQuestionScreen extends ScreenAdapter implements Inpu
                         level.increaseTaskCounter();
                         level.currentscore+=5;
                         app.setScreen(level.tasks.get(level.currentTaskNumber()-1));
-
+dispose();
                     }
                     /**Якщо це останнє питання, відкриває IntermediateScreen з результатами**/
                     else {
                         level.currentscore+=5;
                         app.setScreen(new IntermediateScreen(app,level,userId,2,false));
-
+dispose();
                     }
                 }
                 /**якщо відповідь неправильна**/
@@ -150,11 +150,12 @@ public class NormalTextInputQuestionScreen extends ScreenAdapter implements Inpu
                     else {
                         if(level.getTasks().size()==level.currentTaskNumber()){
                             app.setScreen(new IntermediateScreen(app,level,userId,2,false));
+                       dispose();
                         }
                         else {
                             level.increaseTaskCounter();
                             app.setScreen(level.tasks.get(level.currentTaskNumber()-1));
-
+dispose();
                         }
 
                     }

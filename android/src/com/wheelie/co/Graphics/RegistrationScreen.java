@@ -207,6 +207,7 @@ public class RegistrationScreen extends ScreenAdapter implements InputProcessor 
             else {
                    int i = AuthorizationScreen.getCredentialsId(emailField.getText(),passwordField.getText(),db);
                     app.setScreen(new MainMenuScreen(app,i));
+                    dispose();
 
                 }
             }

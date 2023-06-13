@@ -147,6 +147,7 @@ public class AboutScreen extends ScreenAdapter implements InputProcessor {
         backButton.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
                 app.setScreen(new MainMenuScreen(app,userID));
+                dispose();
             }
         });
 

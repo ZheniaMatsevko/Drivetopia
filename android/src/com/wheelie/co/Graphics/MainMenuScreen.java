@@ -99,6 +99,7 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         startBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
                 app.setScreen(new LevelsScreen(app,userId));
+                dispose();
             }
         });
         stage.addActor(startBtn);
@@ -112,6 +113,7 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         aboutBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
                 app.setScreen(new AboutScreen(app,userId));
+                dispose();
             }
         });
         stage.addActor(aboutBtn);
@@ -123,6 +125,7 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         finalTestBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
                 app.setScreen(new InteractiveTrafficScreen(app,1,1));
+       dispose();
             }
         });
         stage.addActor(finalTestBtn);
@@ -134,6 +137,7 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         exitBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
                 app.setScreen(new BeginningScreen(app));
+                dispose();
             }
         });
         stage.addActor(exitBtn);
@@ -148,6 +152,7 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         profileBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
                 app.setScreen(new ProfileScreen(app,userId));
+                dispose();
             }
         });
         stage.addActor(profileBtn);

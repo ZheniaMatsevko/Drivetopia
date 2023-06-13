@@ -181,6 +181,7 @@ public class UserEditScreen extends ScreenAdapter implements InputProcessor {
         backButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 app.setScreen(new ProfileScreen(app, userID));
+                dispose();
             }
         });
         stage.addActor(backButton);
