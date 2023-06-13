@@ -124,7 +124,6 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputPr
         // Drawing and positioning the buttons to move the car
         carControl = new InteractiveCarController();
         stage.addActor(carControl);
-        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -141,6 +140,8 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputPr
         batch.end();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+        Gdx.input.setInputProcessor(stage);
+
     }
 
     private void checkPedestrianCollision() {

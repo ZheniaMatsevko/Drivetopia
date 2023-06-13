@@ -199,7 +199,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         db.insertWithOnConflict("userInfo", null, userInfoValues2, SQLiteDatabase.CONFLICT_REPLACE);
 
         for (int userId = 1; userId <= 2; userId++) {
-            for (int levelNumb = 1; levelNumb <= 10; levelNumb++) {
+            for (int levelNumb = 1; levelNumb <= 20; levelNumb++) {
                 ContentValues valuess = new ContentValues();
                 valuess.put("userId", userId);
                 valuess.put("levelNumb", levelNumb);
