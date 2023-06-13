@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
@@ -32,6 +33,8 @@ import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.Tools.MyDialog;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalFlashCardQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalRelationsQuestion;
+import com.wheelie.co.levels20.IntermediateScreen;
+import com.wheelie.co.levels20.Level;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,7 +46,7 @@ public class NormalRelationsQuestionScreen extends ScreenAdapter implements Inpu
     private SpriteBatch batch;
     private Sprite sprite;
     private Stage stage;
-    private int level;
+    private Level level;
 
     private BitmapFont font1;
     private BitmapFont font2;
@@ -53,26 +56,22 @@ public class NormalRelationsQuestionScreen extends ScreenAdapter implements Inpu
 
 
     private Skin skin2;
-    private int score;
     private Locale enLocale;
     private Locale ukrLocale;
     private FontFactory fontFactory;
     private final GlyphLayout layout;
     private final GlyphLayout layoutUkr;
     private TextButton exitButton;
-    private int chosenLevel;
     private NormalRelationsQuestion question;
 
-    public NormalRelationsQuestionScreen(NormalRelationsQuestion question1,final Drivetopia app, String title, int level, int score, int chosenLevel) {
+    public NormalRelationsQuestionScreen(final Drivetopia app, NormalRelationsQuestion question1, Level level, int userId) {
 
         question=question1;
-        this.chosenLevel=chosenLevel;
         fontFactory = new FontFactory();
         fontFactory.initialize();
 
         this.level =level;
         this.app = app;
-        this.score = score;
 
         stage = new Stage(new ScreenViewport());
 
@@ -186,30 +185,43 @@ public class NormalRelationsQuestionScreen extends ScreenAdapter implements Inpu
         //stage.addActor(label);
 
 
-        exitButton = new TextButton("Готово",skin2);
-        exitButton.setSize(GraphicConstants.colWidth*4,GraphicConstants.rowHeight*0.7F);
-        exitButton.setPosition(GraphicConstants.centerX- exitButton.getWidth()/2,GraphicConstants.rowHeight/5);
+        exitButton = new TextButton("Перевірити",skin2);
+        exitButton.setSize(GraphicConstants.colWidth*3.7f,GraphicConstants.rowHeight*0.7F);
+        exitButton.setPosition(20,GraphicConstants.rowHeight/5);
 
         exitButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 if(!selectBox1.getSelected().equals(question.findAnswer(images.get(0)))
                 || !selectBox2.getSelected().equals(question.findAnswer(images.get(1)))
                 || !selectBox3.getSelected().equals(question.findAnswer(images.get(2)))){
-                    showDialog("Подумай краще");
+                    showDialog("Помилка");
                 }else
                     showDialog("Молодець");
 
             }
         });
-
         stage.addActor(exitButton);
+
+        Button awayButton = new TextButton("Завершити",skin2);
+        awayButton.setSize(GraphicConstants.colWidth*3.7f,GraphicConstants.rowHeight*0.7F);
+        awayButton.setPosition(GraphicConstants.screenWidth-awayButton.getWidth()-20,GraphicConstants.rowHeight/5);
+
+        awayButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                app.setScreen(new LevelsScreen(app,userId));
+                dispose();
+
+            }
+        });
+
+        stage.addActor(awayButton);
 
 
 
         sprite = new Sprite(new Texture(Gdx.files.internal("white.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.input.setInputProcessor(stage);
-        layout = new GlyphLayout(font2, "Level "+ level);
+
+        layout = new GlyphLayout(font2, "Level "+ level.levelNumb);
         layoutUkr = new GlyphLayout(font3, question.getQuestion());
 
 
@@ -218,6 +230,7 @@ public class NormalRelationsQuestionScreen extends ScreenAdapter implements Inpu
         final MyDialog dialog = new MyDialog("результат", skinForDialog);
         dialog.setMessage(message);
         dialog.getButtonTable().add("ок");
+
         dialog.setColor(Color.BLACK);
 
         dialog.addListener(new InputListener() {
@@ -250,6 +263,7 @@ public class NormalRelationsQuestionScreen extends ScreenAdapter implements Inpu
         batch.end();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+        Gdx.input.setInputProcessor(stage);
     }
     @Override
     public boolean keyDown(int keycode) {
