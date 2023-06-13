@@ -66,8 +66,8 @@ public class Drivetopia extends Game {
 		//setScreen(new RegistrationScreen(this));
 
 		//setScreen(new AuthorizationScreen(this));
-		setScreen(new MainMenuScreen(this,1));
-		//setScreen(new BeginningScreen(this));
+	//	setScreen(new MainMenuScreen(this,1));
+		setScreen(new BeginningScreen(this));
 //	setScreen(new ProfileScreen(this,1,1));
 	//setScreen(new SimpleTextChoiceQuestionScreen(this,1,q));
 		//setScreen(new LevelsScreen(this,1,1));

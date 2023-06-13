@@ -159,7 +159,7 @@ public class HardPictureQuestionScreen extends ScreenAdapter implements InputPro
 
         exitButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                app.setScreen(new LevelsScreen(app,1));
+                app.setScreen(new LevelsScreen(app,userId));
                 dispose();
             }
         });
