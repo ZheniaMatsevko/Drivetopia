@@ -29,6 +29,8 @@ import com.wheelie.co.Tools.Car;
 import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.Tools.InteractiveCarController;
 import com.wheelie.co.Tools.MyDialog;
+import com.wheelie.co.levels20.IntermediateScreen;
+import com.wheelie.co.levels20.Level;
 
 import java.util.Locale;
 
@@ -38,7 +40,6 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputPr
     private ShapeRenderer shapes;
     private Sprite sprite;
     private Stage stage;
-    private int level;
 
     private BitmapFont font;
     private BitmapFont font2;
@@ -56,13 +57,18 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputPr
     private Locale ukrLocale;
     private FontFactory fontFactory;
 
-    public InteractiveCrosswalkScreen(final Drivetopia app, int level, int userID) {
+    private boolean failed;
+
+    private Level level;
+
+    public InteractiveCrosswalkScreen(final Drivetopia app, Level level, int userID) {
         fontFactory = new FontFactory();
         fontFactory.initialize();
 
-        this.level = level;
+
         this.app = app;
         this.userID = userID;
+        this.level = level;
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Zyana.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -149,9 +155,11 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputPr
 
         if (car.getCarBounds().overlaps(justSomeDude.getPedestrianBounds()) && !isDudePassed) {
             showDialog("як ти смієш");
+            failed=true;
             isDudePassed = true;
         } else if (car.getY() >= justSomeDude.getY() + justSomeDude.getHeight() && !isDudePassed) {
             showDialog("молодець!");
+            failed = false;
             isDudePassed = true;
         }
     }
@@ -187,7 +195,24 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputPr
         dialog.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 dialog.setVisible(false);
-                app.setScreen(new MainMenuScreen(app, userID));
+                if(failed) {
+                    level.failureScoreCount+=10;
+                    if (level.failureScoreCount>=level.failureScore)app.setScreen(new IntermediateScreen(app,level,userID,2,true));
+
+                }
+                else {
+                    if(level.getTasks().size()!=level.currentTaskNumber()) {
+                        level.increaseTaskCounter();
+                        level.currentscore += 10;
+                        app.setScreen(level.tasks.get(level.currentTaskNumber() - 1));
+                    }
+                    else {
+                        level.currentscore += 10;
+                        app.setScreen(new IntermediateScreen(app,level,userID,2,false));
+
+                    }
+                }
+               // app.setScreen(new MainMenuScreen(app, userID));
                 return true;
             }
         });

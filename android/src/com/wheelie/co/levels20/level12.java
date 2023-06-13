@@ -30,11 +30,25 @@ public class level12 extends Level {
         this.app = app;
         this.userId = userID;
         this.currentscore = 0;
-        this.maximumScore = 26;
-        this.failureScore = 9;
+        this.maximumScore = 20;
+        this.failureScore = 5;
 
 
-       tasks.add(new InteractiveCrosswalkScreen(app,12,userID));
+       tasks.add(new InteractiveCrosswalkScreen(app,this,userID));
+
+        LinkedList<NormalTextInputQuestion> inputQuestions = NormalTextInputQuestion.extractNormalTextInputQuestionsFromDB(db,levelNumb);
+
+        /**Обираємо 2 серед них**/
+        LinkedList<NormalTextInputQuestion> finalInputQuestions = selectRandomInputQuestions(inputQuestions,2);
+
+        Collections.shuffle(finalInputQuestions);
+        // LinkedList<SimpleTextChoiceQuestionScreen> simpleScreens = new LinkedList<>();
+        /**Створюємо екрани для кожного запитання з вводом і додаємо в список екранів рівня**/
+        for (NormalTextInputQuestion q: finalInputQuestions
+        ) {
+            tasks.add(new NormalTextInputQuestionScreen(app,q,this,userID));
+        }
+
 
         Collections.shuffle(tasks);
 
