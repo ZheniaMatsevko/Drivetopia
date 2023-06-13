@@ -279,6 +279,10 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         }
 
 
+
+        /**Питання на введення відповіді (5 балів)**/
+
+        /**рівень 1**/
         ContentValues normalInputValues = new ContentValues();
         normalInputValues.put("levelNumb", 1);
         normalInputValues.put("text", "Будівництво спортивних споруд, автозаправних станцій та інших об'єктів на дорогах можливе лише з дозволу державних органів та погодженням з ...");
@@ -306,6 +310,129 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         normalInputValues.put("answer", "Про автомобільні дороги");
 
         db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+        /**рівень 2**/
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 2);
+        normalInputValues.put("text", "Чи має пасажир право на отримання інформації про порядок руху?");
+        normalInputValues.put("answer", "так");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 2);
+        normalInputValues.put("text", "Водієві забороняється керувати авто після прийому ліків, що...");
+        normalInputValues.put("answer", "знижують увагу");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 2);
+        normalInputValues.put("text", "Для забезпечення безпеки дорожнього руху водій зобов’язаний перед виїздом перевірити і забезпечити технічно справний стан і _____________ транспортного засобу");
+        normalInputValues.put("answer", "комплектність");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 2);
+        normalInputValues.put("text", "Посадку дозволяється здійснювати пасажирам після зупинки транспортного засобу лише з...");
+        normalInputValues.put("answer", "посадкового майданчику");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+
+        /**рівень 3**/
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 3);
+        normalInputValues.put("text", "Чи можна обганяти транспорт з увімкненим звуковим сигналом?");
+        normalInputValues.put("answer", "ні");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 3);
+        normalInputValues.put("text", "Що повинен зробити водій, наближаючись до нерухомого транспорту з увімкненим маячком?");
+        normalInputValues.put("answer", "знизити швидкість");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 3);
+        normalInputValues.put("text", "Що повинні зробити водії, коли наближається транспорт з увімкненим маяком?");
+        normalInputValues.put("answer", "дати дорогу");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 3);
+        normalInputValues.put("text", "Наближаючись до нерухомого транспорту з увімкненим проблисковим маячком синього кольору, водій повинен знизити швидкість до... (у км/год)");
+        normalInputValues.put("answer", "40");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+
+        /**рівень 4**/
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 4);
+        normalInputValues.put("text", "Для зорового орієнтування використовується ___________ дорожна розмітка.");
+        normalInputValues.put("answer", "вертикальна");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 4);
+        normalInputValues.put("text", "Встановлюють черговість проїзду перехресть, перехрещень проїзних частин або вузьких ділянок дороги...");
+        normalInputValues.put("answer", "знаки пріорітету");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 4);
+        normalInputValues.put("text", "Знак тимчасовий, якщо він на _______ фоні.");
+        normalInputValues.put("answer", "жовтому");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 4);
+        normalInputValues.put("text", "Як допоміжний засіб регулювання дорожнього руху використовується...");
+        normalInputValues.put("answer", "дорожнє обладнання");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         /**1) Тестові питання з варіантами відповіді**/
         /**рівень 1**/
@@ -527,9 +654,263 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
 
 
+        /**рівень 2**/
+         simpleValues = new ContentValues();
+        simpleValues.put("levelNumb", 2);
+        simpleValues.put("text", "Що заборонено пасажирам під час руху у транспортному засобі?");
+        simpleValues.put("answer", "відчиняти двері");
+        simpleValues.put("picture", "noPicture");
+
+         questionId = db.insert("simpleChoiceQuestion", null, simpleValues);
+
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "стояти");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "сидіти");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "їсти");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "пити");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "розмовляти з водієм");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "відчиняти вікна");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "тримати багаж");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "пристібатися");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
 
 
 
+
+        simpleValues = new ContentValues();
+        simpleValues.put("levelNumb", 2);
+        simpleValues.put("text", "До якої категорії транспорту належить авто з причепом?");
+        simpleValues.put("answer", "СЕ");
+        simpleValues.put("picture", "noPicture");
+
+        questionId = db.insert("simpleChoiceQuestion", null, simpleValues);
+
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "В1");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "Т");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "А1");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "А2");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "В2");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+
+
+
+        simpleValues = new ContentValues();
+        simpleValues.put("levelNumb", 2);
+        simpleValues.put("text", "Для забезпечення безпеки дорожнього руху водій НЕ зобов’язаний:");
+        simpleValues.put("answer", "мати відеорегістратор");
+        simpleValues.put("picture", "noPicture");
+
+        questionId = db.insert("simpleChoiceQuestion", null, simpleValues);
+
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "бути уважним");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "пристібатися");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "стежити за дорогою");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "стежити за вантажем");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "мати посвідчення");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "не відволікатися");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+
+
+
+        simpleValues = new ContentValues();
+        simpleValues.put("levelNumb", 2);
+        simpleValues.put("text", "Право на керування мототранспортними засобами і мотоколясками може бути надано з:");
+        simpleValues.put("answer", "16 років");
+        simpleValues.put("picture", "noPicture");
+
+        questionId = db.insert("simpleChoiceQuestion", null, simpleValues);
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "18 років");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "19 років");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "21 року");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "14 років");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "25 років");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+/*
+Яким категоріям належить певний транспорт?
+	Т — трамвай
+	В1 — квадроцикл
+	D1 — автобус
+	СЕ — авто з причепом
+
+	відповідність
+*/
+
+
+/**рівень 3**/
+
+/**рівень 4**/
+        simpleValues = new ContentValues();
+        simpleValues.put("levelNumb", 4);
+        simpleValues.put("text", "Миготливий біло-місячний сигнал на залізничному переїзді показує, що...");
+        simpleValues.put("answer", "сигналізація справна");
+        simpleValues.put("picture", "noPicture");
+
+        questionId = db.insert("simpleChoiceQuestion", null, simpleValues);
+
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "рух заборонено");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "потяг наближається");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "сигналізація несправна");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "треба зачекати");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+
+
+        simpleValues = new ContentValues();
+        simpleValues.put("levelNumb", 4);
+        simpleValues.put("text", "Що із списку має найбільшу перевагу?");
+        simpleValues.put("answer", "тимчасові знаки");
+        simpleValues.put("picture", "noPicture");
+
+        questionId = db.insert("simpleChoiceQuestion", null, simpleValues);
+
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "дорожня розмітка");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "наказові знаки");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "знаки сервісу");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "заборонні знаки");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "вказівні знаки");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
 
     }
 

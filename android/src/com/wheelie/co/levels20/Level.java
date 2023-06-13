@@ -2,8 +2,13 @@ package com.wheelie.co.levels20;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.wheelie.co.Drivetopia;
+import com.wheelie.co.levelTemplates.questionTemplates.NormalTextInputQuestion;
+import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Random;
+import java.util.Set;
 
 public abstract class Level {
 
@@ -53,6 +58,54 @@ public abstract class Level {
 
 
 
+    public static LinkedList<SimpleTextChoiceQuestion> selectRandomSimpleChoiceQuestions(LinkedList<SimpleTextChoiceQuestion> questions, int c) {
+        LinkedList<SimpleTextChoiceQuestion> selectedQuestions = new LinkedList<>();
+
+        if (questions.size() <= c) {
+            selectedQuestions.addAll(questions);
+        } else {
+            // Create a random number generator
+            Random random = new Random();
+
+            // Create a set to keep track of selected indices
+            Set<Integer> selectedIndices = new HashSet<>();
+
+            // Select 5 random questions
+            while (selectedIndices.size() < c) {
+                int randomIndex = random.nextInt(questions.size());
+                if (!selectedIndices.contains(randomIndex)) {
+                    selectedQuestions.add(questions.get(randomIndex));
+                    selectedIndices.add(randomIndex);
+                }
+            }
+        }
+
+        return selectedQuestions;
+    }
+    public static LinkedList<NormalTextInputQuestion> selectRandomInputQuestions(LinkedList<NormalTextInputQuestion> questions, int c) {
+        LinkedList<NormalTextInputQuestion> selectedQuestions = new LinkedList<>();
+
+        if (questions.size() <= c) {
+            selectedQuestions.addAll(questions);
+        } else {
+            // Create a random number generator
+            Random random = new Random();
+
+            // Create a set to keep track of selected indices
+            Set<Integer> selectedIndices = new HashSet<>();
+
+            // Select 5 random questions
+            while (selectedIndices.size() < c) {
+                int randomIndex = random.nextInt(questions.size());
+                if (!selectedIndices.contains(randomIndex)) {
+                    selectedQuestions.add(questions.get(randomIndex));
+                    selectedIndices.add(randomIndex);
+                }
+            }
+        }
+
+        return selectedQuestions;
+    }
 
 
 

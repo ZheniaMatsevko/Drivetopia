@@ -40,7 +40,7 @@ public class level1 extends Level {
         /**Дістаємо всі тестові завдання з вибором, що відносяться до рівню 1**/
      LinkedList<SimpleTextChoiceQuestion> choiceQuestions = SimpleTextChoiceQuestion.extractSimpleTextChoiceQuestionsFromDB(db,1);
 
-     /**Обираємо 5 сердед них**/
+     /**Обираємо 5 серед них**/
     LinkedList<SimpleTextChoiceQuestion> finalChoiceQuestions = selectRandomSimpleChoiceQuestions(choiceQuestions,5);
 
         Collections.shuffle(finalChoiceQuestions);
@@ -58,7 +58,7 @@ public class level1 extends Level {
 
         Collections.shuffle(finalInputQuestions);
         // LinkedList<SimpleTextChoiceQuestionScreen> simpleScreens = new LinkedList<>();
-        /**Створюємо екрани для кожного запитання з вибором і додаємо в список екранів рівня**/
+        /**Створюємо екрани для кожного запитання з вводом і додаємо в список екранів рівня**/
         for (NormalTextInputQuestion q: finalInputQuestions
         ) {
             tasks.add(new NormalTextInputQuestionScreen(app,q,this,userID));
@@ -85,54 +85,6 @@ public class level1 extends Level {
 
 
 
-    public static LinkedList<SimpleTextChoiceQuestion> selectRandomSimpleChoiceQuestions(LinkedList<SimpleTextChoiceQuestion> questions, int c) {
-        LinkedList<SimpleTextChoiceQuestion> selectedQuestions = new LinkedList<>();
-
-        if (questions.size() <= c) {
-            selectedQuestions.addAll(questions);
-        } else {
-            // Create a random number generator
-            Random random = new Random();
-
-            // Create a set to keep track of selected indices
-            Set<Integer> selectedIndices = new HashSet<>();
-
-            // Select 5 random questions
-            while (selectedIndices.size() < c) {
-                int randomIndex = random.nextInt(questions.size());
-                if (!selectedIndices.contains(randomIndex)) {
-                    selectedQuestions.add(questions.get(randomIndex));
-                    selectedIndices.add(randomIndex);
-                }
-            }
-        }
-
-        return selectedQuestions;
-    }
-    public static LinkedList<NormalTextInputQuestion> selectRandomInputQuestions(LinkedList<NormalTextInputQuestion> questions, int c) {
-        LinkedList<NormalTextInputQuestion> selectedQuestions = new LinkedList<>();
-
-        if (questions.size() <= c) {
-            selectedQuestions.addAll(questions);
-        } else {
-            // Create a random number generator
-            Random random = new Random();
-
-            // Create a set to keep track of selected indices
-            Set<Integer> selectedIndices = new HashSet<>();
-
-            // Select 5 random questions
-            while (selectedIndices.size() < c) {
-                int randomIndex = random.nextInt(questions.size());
-                if (!selectedIndices.contains(randomIndex)) {
-                    selectedQuestions.add(questions.get(randomIndex));
-                    selectedIndices.add(randomIndex);
-                }
-            }
-        }
-
-        return selectedQuestions;
-    }
 
 
     @Override

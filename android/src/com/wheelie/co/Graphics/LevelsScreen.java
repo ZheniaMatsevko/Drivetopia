@@ -31,6 +31,7 @@ import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.Tools.MyDialog;
 import com.wheelie.co.levels20.IntermediateScreen;
 import com.wheelie.co.levels20.level1;
+import com.wheelie.co.levels20.level2;
 import com.wheelie.co.levels20.level4;
 import com.wheelie.co.levels20.level5;
 
@@ -245,6 +246,9 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
             public void changed(ChangeEvent event, Actor actor) {
                 if(dialog.getLevel()==1) {
                     app.setScreen(new IntermediateScreen(app,new level1(app,userID),userID,0,false));
+                }
+                if(dialog.getLevel()==2) {
+                    app.setScreen(new IntermediateScreen(app,new level2(app,userID),userID,0,false));
                 }
                 if(dialog.getLevel()==4) {
                     app.setScreen(new IntermediateScreen(app,new level4(app,userID),userID,0,false));
