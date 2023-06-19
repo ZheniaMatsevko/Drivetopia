@@ -12,10 +12,13 @@ import com.wheelie.co.Graphics.BeginningScreen;
 import com.wheelie.co.Graphics.LevelsScreen;
 import com.wheelie.co.Graphics.MainMenuScreen;
 import com.wheelie.co.Graphics.RegistrationScreen;
+import com.wheelie.co.levelTemplates.NormalRelationsTextQuestionScreen;
 import com.wheelie.co.levelTemplates.SimpleTextChoiceQuestionScreen;
+import com.wheelie.co.levelTemplates.questionTemplates.NormalRelationsQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 import com.wheelie.co.levels20.IntermediateScreen;
 import com.wheelie.co.levels20.level1;
+import com.wheelie.co.levels20.level4;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -67,8 +70,8 @@ public class Drivetopia extends Game {
 
 		//setScreen(new AuthorizationScreen(this));
 	//	setScreen(new MainMenuScreen(this,1));
-		setScreen(new BeginningScreen(this));
-//	setScreen(new ProfileScreen(this,1,1));
+		//setScreen(new NormalRelationsTextQuestionScreen(this,new NormalRelationsQuestion("text"), new level4(),1));
+	setScreen(new LevelsScreen(this,1));
 	//setScreen(new SimpleTextChoiceQuestionScreen(this,1,q));
 		//setScreen(new LevelsScreen(this,1,1));
 

@@ -38,30 +38,6 @@ public class level5 extends Level{
 
     }
 
-    private LinkedList<NormalFlashCardQuestion> selectRandomFlashCardQuestions(LinkedList<NormalFlashCardQuestion> questions, int c) {
-        LinkedList<NormalFlashCardQuestion> selectedQuestions = new LinkedList<>();
-
-        if (questions.size() <= c) {
-            selectedQuestions.addAll(questions);
-        } else {
-            // Create a random number generator
-            Random random = new Random();
-
-            // Create a set to keep track of selected indices
-            Set<Integer> selectedIndices = new HashSet<>();
-
-            // Select 5 random questions
-            while (selectedIndices.size() < c) {
-                int randomIndex = random.nextInt(questions.size());
-                if (!selectedIndices.contains(randomIndex)) {
-                    selectedQuestions.add(questions.get(randomIndex));
-                    selectedIndices.add(randomIndex);
-                }
-            }
-        }
-
-        return selectedQuestions;
-    }
 
 
     @Override
