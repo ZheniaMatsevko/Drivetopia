@@ -10,6 +10,10 @@ import com.wheelie.co.levelTemplates.questionTemplates.NormalRelationsQuestion;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**Тема 10: Обгін
+ *
+ */
+
 public class level10 extends Level{
     public level10(Drivetopia app, int userID) {
         // (app,1,new SimpleTextChoiceQuestion()));
@@ -24,7 +28,7 @@ public class level10 extends Level{
         this.failureScore = 1;
 
 
-        tasks.add(new NormalRelationsQuestionScreen(app,new NormalRelationsQuestion(1),this,userID));
+        //    tasks.add(new NormalRelationsQuestionScreen(app,new NormalRelationsQuestion(1),this,userID));
 
         Collections.shuffle(tasks);
 

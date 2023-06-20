@@ -35,7 +35,7 @@ import com.wheelie.co.levels20.IntermediateScreen;
 import com.wheelie.co.levels20.level1;
 import com.wheelie.co.levels20.level10;
 import com.wheelie.co.levels20.level12;
-import com.wheelie.co.levels20.level18;
+import com.wheelie.co.levels20.level14;
 import com.wheelie.co.levels20.level2;
 import com.wheelie.co.levels20.level4;
 import com.wheelie.co.levels20.level5;
@@ -276,7 +276,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
                dispose();
                 }
                 if(dialog.getLevel()==18) {
-                    app.setScreen(new IntermediateScreen(app,new level18(app,userID),userID,0,false));
+                    app.setScreen(new IntermediateScreen(app,new level14(app,userID),userID,0,false));
                     dispose();
                 }
             }

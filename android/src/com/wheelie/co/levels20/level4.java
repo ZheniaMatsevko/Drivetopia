@@ -23,11 +23,13 @@ import java.util.Set;
 public class level4 extends Level{
     public level4() {}
     /**Тема 4: Регулювання дорожнього руху
-     * 2 флеш-картки - 10 балів
      * 2 запитання з вводом - 10 балів
      * 1 тест - 3 бали
      * 1 запитання на відповідність - 6 балів
-     * Всього: 23 бали**/
+     * * завдання з натисканням на картинку(поворот)  - 7 балів (НЕ ДОДАНО)
+     * * Всього: 26 балів, прохідний - 20 **/
+    /**НЕПРАВИЛЬНО ПРАЦЮЄ ЗАПИТАННЯ НА ВІДПОВІДНІСТЬ**/
+
     public level4(Drivetopia app, int userID) {
         // (app,1,new SimpleTextChoiceQuestion()));
         final SQLiteDatabase db = app.getDatabase();
@@ -36,25 +38,8 @@ public class level4 extends Level{
         this.tasks=new LinkedList<>();
         this.app = app;
         this.currentscore = 0;
-        this.maximumScore = 29;
-        this.failureScore = 11;
-
-
-
-
-        /**Дістаємо всі флеш-картки, що відносяться до рівню 4**/
-        LinkedList<NormalFlashCardQuestion> flashCardQuestions = NormalFlashCardQuestion.extractNormalFlashCardQuestionFromDB(db,4, "sign");
-
-        /**Обираємо 2 сердед них**/
-        LinkedList<NormalFlashCardQuestion> finalFlashCardQuestions = selectRandomFlashCardQuestions(flashCardQuestions,2);
-
-        Collections.shuffle(finalFlashCardQuestions);
-        // LinkedList<SimpleTextChoiceQuestionScreen> simpleScreens = new LinkedList<>();
-        /**Створюємо екрани для кожного запитання з вибором і додаємо в список екранів рівня**/
-        for (NormalFlashCardQuestion q: finalFlashCardQuestions
-        ) {
-            tasks.add(new NormalFlashCardQuestionScreen(app,q,this,userID));
-        }
+        this.maximumScore = 26;
+        this.failureScore = 7;
 
 
         LinkedList<NormalTextInputQuestion> inputQuestions = NormalTextInputQuestion.extractNormalTextInputQuestionsFromDB(db,levelNumb);
@@ -89,7 +74,7 @@ public class level4 extends Level{
 
         Collections.shuffle(finalRelationsQuestions);
 
-        /**Створюємо екрани для кожного запитання з вибором і додаємо в список екранів рівня**/
+        /**Створюємо екрани для кожного запитання на відповідність і додаємо в список екранів рівня**/
         for (NormalRelationsQuestion q: finalRelationsQuestions
         ) {
             tasks.add(new NormalRelationsTextQuestionScreen(app,q,this,userID));

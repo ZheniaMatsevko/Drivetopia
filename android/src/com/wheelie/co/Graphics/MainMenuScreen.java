@@ -124,7 +124,7 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         finalTestBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,aboutBtn.getY()-startBtn.getHeight()*1.2F);
         finalTestBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new InteractiveTrafficScreen(app,1,1));
+                app.setScreen(new InteractiveTrafficScreen(app,1,userId));
        dispose();
             }
         });

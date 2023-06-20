@@ -5,27 +5,29 @@ import android.database.sqlite.SQLiteDatabase;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.levelTemplates.NormalFlashCardQuestionScreen;
 import com.wheelie.co.levelTemplates.NormalRelationsQuestionScreen;
-import com.wheelie.co.levelTemplates.NormalTextInputQuestionScreen;
-import com.wheelie.co.levelTemplates.SimpleTextChoiceQuestionScreen;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalFlashCardQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalRelationsQuestion;
-import com.wheelie.co.levelTemplates.questionTemplates.NormalTextInputQuestion;
-import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class level18 extends Level{
-    public level18(Drivetopia app, int userID) {
+
+/**Тема 14. Дорожні знаки і розмітка
+        * 2 флеш-картки - 10 балів
+        * 2 запитання на відповідність (з картинкою)  - 12 балів
+        *???
+**/
+public class level14 extends Level{
+    public level14(Drivetopia app, int userID) {
         // (app,1,new SimpleTextChoiceQuestion()));
         final SQLiteDatabase db = app.getDatabase();
 
-        this.levelNumb = 18;
+        this.levelNumb = 14;
         this.tasks=new LinkedList<>();
         this.app = app;
         this.userId = userID;
         this.currentscore = 0;
-        this.maximumScore = 12;
+        this.maximumScore = 22;
         this.failureScore = 6;
 
 
@@ -42,6 +44,22 @@ public class level18 extends Level{
         ) {
             tasks.add(new NormalRelationsQuestionScreen(app,q,this,userID));
         }
+
+
+        /**Дістаємо всі флеш-картки, що відносяться до рівню 14**/
+        LinkedList<NormalFlashCardQuestion> flashCardQuestions = NormalFlashCardQuestion.extractNormalFlashCardQuestionFromDB(db,14, "sign");
+
+        /**Обираємо 2 серед них**/
+        LinkedList<NormalFlashCardQuestion> finalFlashCardQuestions = selectRandomFlashCardQuestions(flashCardQuestions,2);
+
+        Collections.shuffle(finalFlashCardQuestions);
+        // LinkedList<SimpleTextChoiceQuestionScreen> simpleScreens = new LinkedList<>();
+        /**Створюємо екрани для кожного запитання з вибором і додаємо в список екранів рівня**/
+        for (NormalFlashCardQuestion q: finalFlashCardQuestions
+        ) {
+            tasks.add(new NormalFlashCardQuestionScreen(app,q,this,userID));
+        }
+
 
         this.numberOfTasks = tasks.size();
         this.taskCounter = 1;
