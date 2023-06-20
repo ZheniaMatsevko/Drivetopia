@@ -15,7 +15,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -158,11 +157,11 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputPr
         justSomeDude.setPedestrianBounds(justSomeDude.getX(), justSomeDude.getY(), justSomeDude.getWidth(), justSomeDude.getHeight());
 
         if (CollisionUtils.collides(car.getCarBounds(), justSomeDude.getPedestrianBounds()) && !isDudePassed) {
-            showDialog("як ти смієш");
+            showDialog("Задів пішохода!");
             failed=true;
             isDudePassed = true;
         } else if (car.getY() >= justSomeDude.getY() + justSomeDude.getHeight() && !isDudePassed) {
-            showDialog("молодець!");
+            showDialog("Молодець!");
             failed = false;
             isDudePassed = true;
         }

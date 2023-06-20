@@ -28,7 +28,6 @@ import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Tools.Car;
-import com.wheelie.co.Tools.CollisionUtils;
 import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.Tools.InteractiveCarController;
 import com.wheelie.co.Tools.MyDialog;
@@ -244,7 +243,7 @@ public class InteractiveParkingScreen extends ScreenAdapter implements InputProc
 
         if ((Intersector.overlapConvexPolygons(userCarBounds, car1Bounds) || Intersector.overlapConvexPolygons(userCarBounds, car2Bounds)) && !isCarCollided) {
             isCarCollided = true;
-            showDialog(":с");
+            showDialog("Задів машину!");
         }
     }
 
@@ -253,10 +252,10 @@ public class InteractiveParkingScreen extends ScreenAdapter implements InputProc
 
         if(isPolygonFullyInsideRectangle(carHitbox, correctParkingArea) && !isCarParked) {
             isCarParked = true;
-            showDialog("у а у");
+            showDialog("Молодець!");
         } else if(isPolygonFullyInsideRectangle(carHitbox, incorrectParkingArea) && !isCarParked) {
             isCarParked = true;
-            showDialog("идйітйод");
+            showDialog("Не туди!");
         }
     }
 

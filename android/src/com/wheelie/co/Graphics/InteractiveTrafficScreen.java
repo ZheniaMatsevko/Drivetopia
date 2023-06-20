@@ -19,11 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Tools.Car;
@@ -142,10 +138,10 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         car.setCarBounds(car.getCarBounds().getVertices());
 
         if (car.getCarBounds().getY() >= light.getBounds().getY() && light.getCurrent() == light.green && !isLightPassed) {
-            showDialog("молодець!");
+            showDialog("Молодець!");
             isLightPassed = true;
         } else if (car.getCarBounds().getY() >= light.getBounds().getY() && light.getCurrent() != light.green && !isLightPassed) {
-            showDialog("шо ти робиш");
+            showDialog("Неправильно!");
             isLightPassed = true;
         } else if (car.getCarBounds().getY() < light.getBounds().getY()) {
             isLightPassed = false;
