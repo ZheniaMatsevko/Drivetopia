@@ -2,6 +2,8 @@ package com.wheelie.co.levels20;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.wheelie.co.Drivetopia;
+import com.wheelie.co.levelTemplates.questionTemplates.NormalFlashCardQuestion;
+import com.wheelie.co.levelTemplates.questionTemplates.NormalRelationsQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalTextInputQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 
@@ -84,6 +86,55 @@ public abstract class Level {
     }
     public static LinkedList<NormalTextInputQuestion> selectRandomInputQuestions(LinkedList<NormalTextInputQuestion> questions, int c) {
         LinkedList<NormalTextInputQuestion> selectedQuestions = new LinkedList<>();
+
+        if (questions.size() <= c) {
+            selectedQuestions.addAll(questions);
+        } else {
+            // Create a random number generator
+            Random random = new Random();
+
+            // Create a set to keep track of selected indices
+            Set<Integer> selectedIndices = new HashSet<>();
+
+            // Select 5 random questions
+            while (selectedIndices.size() < c) {
+                int randomIndex = random.nextInt(questions.size());
+                if (!selectedIndices.contains(randomIndex)) {
+                    selectedQuestions.add(questions.get(randomIndex));
+                    selectedIndices.add(randomIndex);
+                }
+            }
+        }
+
+        return selectedQuestions;
+    }
+    public LinkedList<NormalFlashCardQuestion> selectRandomFlashCardQuestions(LinkedList<NormalFlashCardQuestion> questions, int c) {
+        LinkedList<NormalFlashCardQuestion> selectedQuestions = new LinkedList<>();
+
+        if (questions.size() <= c) {
+            selectedQuestions.addAll(questions);
+        } else {
+            // Create a random number generator
+            Random random = new Random();
+
+            // Create a set to keep track of selected indices
+            Set<Integer> selectedIndices = new HashSet<>();
+
+            // Select 5 random questions
+            while (selectedIndices.size() < c) {
+                int randomIndex = random.nextInt(questions.size());
+                if (!selectedIndices.contains(randomIndex)) {
+                    selectedQuestions.add(questions.get(randomIndex));
+                    selectedIndices.add(randomIndex);
+                }
+            }
+        }
+
+        return selectedQuestions;
+    }
+
+    public LinkedList<NormalRelationsQuestion> selectRandomRelationsQuestions(LinkedList<NormalRelationsQuestion> questions, int c) {
+        LinkedList<NormalRelationsQuestion> selectedQuestions = new LinkedList<>();
 
         if (questions.size() <= c) {
             selectedQuestions.addAll(questions);

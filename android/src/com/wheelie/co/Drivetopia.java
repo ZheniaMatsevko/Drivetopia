@@ -12,10 +12,16 @@ import com.wheelie.co.Graphics.BeginningScreen;
 import com.wheelie.co.Graphics.LevelsScreen;
 import com.wheelie.co.Graphics.MainMenuScreen;
 import com.wheelie.co.Graphics.RegistrationScreen;
+import com.wheelie.co.Theory.Slide;
+import com.wheelie.co.Theory.TheoryScreen;
+import com.wheelie.co.Tools.FileService;
+import com.wheelie.co.levelTemplates.NormalRelationsTextQuestionScreen;
 import com.wheelie.co.levelTemplates.SimpleTextChoiceQuestionScreen;
+import com.wheelie.co.levelTemplates.questionTemplates.NormalRelationsQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 import com.wheelie.co.levels20.IntermediateScreen;
 import com.wheelie.co.levels20.level1;
+import com.wheelie.co.levels20.level4;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -67,10 +73,18 @@ public class Drivetopia extends Game {
 
 		//setScreen(new AuthorizationScreen(this));
 	//	setScreen(new MainMenuScreen(this,1));
-		setScreen(new BeginningScreen(this));
-//	setScreen(new ProfileScreen(this,1,1));
+		//setScreen(new NormalRelationsTextQuestionScreen(this,new NormalRelationsQuestion("text"), new level4(),1));
+	setScreen(new LevelsScreen(this,1));
+		/*LinkedList<Slide> slides = new LinkedList<>();
+		slides.add(new Slide("theory1.jpg", FileService.readTheory(1)));
+		slides.add(new Slide("theory2.jpg", FileService.readTheory(2)));
+		slides.add(new Slide("theory3.jpg", FileService.readTheory(3)));
+		slides.add(new Slide("theory4.jpg", FileService.readTheory(4)));
+		slides.add(new Slide("theory5.jpg", FileService.readTheory(5)));
+		slides.add(new Slide("theory6.jpg", FileService.readTheory(6)));
+		//setScreen(new TheoryScreen(this,slides,1));
+*/
 	//setScreen(new SimpleTextChoiceQuestionScreen(this,1,q));
-		//setScreen(new LevelsScreen(this,1,1));
 
 		//setScreen(new SimpleTextChoiceQuestionScreen(this,1,q));
 

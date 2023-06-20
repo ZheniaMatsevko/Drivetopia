@@ -10,38 +10,33 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Graphics.GraphicConstants;
-import com.wheelie.co.Graphics.LevelsScreen;
 import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.Tools.MyDialog;
-import com.wheelie.co.levelTemplates.questionTemplates.NormalFlashCardQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalRelationsQuestion;
 import com.wheelie.co.levels20.IntermediateScreen;
 import com.wheelie.co.levels20.Level;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.Locale;
 
-public class NormalRelationsQuestionScreen extends ScreenAdapter implements InputProcessor {
+public class NormalRelationsTextQuestionScreen extends ScreenAdapter implements InputProcessor {
     Drivetopia app;
     private SpriteBatch batch;
     private Sprite sprite;
@@ -64,7 +59,7 @@ public class NormalRelationsQuestionScreen extends ScreenAdapter implements Inpu
     private TextButton exitButton;
     private NormalRelationsQuestion question;
 
-    public NormalRelationsQuestionScreen(final Drivetopia app, NormalRelationsQuestion question1, Level level, int userId) {
+    public NormalRelationsTextQuestionScreen(final Drivetopia app, NormalRelationsQuestion question1, Level level, int userId) {
 
         question=question1;
         fontFactory = new FontFactory();
@@ -107,13 +102,13 @@ public class NormalRelationsQuestionScreen extends ScreenAdapter implements Inpu
 
         ArrayList<String> text = question.getTexts();
 
+
         Label label = new Label("1 - "+text.get(0), skinForText);
         label.setWrap(true);
         Label label1 = new Label("2 - " + text.get(1), skinForText);
         label1.setWrap(true);
         Label label2 = new Label("3 - " + text.get(2), skinForText);
         label2.setWrap(true);
-
 
 
 
@@ -128,23 +123,6 @@ public class NormalRelationsQuestionScreen extends ScreenAdapter implements Inpu
 
 
         stage.addActor(textTable);
-
-        ArrayList<ImageButton> images = question.getImages();
-        Collections.shuffle(images);
-
-
-        Table imageTable = new Table();
-        imageTable.defaults().pad(10,15,50,15);
-        imageTable.setPosition(10, GraphicConstants.rowHeight*0.5f); // Replace x and y with the desired coordinates
-        imageTable.setSize(GraphicConstants.screenWidth -10, GraphicConstants.rowHeight*4.5f);
-
-        imageTable.add(images.get(0)).width(300).height(300);;
-        imageTable.add(images.get(1)).width(300).height(300);;
-        imageTable.add(images.get(2)).width(300).height(300);;
-        imageTable.row();
-
-        stage.addActor(imageTable);
-
         SelectBox<String> selectBox1 = new SelectBox<>(skinForText);
         Array<String> options1 = new Array<>();
         options1.add("1");
@@ -169,17 +147,34 @@ public class NormalRelationsQuestionScreen extends ScreenAdapter implements Inpu
         selectBox3.setWidth(200);
         selectBox3.setItems(options3);
 
-        Table selectsTable = new Table();
-        selectsTable.defaults().pad(10,15,50,15);
-        selectsTable.setPosition(10, GraphicConstants.rowHeight*0.5f); // Replace x and y with the desired coordinates
-        selectsTable.setSize(GraphicConstants.screenWidth -10, GraphicConstants.rowHeight*2.4f);
+        ScrollPane scrollPane  = new ScrollPane(null);
+        scrollPane.setBounds(10, GraphicConstants.rowHeight + 5, GraphicConstants.screenWidth - 20, GraphicConstants.screenHeight/2 - GraphicConstants.rowHeight - 5);
 
-        selectsTable.add(selectBox1).width(200).padRight(90);
-        selectsTable.add(selectBox2).width(200).padRight(90);
-        selectsTable.add(selectBox3).width(200);
-        selectsTable.row();
+        ArrayList<String> answers = question.getAnswers();
+        Collections.shuffle(answers);
 
-        stage.addActor(selectsTable);
+        Label label3 = new Label(answers.get(0), skinForText);
+        label3.setWrap(true);
+        Label label4 = new Label(answers.get(1), skinForText);
+        label4.setWrap(true);
+        Label label5 = new Label(answers.get(2), skinForText);
+        label5.setWrap(true);
+        Table answerTable = new Table();
+        answerTable.defaults().pad(10,10,40,10);
+        answerTable.setPosition(10, GraphicConstants.rowHeight*2.6f); // Replace x and y with the desired coordinates
+        answerTable.setSize(GraphicConstants.screenWidth, GraphicConstants.screenHeight - GraphicConstants.rowHeight*3.3f);
+
+        answerTable.add(label3).width(GraphicConstants.colWidth*6);
+        answerTable.add(selectBox1).width(200).row();
+        answerTable.add(label4).width(GraphicConstants.colWidth*6);
+        answerTable.add(selectBox2).width(200).row();
+        answerTable.add(label5).width(GraphicConstants.colWidth*6);
+        answerTable.add(selectBox3).width(200).row();
+
+        scrollPane.setActor(answerTable);
+        scrollPane.setScrollingDisabled(true, false); // Enable vertical scrolling
+
+        stage.addActor(scrollPane);
 
 
         //stage.addActor(label);
@@ -191,17 +186,17 @@ public class NormalRelationsQuestionScreen extends ScreenAdapter implements Inpu
 
         exitButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                if(selectBox1.getSelected().equals(question.findAnswer(images.get(0)))){
+                if(selectBox1.getSelected().equals(question.findTextAnswer(text.get(0)))){
                     level.currentscore+=2;
                 }else{
                     level.failureScoreCount+=2;
                 }
-                if(selectBox2.getSelected().equals(question.findAnswer(images.get(1)))){
+                if(selectBox2.getSelected().equals(question.findTextAnswer(text.get(1)))){
                     level.currentscore+=2;
                 }else{
                     level.failureScoreCount+=2;
                 }
-                if(selectBox3.getSelected().equals(question.findAnswer(images.get(2)))){
+                if(selectBox3.getSelected().equals(question.findTextAnswer(text.get(2)))){
                     level.currentscore+=2;
                 }else{
                     level.failureScoreCount+=2;
@@ -219,6 +214,7 @@ public class NormalRelationsQuestionScreen extends ScreenAdapter implements Inpu
                     }
 
                 }
+
             }
         });
 

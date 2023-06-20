@@ -6,6 +6,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+
 public class DatabaseHelperH extends SQLiteOpenHelper {
     private static DatabaseHelperH instance;
     private SQLiteDatabase database;
@@ -73,18 +79,6 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
 
 
-        // Create "theory" table
-        //таблиця для збереження інформації для кожного екрану теорії
-        String createTheoryTable = "CREATE TABLE IF NOT EXISTS theory (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                "levelNumb INTEGER NOT NULL, " +
-                "pictures TEXT NOT NULL, " +
-                "texts TEXT NOT NULL" +
-                ")";
-        db.execSQL(createTheoryTable);
-
-
-
 
         // Create "simpleChoiceQuestion" table
         //таблиця для збереження інформації про кожні прості тести з вибором
@@ -138,7 +132,22 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
         db.execSQL(createImagesForFlashCards);
 
+        String createNormalRelationsQuestion = "CREATE TABLE IF NOT EXISTS normalRelationsQuestion (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "levelNumb INTEGER NOT NULL, " +
+                "text TEXT NOT NULL, " +
+                "answer TEXT NOT NULL, " +
+                "type TEXT NOT NULL " + //image or text
+                ")";
+        db.execSQL(createNormalRelationsQuestion);
 
+        String createTheoryTable = "CREATE TABLE IF NOT EXISTS theory (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "levelNumb INTEGER NOT NULL, " +
+                "text TEXT NOT NULL, " +
+                "image TEXT NOT NULL " +
+                ")";
+        db.execSQL(createTheoryTable);
 
 
         // Insert initial data
@@ -214,7 +223,29 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         }
 
 
+        /**
+         * Заповнюємо теорію
+         */
+        ContentValues theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 1);
+        theoryValues.put("text", "theory1.txt");
+        theoryValues.put("image", "theory1.jpg");
 
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 1);
+        theoryValues.put("text", "theory1-2.txt");
+        theoryValues.put("image", "theory1-2.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 1);
+        theoryValues.put("text", "theory1-3.txt");
+        theoryValues.put("image", "theory1-3.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
 
 
 
@@ -278,6 +309,40 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
             db.insert(DBConstants.FLASHCARD_IMAGES_TABLE, null, flashCardImageValues);
         }
 
+        ContentValues relationsValues = new ContentValues();
+
+
+        String[] texts = new String[]{"Кінець велосипедної смуги","Місце для стоянки", "Виїзд на дорогу із смугою для руху маршрутних транспортних засобів", "Кінець смуги для руху маршрутних транспортних засобів", "Кінець додаткової смуги руху",
+        "Місце для розвороту","Пішохідна зона","Підземний пішохідний перехід",
+                "Велосипедна смуга","Дорога із зустрічною велосипедною смугою",
+        "Дорога з одностороннім рухом", "Кінець дороги із смугою для руху маршрутних транспортних засобів",
+        "Смуга руху для аварійної зупинки", "Кінець пішохідної зони","Пішохідний перехід"};
+        for(int i=1;i<16;i++){
+            relationsValues = new ContentValues();
+            relationsValues.put("levelNumb", 18);
+            relationsValues.put("text", texts[i-1]);
+            relationsValues.put("answer", "sign"+i+".png");
+            relationsValues.put("type", "image");
+            db.insert(DBConstants.RELATIONS_TABLE, null, relationsValues);
+        }
+        texts = new String[]{"попереджувальні знаки", "знаки пріоритету",
+        "заборонні знаки", "наказові знаки", "інформаційно-вказівні знаки",
+                "знаки сервісу", "таблички до дорожніх знаків"};
+        String[] answers = new String[]{"інформують водіїв про наближення до небезпечної ділянки дороги і характер небезпеки.",
+        "встановлюють черговість проїзду перехресть, перехрещень проїзних частин або вузьких ділянок дороги;",
+        "запроваджують/скасовують певні обмеження в русі;",
+        "показують обов’язкові напрямки руху або дозволяють деяким категоріям учасників рух по проїзній частині чи окремих її ділянках, а також запроваджують/скасовують деякі обмеження;",
+        "запроваджують/скасовують певний режим руху, а також інформують учасників дорожнього руху про розташування населених пунктів, різних об’єктів, територій, де діють спеціальні правила;",
+        "інформують учасників дорожнього руху про розташування об’єктів обслуговування;",
+        "уточнюють або обмежують дію знаків, разом з якими вони встановлені."};
+        for(int i=0;i<texts.length;i++){
+            relationsValues = new ContentValues();
+            relationsValues.put("levelNumb", 4);
+            relationsValues.put("text", texts[i]);
+            relationsValues.put("answer", answers[i]);
+            relationsValues.put("type", "text");
+            db.insert(DBConstants.RELATIONS_TABLE, null, relationsValues);
+        }
 
 
         /**Питання на введення відповіді (5 балів)**/
