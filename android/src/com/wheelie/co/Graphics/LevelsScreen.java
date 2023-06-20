@@ -178,7 +178,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
 
 
 
-        for(int i=0;i<20;i++){
+        for(int i=0;i<15;i++){
             String path = "level" + (i+1) + ".png";
             Texture myTexture = new Texture(Gdx.files.internal(path));
             TextureRegion myTextureRegion = new TextureRegion(myTexture);
@@ -200,28 +200,18 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         levelsBtns.get(8).setPosition(70,levelsBtns.get(7).getY()-10);
         levelsBtns.get(8).setSize(280,210);
         levelsBtns.get(9).setPosition(-25,GraphicConstants.rowHeight*3 + 60);
-        levelsBtns.get(9).setSize(290,220);
+        //levelsBtns.get(9).setSize(290,220);
         levelsBtns.get(10).setPosition(-30,GraphicConstants.rowHeight*2+110);
-        levelsBtns.get(10).setSize(290,220);
+        ///levelsBtns.get(10).setSize(290,220);
         levelsBtns.get(11).setPosition(185,GraphicConstants.rowHeight*2+30);
-        levelsBtns.get(11).setSize(290,220);
+        //levelsBtns.get(11).setSize(290,220);
         levelsBtns.get(12).setPosition(GraphicConstants.colWidth*3,GraphicConstants.rowHeight*2+30);
-        levelsBtns.get(12).setSize(290,220);
+        //levelsBtns.get(12).setSize(290,220);
         levelsBtns.get(13).setPosition(GraphicConstants.colWidth*5-40,GraphicConstants.rowHeight*2+30);
-        levelsBtns.get(13).setSize(290,220);
+        //levelsBtns.get(13).setSize(290,220);
         levelsBtns.get(14).setPosition(GraphicConstants.screenWidth-GraphicConstants.colWidth*2+20,GraphicConstants.rowHeight*2-100);
-        levelsBtns.get(14).setSize(290,220);
+       // levelsBtns.get(14).setSize(290,220);
 
-        levelsBtns.get(15).setPosition(GraphicConstants.screenWidth-GraphicConstants.colWidth*2,GraphicConstants.rowHeight - 45);
-        levelsBtns.get(15).setSize(290,220);
-        levelsBtns.get(16).setPosition(levelsBtns.get(0).getWidth()*2+60,55);
-        levelsBtns.get(16).setSize(290,220);
-        levelsBtns.get(17).setPosition(levelsBtns.get(0).getWidth()*2 - 165,55);
-        levelsBtns.get(17).setSize(290,220);
-        levelsBtns.get(18).setSize(290,220);
-        levelsBtns.get(18).setPosition(levelsBtns.get(0).getWidth() - 95,50);
-        levelsBtns.get(19).setPosition(-20,50);
-        levelsBtns.get(19).setSize(290,220);
 
 
         sprite = new Sprite(new Texture(Gdx.files.internal("levels1.jpg")));
@@ -277,7 +267,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
                     app.setScreen(new IntermediateScreen(app,new level12(app,userID),userID,0,false));
                dispose();
                 }
-                if(dialog.getLevel()==18) {
+                if(dialog.getLevel()==14) {
                     app.setScreen(new IntermediateScreen(app,new level14(app,userID),userID,0,false));
                     dispose();
                 }
@@ -313,15 +303,6 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
                 "а.пасажирів  " +
                 "б.вантажу\n" +
                 "в.інших транспортних засобів");
-        topics.add("Тема 16. Номерні,\nрозпізнавальні знаки,\nнаписи і позначення");
-        topics.add("Тема 17. Технічний стан\nтранспорту та обладнання");
-        topics.add("Тема 18. Дорожні знаки\nі розмітка");
-        topics.add("Тема 19. Рух\n" +
-                "а.житлова/пішохідна зона\n" +
-                "б.по автомагістралях");
-        topics.add("Тема 20. Рух ІІ\n" +
-                "а.по гірських дорогах\n" +
-                "б.міжнародний");
 
         int counter=0;
         for(final String topic: topics){
