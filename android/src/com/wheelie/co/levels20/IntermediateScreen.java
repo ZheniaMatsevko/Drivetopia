@@ -151,10 +151,19 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
                 /**якщо це екран завершення практики, повертати в головне меню**/
             if(state!=0)  {
 
+                /**оновлення очків юзера за цю практику якщо він набрав більше за попередній результат**/
                if(getUserScoreForLevel(app.getDatabase(),userId,level.levelNumb)<level.currentscore && !failure) {
                    updateUserScoreForLevel(app.getDatabase(),userId, level.levelNumb, level.currentscore);
                }
+                /**якщо пройдено на максимум, заноситься стан 2 в базу даних цього рівня і користувача**/
+               if(!failure && level.currentscore>=level.maximumScore) {
+                   updateUserStateForLevel(app.getDatabase(),userId,level.levelNumb,2);
+               }
+               /**якщо не на максимум, то стан 1**/
+               else if(!failure) {
+                   updateUserStateForLevel(app.getDatabase(),userId,level.levelNumb,1);
 
+               }
 
 
                 app.setScreen(new LevelsScreen(app,userId));
@@ -239,6 +248,13 @@ dispose();
     public void updateUserScoreForLevel(SQLiteDatabase database, int userId, int levelNumb, int newScore) {
         String query = "UPDATE scores SET score = ? WHERE userId = ? AND levelNumb = ?";
         Object[] args = {newScore, userId, levelNumb};
+
+        database.execSQL(query, args);
+    }
+
+    public void updateUserStateForLevel(SQLiteDatabase database, int userId, int levelNumb, int newState) {
+        String query = "UPDATE scores SET state = ? WHERE userId = ? AND levelNumb = ?";
+        Object[] args = {newState, userId, levelNumb};
 
         database.execSQL(query, args);
     }

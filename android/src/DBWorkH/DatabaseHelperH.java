@@ -72,6 +72,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
                 "userId INTEGER NOT NULL, " +
                 "levelNumb INTEGER NOT NULL, " +
                 "score INTEGER NOT NULL, " +
+                "state INTEGER NOT NULL, " +
                 "FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE" +
                 ")";
 
@@ -208,11 +209,12 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         db.insertWithOnConflict("userInfo", null, userInfoValues2, SQLiteDatabase.CONFLICT_REPLACE);
 
         for (int userId = 1; userId <= 2; userId++) {
-            for (int levelNumb = 1; levelNumb <= 20; levelNumb++) {
+            for (int levelNumb = 1; levelNumb <= 16; levelNumb++) {
                 ContentValues valuess = new ContentValues();
                 valuess.put("userId", userId);
                 valuess.put("levelNumb", levelNumb);
                 valuess.put("score", 0);
+                valuess.put("state", 0);
 
                 long rowId = db.insert("scores", null, valuess);
 
@@ -319,7 +321,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         "Смуга руху для аварійної зупинки", "Кінець пішохідної зони","Пішохідний перехід"};
         for(int i=1;i<16;i++){
             relationsValues = new ContentValues();
-            relationsValues.put("levelNumb", 18);
+            relationsValues.put("levelNumb", 14);
             relationsValues.put("text", texts[i-1]);
             relationsValues.put("answer", "sign"+i+".png");
             relationsValues.put("type", "image");

@@ -9,5 +9,7 @@ public class DBConstants {
     public static final String RELATIONS_TABLE= "normalRelationsQuestion";
     public static final String THEORY_TABLE= "theory";
 
+    public static final String CHOICE_QUESTION = "simpleChoiceQuestion";
+
 
 }

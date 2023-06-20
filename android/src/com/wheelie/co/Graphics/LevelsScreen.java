@@ -198,7 +198,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         levelsBtns.get(6).setPosition(levelsBtns.get(1).getX()+280,levelsBtns.get(5).getY());
         levelsBtns.get(7).setPosition(levelsBtns.get(0).getX()+300,levelsBtns.get(5).getY());
         levelsBtns.get(8).setPosition(70,levelsBtns.get(7).getY()-10);
-        levelsBtns.get(8).setSize(280,210);
+        //levelsBtns.get(8).setSize(280,210);
         levelsBtns.get(9).setPosition(-25,GraphicConstants.rowHeight*3 + 60);
         //levelsBtns.get(9).setSize(290,220);
         levelsBtns.get(10).setPosition(-30,GraphicConstants.rowHeight*2+110);
@@ -293,16 +293,13 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         topics.add("Тема 10. Обгін");
         topics.add("Тема 11. Зупинка і стоянка");
         topics.add("Тема 12. Проїзд\n" +
-                "а.перехресть\n" +
+                "а.перехресть, зупинок\n" +
                 "б.пішохідних переходів");
-        topics.add("Тема 13. Проїзд ІІ\n" +
-                "а.зупинок\n" +
-                "б.через залізничні переїзди");
-        topics.add("Тема 14. Користування\nсвітловими приладами");
-        topics.add("Тема 15. Перевезення\n" +
-                "а.пасажирів  " +
-                "б.вантажу\n" +
-                "в.інших транспортних засобів");
+        topics.add("Тема 13. Номерні,\nрозпізнавальні знаки,\nнаписи і позначення");
+        topics.add("Тема 14. Дорожні знаки\n і розмітка");
+        topics.add("Тема 15. Рух\n" +
+                "а.житлова/пішохідна зона\n" +
+                "б.по автомагістралях");
 
         int counter=0;
         for(final String topic: topics){

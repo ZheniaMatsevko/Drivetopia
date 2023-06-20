@@ -287,11 +287,12 @@ public class RegistrationScreen extends ScreenAdapter implements InputProcessor 
 
 
         /**створюємо рядки рівень-кількість балів для нового юзера**/
-        for (int levelNumb = 1; levelNumb <= 20; levelNumb++) {
+        for (int levelNumb = 1; levelNumb <= 16; levelNumb++) {
             ContentValues valuess = new ContentValues();
             valuess.put("userId", userId);
             valuess.put("levelNumb", levelNumb);
             valuess.put("score", 0);
+            valuess.put("state", 0);
 
             long rowId = db.insert("scores", null, valuess);
 
