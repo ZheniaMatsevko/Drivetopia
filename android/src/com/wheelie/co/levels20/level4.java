@@ -28,7 +28,6 @@ public class level4 extends Level{
      * 1 запитання на відповідність - 6 балів
      * * завдання з натисканням на картинку(поворот)  - 7 балів (НЕ ДОДАНО)
      * * Всього: 26 балів, прохідний - 20 **/
-    /**НЕПРАВИЛЬНО ПРАЦЮЄ ЗАПИТАННЯ НА ВІДПОВІДНІСТЬ**/
 
     public level4(Drivetopia app, int userID) {
         // (app,1,new SimpleTextChoiceQuestion()));
