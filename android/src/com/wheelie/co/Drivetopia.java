@@ -9,6 +9,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.wheelie.co.Graphics.AuthorizationScreen;
 import com.wheelie.co.Graphics.BeginningScreen;
+import com.wheelie.co.Graphics.InteractiveCrosswalkScreen;
+import com.wheelie.co.Graphics.InteractiveParkingScreen;
 import com.wheelie.co.Graphics.LevelsScreen;
 import com.wheelie.co.Graphics.MainMenuScreen;
 import com.wheelie.co.Graphics.RegistrationScreen;
@@ -66,8 +68,9 @@ public class Drivetopia extends Game {
 		//setScreen(new RegistrationScreen(this));
 
 		//setScreen(new AuthorizationScreen(this));
-	//	setScreen(new MainMenuScreen(this,1));
-		setScreen(new BeginningScreen(this));
+		//setScreen(new MainMenuScreen(this,1));
+		//setScreen(new BeginningScreen(this));
+		setScreen(new InteractiveParkingScreen(this, 1, 1));
 //	setScreen(new ProfileScreen(this,1,1));
 	//setScreen(new SimpleTextChoiceQuestionScreen(this,1,q));
 		//setScreen(new LevelsScreen(this,1,1));

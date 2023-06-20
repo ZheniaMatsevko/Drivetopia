@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -26,6 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Tools.Car;
+import com.wheelie.co.Tools.CollisionUtils;
 import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.Tools.InteractiveCarController;
 import com.wheelie.co.Tools.MyDialog;
@@ -51,14 +53,14 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputPr
     private Skin skin;
     private int userID;
     private float carMovementSpeed = 700f;
-    private float carSteerSpeed = 3f;
+    private float carSteerSpeed = 50f;
     private InteractiveCarController carControl;
     private Locale enLocale;
     private Locale ukrLocale;
     private FontFactory fontFactory;
 
     private boolean failed;
-
+    private int counter = 0;
     private Level level;
 
     public InteractiveCrosswalkScreen(final Drivetopia app, Level level, int userID) {
@@ -81,7 +83,6 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputPr
         stage = new Stage(new ScreenViewport());
 
         batch = new SpriteBatch();
-
         shapes = new ShapeRenderer();
 
         // Initialize locales
@@ -102,32 +103,34 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputPr
         sprite.setRotation(270);
         roadLeftEdge = 0;
         roadRightEdge = sprite.getRegionWidth()/1.5f;
-        System.out.println(roadLeftEdge + " " + roadRightEdge);
 
         Texture guyTexture = new Texture(Gdx.files.internal("justSomeGuy.png"));
         TextureRegion guyReg = new TextureRegion(guyTexture);
         justSomeDude = new Pedestrian(guyReg, roadLeftEdge, roadRightEdge);
-        float pedestrianWidth = Gdx.graphics.getWidth() / 7.5f;
-        float pedestrianHeight = Gdx.graphics.getHeight() / 7.5f;
+        float pedestrianWidth = GraphicConstants.screenWidth / 7.5f;
+        float pedestrianHeight = GraphicConstants.screenHeight / 7.5f;
         justSomeDude.setSize(pedestrianWidth, pedestrianHeight);
         justSomeDude.setPosition(0, GraphicConstants.centerY * 1.05f);
         justSomeDude.setPedestrianBounds(justSomeDude.getX(), justSomeDude.getY(), pedestrianWidth, pedestrianHeight);
-
         stage.addActor(justSomeDude);
 
         Texture carTexture = new Texture(Gdx.files.internal("car.png"));
         TextureRegion carReg = new TextureRegion(carTexture);
         car = new Car(carReg);
-        car.setPosition(GraphicConstants.centerX - (car.getWidth() / 5), 0);
         float carWidth = Gdx.graphics.getWidth() * 0.15f;
         float carHeight = Gdx.graphics.getHeight() * 0.15f;
-        car.setSize(carWidth, carHeight);
-        car.setCarBounds(car.getX(), car.getY(), carWidth, carHeight);
+        float[] carVertices = {
+                0, 0,
+                carWidth, 0,
+                carWidth, carHeight,
+                0, carHeight
+        };
 
+        car.setPosition(GraphicConstants.centerX - (car.getWidth() / 5), 0);
+        car.setSize(carWidth, carHeight);
+        car.setCarBounds(carVertices);
         stage.addActor(car);
 
-
-        // Drawing and positioning the buttons to move the car
         carControl = new InteractiveCarController();
         stage.addActor(carControl);
     }
@@ -144,6 +147,7 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputPr
         checkPedestrianCollision();
 
         batch.end();
+
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
         Gdx.input.setInputProcessor(stage);
@@ -153,7 +157,7 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputPr
     private void checkPedestrianCollision() {
         justSomeDude.setPedestrianBounds(justSomeDude.getX(), justSomeDude.getY(), justSomeDude.getWidth(), justSomeDude.getHeight());
 
-        if (car.getCarBounds().overlaps(justSomeDude.getPedestrianBounds()) && !isDudePassed) {
+        if (CollisionUtils.collides(car.getCarBounds(), justSomeDude.getPedestrianBounds()) && !isDudePassed) {
             showDialog("як ти смієш");
             failed=true;
             isDudePassed = true;
@@ -169,20 +173,30 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputPr
         Vector2 direction = new Vector2(-MathUtils.sinDeg(car.getRotation()), MathUtils.cosDeg(car.getRotation())).nor();
 
         if (carControl.isMovingForward()) {
-            car.setCarBounds(car.getX() + direction.x * carMovementSpeed * delta, car.getY() + direction.y * carMovementSpeed * delta, car.getWidth(), car.getHeight());
-            car.setX(car.getX() + direction.x * carMovementSpeed * delta);
-            car.setY(car.getY() + direction.y * carMovementSpeed * delta);
+            float[] vertices = car.getCarBounds().getVertices();
+            for (int i = 0; i < vertices.length; i += 2) {
+                vertices[i] += direction.x * carMovementSpeed * delta;
+                vertices[i + 1] += direction.y * carMovementSpeed * delta;
+            }
+            car.setPosition(car.getX() + direction.x * carMovementSpeed * delta, car.getY() + direction.y * carMovementSpeed * delta);
+            car.updateBounds();
         } else if (carControl.isMovingBackward()) {
-            car.setCarBounds(car.getX() - direction.x * (carMovementSpeed * 0.5f) * delta, car.getY() - direction.y * (carMovementSpeed * 0.5f) * delta, car.getWidth(), car.getHeight());
-            car.setX(car.getX() - direction.x * (carMovementSpeed * 0.5f) * delta);
-            car.setY(car.getY() - direction.y * (carMovementSpeed * 0.5f) * delta);
+            float[] vertices = car.getCarBounds().getVertices();
+            for (int i = 0; i < vertices.length; i += 2) {
+                vertices[i] -= direction.x * (carMovementSpeed * 0.5f) * delta;
+                vertices[i + 1] -= direction.y * (carMovementSpeed * 0.5f) * delta;
+            }
+            car.setPosition(car.getX() - direction.x * (carMovementSpeed * 0.5f) * delta, car.getY() - direction.y * (carMovementSpeed * 0.5f) * delta);
+            car.updateBounds();
         }
 
         if(carControl.isTurningLeft()) {
-            car.setRotation(car.getRotation() + carSteerSpeed);
+            car.setRotation(car.getRotation() + carSteerSpeed * delta);
+            car.updateBounds();
         }
         if(carControl.isTurningRight()) {
-            car.setRotation(car.getRotation() - carSteerSpeed);
+            car.setRotation(car.getRotation() - carSteerSpeed * delta);
+            car.updateBounds();
         }
     }
 
@@ -270,7 +284,6 @@ class Pedestrian extends Actor {
 
         tempTexture = region.getTexture();
         this.bounds = new Rectangle(0, 0, tempTexture.getWidth(), tempTexture.getHeight());
-        //this.bounds = new Rectangle();
 
         isGoingRight = true;
         moveSpeed = 200f;

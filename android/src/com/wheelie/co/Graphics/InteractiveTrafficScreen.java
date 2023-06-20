@@ -139,7 +139,7 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
     }
 
     private void verifyCarPassedTraffic() {
-        car.setCarBounds(car.getX(), car.getY(), car.getWidth(), car.getHeight());
+        car.setCarBounds(car.getCarBounds().getVertices());
 
         if (car.getCarBounds().getY() >= light.getBounds().getY() && light.getCurrent() == light.green && !isLightPassed) {
             showDialog("молодець!");
