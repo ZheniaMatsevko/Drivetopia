@@ -5,9 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 import com.badlogic.gdx.ScreenAdapter;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.levelTemplates.NormalFlashCardQuestionScreen;
+import com.wheelie.co.levelTemplates.NormalRelationsQuestionScreen;
+import com.wheelie.co.levelTemplates.NormalRelationsTextQuestionScreen;
 import com.wheelie.co.levelTemplates.NormalTextInputQuestionScreen;
 import com.wheelie.co.levelTemplates.SimpleTextChoiceQuestionScreen;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalFlashCardQuestion;
+import com.wheelie.co.levelTemplates.questionTemplates.NormalRelationsQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalTextInputQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 
@@ -20,10 +23,13 @@ import java.util.Set;
 public class level4 extends Level{
     public level4() {}
     /**Тема 4: Регулювання дорожнього руху
-     * 2 флеш-картки - 10 балів
      * 2 запитання з вводом - 10 балів
      * 1 тест - 3 бали
-     * Всього: 23 бали**/
+     * 1 запитання на відповідність - 6 балів
+     * * завдання з натисканням на картинку(поворот)  - 7 балів (НЕ ДОДАНО)
+     * * Всього: 26 балів, прохідний - 20 **/
+    /**НЕПРАВИЛЬНО ПРАЦЮЄ ЗАПИТАННЯ НА ВІДПОВІДНІСТЬ**/
+
     public level4(Drivetopia app, int userID) {
         // (app,1,new SimpleTextChoiceQuestion()));
         final SQLiteDatabase db = app.getDatabase();
@@ -32,25 +38,8 @@ public class level4 extends Level{
         this.tasks=new LinkedList<>();
         this.app = app;
         this.currentscore = 0;
-        this.maximumScore = 23;
-        this.failureScore = 6;
-
-
-
-
-        /**Дістаємо всі флеш-картки, що відносяться до рівню 4**/
-        LinkedList<NormalFlashCardQuestion> flashCardQuestions = NormalFlashCardQuestion.extractNormalFlashCardQuestionFromDB(db,4, "sign");
-
-        /**Обираємо 2 сердед них**/
-        LinkedList<NormalFlashCardQuestion> finalFlashCardQuestions = selectRandomFlashCardQuestions(flashCardQuestions,2);
-
-        Collections.shuffle(finalFlashCardQuestions);
-        // LinkedList<SimpleTextChoiceQuestionScreen> simpleScreens = new LinkedList<>();
-        /**Створюємо екрани для кожного запитання з вибором і додаємо в список екранів рівня**/
-        for (NormalFlashCardQuestion q: finalFlashCardQuestions
-        ) {
-            tasks.add(new NormalFlashCardQuestionScreen(app,q,this,userID));
-        }
+        this.maximumScore = 26;
+        this.failureScore = 7;
 
 
         LinkedList<NormalTextInputQuestion> inputQuestions = NormalTextInputQuestion.extractNormalTextInputQuestionsFromDB(db,levelNumb);
@@ -78,6 +67,18 @@ public class level4 extends Level{
             tasks.add(new SimpleTextChoiceQuestionScreen(app,q,this,userID));
         }
 
+        LinkedList<NormalRelationsQuestion> relationsQuestions = NormalRelationsQuestion.extractNormalRelationsQuestionFromDB(db,levelNumb, "text");
+
+
+        LinkedList<NormalRelationsQuestion> finalRelationsQuestions = selectRandomRelationsQuestions(relationsQuestions,1);
+
+        Collections.shuffle(finalRelationsQuestions);
+
+        /**Створюємо екрани для кожного запитання на відповідність і додаємо в список екранів рівня**/
+        for (NormalRelationsQuestion q: finalRelationsQuestions
+        ) {
+            tasks.add(new NormalRelationsTextQuestionScreen(app,q,this,userID));
+        }
 
 
        Collections.shuffle(tasks);
@@ -89,30 +90,6 @@ public class level4 extends Level{
 
     }
 
-    private LinkedList<NormalFlashCardQuestion> selectRandomFlashCardQuestions(LinkedList<NormalFlashCardQuestion> questions, int c) {
-        LinkedList<NormalFlashCardQuestion> selectedQuestions = new LinkedList<>();
-
-        if (questions.size() <= c) {
-            selectedQuestions.addAll(questions);
-        } else {
-            // Create a random number generator
-            Random random = new Random();
-
-            // Create a set to keep track of selected indices
-            Set<Integer> selectedIndices = new HashSet<>();
-
-            // Select 5 random questions
-            while (selectedIndices.size() < c) {
-                int randomIndex = random.nextInt(questions.size());
-                if (!selectedIndices.contains(randomIndex)) {
-                    selectedQuestions.add(questions.get(randomIndex));
-                    selectedIndices.add(randomIndex);
-                }
-            }
-        }
-
-        return selectedQuestions;
-    }
 
 
     @Override

@@ -124,7 +124,7 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         finalTestBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,aboutBtn.getY()-startBtn.getHeight()*1.2F);
         finalTestBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new InteractiveTrafficScreen(app,1,1));
+                app.setScreen(new InteractiveTrafficScreen(app,1,userId));
        dispose();
             }
         });
@@ -158,17 +158,6 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         stage.addActor(profileBtn);
 
         /**звичайна іконка звуку**/
-        Texture myTexture1 = new Texture(Gdx.files.internal("sound2.png"));
-        TextureRegion myTextureRegion1 = new TextureRegion(myTexture1);
-        final TextureRegionDrawable myTexRegionDrawable1 = new TextureRegionDrawable(myTextureRegion1);
-
-        Texture myTexture2 = new Texture(Gdx.files.internal("sound2small.png"));
-        TextureRegion myTextureRegion2 = new TextureRegion(myTexture2);
-        final TextureRegionDrawable myTexRegionDrawable2 = new TextureRegionDrawable(myTextureRegion2);
-
-        Texture myTexture3 = new Texture(Gdx.files.internal("sound2no.png"));
-        TextureRegion myTextureRegion3 = new TextureRegion(myTexture3);
-        final TextureRegionDrawable myTexRegionDrawable3 = new TextureRegionDrawable(myTextureRegion3);
 
 
         if(soundState==1) {
@@ -216,7 +205,6 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(stage);
         layout = new GlyphLayout(font2, "DRIVETOPIA");
-
 
     }
 

@@ -15,11 +15,11 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 /**Тема 12: Проїзд перехресть, пішохідних переходів
- * 2 тестових питань - 6 балів
- * 2 завдання на введення відповіді - 10 балів
- * 1 інтерактивне завдання - 10 балів
- *
- * Всього - 26 балів**/
+ ** інтерактивне завдання пішоходним переходом - 10 балів
+ * * 2 завдання зі вводом - 10 балів
+ * * 1 тестове запитання - 3 бали
+ * * завдання з натисканням на картинку(перехрестя)  - 7 балів
+ * *Всього: 30 балів, прохідний - 24**/
 public class level12 extends Level {
     public level12(Drivetopia app, int userID) {
         // (app,1,new SimpleTextChoiceQuestion()));
@@ -31,7 +31,7 @@ public class level12 extends Level {
         this.userId = userID;
         this.currentscore = 0;
         this.maximumScore = 20;
-        this.failureScore = 5;
+        this.failureScore = 7;
 
 
        tasks.add(new InteractiveCrosswalkScreen(app,this,userID));

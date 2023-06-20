@@ -27,12 +27,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
+import com.wheelie.co.Theory.BasicTheory;
+import com.wheelie.co.Theory.TheoryScreen;
 import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.Tools.MyDialog;
 import com.wheelie.co.levels20.IntermediateScreen;
 import com.wheelie.co.levels20.level1;
 import com.wheelie.co.levels20.level10;
 import com.wheelie.co.levels20.level12;
+import com.wheelie.co.levels20.level14;
 import com.wheelie.co.levels20.level2;
 import com.wheelie.co.levels20.level4;
 import com.wheelie.co.levels20.level5;
@@ -232,12 +235,15 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         TextButton theoryBtn = new TextButton("Теорія", skin);
         TextButton practiceBtn = new TextButton("Практика", skin);
 
+        BasicTheory.setApp(app);
         theoryBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 dialog.hide();
-                app.setScreen(new TheoryScreen(app,dialog.getMessage(),userID,dialog.getLevel()));
-                dispose();
+                if(dialog.getLevel()==1) {
+                    app.setScreen(new TheoryScreen(app, BasicTheory.getSlides(1),userID));
+                    dispose();
+                }
             }
         });
 
@@ -271,8 +277,10 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
                     app.setScreen(new IntermediateScreen(app,new level12(app,userID),userID,0,false));
                dispose();
                 }
-                //    app.setScreen(new IntermediateScreen(app,new level1(app,userID),userID,0,false));
-                   // app.setScreen(new SimpleTextChoiceQuestionScreen(app,1,new SimpleTextChoiceQuestion()));
+                if(dialog.getLevel()==18) {
+                    app.setScreen(new IntermediateScreen(app,new level14(app,userID),userID,0,false));
+                    dispose();
+                }
             }
         });
 

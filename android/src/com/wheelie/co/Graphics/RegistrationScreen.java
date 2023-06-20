@@ -191,7 +191,7 @@ public class RegistrationScreen extends ScreenAdapter implements InputProcessor 
 
 
                     mode=2;
-                    loginBtn.setText("Увійти " + id);
+                    loginBtn.setText("Увійти");
                     emailField.setDisabled(true);
                     passwordField.setDisabled(true);
                     confirmField.setDisabled(true);

@@ -15,11 +15,13 @@ import java.util.LinkedList;
 
 
 
-/**Тема 2: Загальні положення
- * 3 тестових питань - 9 балів
- * 3 завдання де вводиш відповідь сам - 15 балів
- * Всього - 24 бали**/
-public class level2 extends Level {
+/**Тема 2:  Обов’язки та права: водіїв, пасажирів
+ *3 тестових завдання - 9 балів,
+ *3 завдання з уведенням - 15 балів,
+ *Всього: 24 бали, прохідний - 19**/
+/**ДОРОБЛЕНО**/
+
+ public class level2 extends Level {
      public level2(Drivetopia app, int userID) {
         // (app,1,new SimpleTextChoiceQuestion()));
         final SQLiteDatabase db = app.getDatabase();
