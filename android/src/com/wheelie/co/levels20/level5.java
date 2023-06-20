@@ -14,7 +14,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
-
+/**Тема 5: Попереджувальні сигнали
+ * ??? **/
 public class level5 extends Level{
     public level5() {}
     public level5(Drivetopia app, int userID) {

@@ -254,7 +254,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         /**Заповнюємо інформацію про рівні**/
 
         ContentValues flashCardValues = new ContentValues();
-        flashCardValues.put("levelNumb", 4);
+        flashCardValues.put("levelNumb", 14);
         flashCardValues.put("text", "На якій картинці зображений знак 'Пішохідний перехід'?");
         flashCardValues.put("answer", "sign15.png");
         flashCardValues.put("type", "sign");
@@ -262,7 +262,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
 
         flashCardValues = new ContentValues();
-        flashCardValues.put("levelNumb", 4);
+        flashCardValues.put("levelNumb", 14);
         flashCardValues.put("text", "На якій картинці зображений знак 'Кінець велосипедної смуги'?");
         flashCardValues.put("answer", "sign1.png");
         flashCardValues.put("type", "sign");
@@ -270,7 +270,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
 
         flashCardValues = new ContentValues();
-        flashCardValues.put("levelNumb", 4);
+        flashCardValues.put("levelNumb", 14);
         flashCardValues.put("text", "На якій картинці зображений знак 'Кінець пішохідної зони'?");
         flashCardValues.put("answer", "sign14.png");
         flashCardValues.put("type", "sign");
@@ -278,7 +278,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
 
         flashCardValues = new ContentValues();
-        flashCardValues.put("levelNumb", 4);
+        flashCardValues.put("levelNumb", 14);
         flashCardValues.put("text", "На якій картинці зображений знак 'Смуга руху для аварійної зупинки'?");
         flashCardValues.put("answer", "sign13.png");
         flashCardValues.put("type", "sign");
@@ -286,7 +286,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
 
         flashCardValues = new ContentValues();
-        flashCardValues.put("levelNumb", 4);
+        flashCardValues.put("levelNumb", 14);
         flashCardValues.put("text", "На якій картинці зображений знак 'Дорога з одностороннім рухом'?");
         flashCardValues.put("answer", "sign11.png");
         flashCardValues.put("type", "sign");
@@ -294,7 +294,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
 
         flashCardValues = new ContentValues();
-        flashCardValues.put("levelNumb", 4);
+        flashCardValues.put("levelNumb", 14);
         flashCardValues.put("text", "На якій картинці зображений знак 'Дорога із зустрічною велосипедною смугою'?");
         flashCardValues.put("answer", "sign10.png");
         flashCardValues.put("type", "sign");
