@@ -77,8 +77,8 @@ public class Drivetopia extends Game {
 	setScreen(new LevelsScreen(this,1));
 		/*LinkedList<Slide> slides = new LinkedList<>();
 		slides.add(new Slide("theory1.jpg", FileService.readTheory(1)));
-		slides.add(new Slide("theory2.jpg", FileService.readTheory(2)));
-		slides.add(new Slide("theory3.jpg", FileService.readTheory(3)));
+		slides.add(new Slide("theory2-3.jpg", FileService.readTheory(2)));
+		slides.add(new Slide("theory3-2.jpg", FileService.readTheory(3)));
 		slides.add(new Slide("theory4.jpg", FileService.readTheory(4)));
 		slides.add(new Slide("theory5.jpg", FileService.readTheory(5)));
 		slides.add(new Slide("theory6.jpg", FileService.readTheory(6)));

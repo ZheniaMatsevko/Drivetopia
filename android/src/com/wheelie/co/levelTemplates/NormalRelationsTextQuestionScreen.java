@@ -186,17 +186,17 @@ public class NormalRelationsTextQuestionScreen extends ScreenAdapter implements 
 
         exitButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                if(selectBox1.getSelected().equals(question.findTextAnswer(text.get(0)))){
+                if(selectBox1.getSelected().equals(question.findTextAnswer(answers.get(0)))){
                     level.currentscore+=2;
                 }else{
                     level.failureScoreCount+=2;
                 }
-                if(selectBox2.getSelected().equals(question.findTextAnswer(text.get(1)))){
+                if(selectBox2.getSelected().equals(question.findTextAnswer(answers.get(1)))){
                     level.currentscore+=2;
                 }else{
                     level.failureScoreCount+=2;
                 }
-                if(selectBox3.getSelected().equals(question.findTextAnswer(text.get(2)))){
+                if(selectBox3.getSelected().equals(question.findTextAnswer(answers.get(2)))){
                     level.currentscore+=2;
                 }else{
                     level.failureScoreCount+=2;

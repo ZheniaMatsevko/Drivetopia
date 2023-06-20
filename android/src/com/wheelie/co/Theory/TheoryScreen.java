@@ -108,7 +108,7 @@ public class TheoryScreen extends ScreenAdapter implements InputProcessor {
         scrollPane.setBounds(10, GraphicConstants.rowHeight + 5, GraphicConstants.screenWidth - 20, GraphicConstants.screenHeight/1.5f);
 
         Image image = new Image(new Texture(slides.get(currentSlide).getImage()));
-        image.setSize(2000f,1000);
+        //image.setSize(2000f,1000);
 
 
         Label label = new Label(slides.get(currentSlide).getText(), skinForText);
@@ -117,7 +117,10 @@ public class TheoryScreen extends ScreenAdapter implements InputProcessor {
         Table table = new Table();
         table.defaults().pad(10,10,40,10);
 
-        table.add(image).height(GraphicConstants.rowHeight*2).width(GraphicConstants.screenWidth-20).row();
+        //table.add(image).height(GraphicConstants.rowHeight*2).width(GraphicConstants.screenWidth-20).row();
+        //table.add(label).width(GraphicConstants.screenWidth-20).row();
+
+        table.add(image).row();
         table.add(label).width(GraphicConstants.screenWidth-20).row();
 
 

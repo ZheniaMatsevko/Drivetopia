@@ -35,19 +35,7 @@ public class NormalRelationsQuestion {
         this.type=type;
         imageTasks = new HashMap<>();
         textTasks = new HashMap<>();
-        if(type=="text"){
-            textTasks.put("попереджувальні знаки","інформують водіїв про наближення до небезпечної ділянки дороги і характер небезпеки.");
-            textTasks.put("знаки пріоритету","встановлюють черговість проїзду перехресть, перехрещень проїзних частин або вузьких ділянок дороги;");
-            textTasks.put("заборонні знаки","показують обов’язкові напрямки руху або дозволяють деяким категоріям учасників рух по проїзній частині чи окремих її ділянках, а також запроваджують або скасовують деякі обмеження;");
-              /*попереджувальні знаки — інформують водіїв про наближення до небезпечної ділянки дороги і характер небезпеки. Під час руху по цій ділянці необхідно вжити заходів для безпечного проїзду;
-знаки пріоритету — встановлюють черговість проїзду перехресть, перехрещень проїзних частин або вузьких ділянок дороги;
-заборонні знаки — запроваджують або скасовують певні обмеження в русі;
-наказові знаки — показують обов’язкові напрямки руху або дозволяють деяким категоріям учасників рух по проїзній частині чи окремих її ділянках, а також запроваджують або скасовують деякі обмеження;
-інформаційно-вказівні знаки — запроваджують або скасовують певний режим руху, а також інформують учасників дорожнього руху про розташування населених пунктів, різних об’єктів, територій, де діють спеціальні правила;
-знаки сервісу — інформують учасників дорожнього руху про розташування об’єктів обслуговування;
-таблички до дорожніх знаків — уточнюють або обмежують дію знаків, разом з якими вони встановлені.
-*/
-        }
+
     }
     public void addImageTask(String text, String answer){
         Texture myTexture = new Texture(Gdx.files.internal(answer));
@@ -131,7 +119,7 @@ public class NormalRelationsQuestion {
     }
 
     private void addTextTask(String question, String answer) {
-        textTasks.put(question,answer);
+        textTasks.put(answer,question);
     }
 
     public String getType() {
@@ -153,12 +141,12 @@ public class NormalRelationsQuestion {
         }
         return "";
     }
-    public String findTextAnswer(String question){
-        if(textTasks.containsKey(question)){
+    public String findTextAnswer(String answer){
+        if(textTasks.containsKey(answer)){
             int index = -1;
             int currentIndex = 0;
             for (Map.Entry<String, String> entry : textTasks.entrySet()) {
-                if (entry.getKey().equals(question)) {
+                if (entry.getKey().equals(answer)) {
                     index = currentIndex;
                     break;
                 }
@@ -192,10 +180,10 @@ public class NormalRelationsQuestion {
         if(type=="image")
             return new ArrayList<>(imageTasks.values());
         else
-            return new ArrayList<>(textTasks.keySet());
+            return new ArrayList<>(textTasks.values());
     }
     public ArrayList<String> getAnswers() {
-        return new ArrayList<>(textTasks.values());
+        return new ArrayList<>(textTasks.keySet());
     }
     public ArrayList<ImageButton> getImages() {
         return new ArrayList<>(imageTasks.keySet());

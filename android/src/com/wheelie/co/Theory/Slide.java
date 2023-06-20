@@ -19,8 +19,8 @@ public class Slide {
     private String image;
     private String text;
 
-    public Slide(String image, String text){
-        this.text= FileService.readFile(text);
+    public Slide(String image, String path){
+        this.text= FileService.readFile(path);
         this.image=image;
         //image = new Image(new Texture(path));
         //image.setSize(GraphicConstants.screenWidth-10,GraphicConstants.rowHeight*2.5f);
