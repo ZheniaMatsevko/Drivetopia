@@ -7,6 +7,7 @@ public class DBConstants {
     public static final String FLASHCARD_QUESTION_TABLE= "normalFlashCardQuestion";
     public static final String FLASHCARD_IMAGES_TABLE= "flashCardImages";
     public static final String RELATIONS_TABLE= "normalRelationsQuestion";
+    public static final String THEORY_TABLE= "theory";
 
 
 }

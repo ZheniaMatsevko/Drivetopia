@@ -79,18 +79,6 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
 
 
-        // Create "theory" table
-        //таблиця для збереження інформації для кожного екрану теорії
-        String createTheoryTable = "CREATE TABLE IF NOT EXISTS theory (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                "levelNumb INTEGER NOT NULL, " +
-                "pictures TEXT NOT NULL, " +
-                "texts TEXT NOT NULL" +
-                ")";
-        db.execSQL(createTheoryTable);
-
-
-
 
         // Create "simpleChoiceQuestion" table
         //таблиця для збереження інформації про кожні прості тести з вибором
@@ -152,6 +140,14 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
                 "type TEXT NOT NULL " + //image or text
                 ")";
         db.execSQL(createNormalRelationsQuestion);
+
+        String createTheoryTable = "CREATE TABLE IF NOT EXISTS theory (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "levelNumb INTEGER NOT NULL, " +
+                "text TEXT NOT NULL, " +
+                "image TEXT NOT NULL " +
+                ")";
+        db.execSQL(createTheoryTable);
 
 
         // Insert initial data
@@ -227,7 +223,29 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         }
 
 
+        /**
+         * Заповнюємо теорію
+         */
+        ContentValues theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 1);
+        theoryValues.put("text", "theory1.txt");
+        theoryValues.put("image", "theory1.jpg");
 
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 1);
+        theoryValues.put("text", "theory1-2.txt");
+        theoryValues.put("image", "theory1-2.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 1);
+        theoryValues.put("text", "theory1-3.txt");
+        theoryValues.put("image", "theory1-3.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
 
 
 
