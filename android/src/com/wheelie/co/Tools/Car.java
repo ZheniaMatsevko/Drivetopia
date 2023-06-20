@@ -4,40 +4,37 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class Car extends Actor {
-    private Rectangle carBounds;
+    private Polygon carBounds;
     private TextureRegion carTexture;
-    private Texture tempTexture;
-    private float carRotation;
+
     private Image car;
 
     public Car(TextureRegion texture) {
         this.carTexture = texture;
-        this.car = new Image(this.carTexture);
+        car = new Image(this.carTexture);
 
-        tempTexture = carTexture.getTexture();
+        Texture tempTexture = carTexture.getTexture();
 
-        this.carBounds = new Rectangle(0, 0, tempTexture.getWidth(), tempTexture.getHeight());
-        //this.carBounds = new Rectangle();
-        this.car.setOrigin(this.car.getWidth() / 5f, this.car.getHeight() / 5f);
-        this.car.setRotation(this.carRotation);
+        float[] vertices = {
+                0, 0,                      // Bottom-left
+                tempTexture.getWidth(), 0, // Bottom-right
+                tempTexture.getWidth(), tempTexture.getHeight(),  // Top-right
+                0, tempTexture.getHeight() // Top-left
+        };
+
+        this.carBounds = new Polygon(vertices);
+        car.setOrigin(car.getWidth() / 2f, car.getHeight() / 2f);
 
         this.setPosition(0, 0);
-        this.setSize(this.car.getWidth(), this.car.getHeight());
+        this.setSize(car.getWidth(), car.getHeight());
 
         this.setOrigin(this.getWidth() / 5f, this.getHeight() / 5f);
-    }
-
-    public Car(TextureRegion texture, float x, float y, float rotation) {
-        this.car = new Image(texture);
-        this.car.setPosition(x, y);
-        this.carRotation = rotation;
-        this.carBounds = new Rectangle(x, y, this.car.getWidth(), this.car.getHeight());
     }
 
     @Override
@@ -47,11 +44,31 @@ public class Car extends Actor {
         batch.draw(carTexture, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
     }
 
-    public Rectangle getCarBounds() {
+    public Polygon getCarBounds() {
         return carBounds;
     }
 
-    public void setCarBounds(float x, float y, float width, float height) {
-        this.carBounds = new Rectangle(x, y, width, height);
+    public void setCarBounds(float[] vertices) {
+        this.carBounds = new Polygon(vertices);
+        this.carBounds.setPosition(getX(), getY());
+        this.carBounds.setOrigin(getOriginX(), getOriginY());
+        this.carBounds.setRotation(getRotation());
     }
+
+    public void updateBounds() {
+        float carWidth = getWidth();
+        float carHeight = getHeight();
+        float[] carVertices = {
+                0, 0,
+                carWidth, 0,
+                carWidth, carHeight,
+                0, carHeight
+        };
+
+        carBounds = new Polygon(carVertices);
+        carBounds.setPosition(getX(), getY());
+        carBounds.setRotation(getRotation());
+        carBounds.setOrigin(getOriginX(), getOriginY());
+    }
+
 }
