@@ -822,13 +822,179 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
 
 
+        /**рівень 5**/
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 5);
+        normalInputValues.put("text", "Чи надає водієві переваги попереджувальний сигнал?");
+        normalInputValues.put("answer", "ні");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 5);
+        normalInputValues.put("text", "Що забороняється використовувати, як попереджувальний сигнал, в умовах, коли це може призвести до засліплення інших водіїв?");
+        normalInputValues.put("answer", "дальнє світло фар");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 5);
+        normalInputValues.put("text", "Який попереджувальний сигнал слід ввімкнути у разі зупинки на вимогу поліцейького?");
+        normalInputValues.put("answer", "аварійну світлову сигналізацію");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 5);
+        normalInputValues.put("text", "Який попереджувальний сигнал слід ввімкнути у разі вимушеної зупинки на дорозі?");
+        normalInputValues.put("answer", "аварійну світлову сигналізацію");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
 
 
 
         normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 5);
+        normalInputValues.put("text", "Чи вважаються за попереджувальні сигнали, які подаються рукою?");
+        normalInputValues.put("answer", "так");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+
+
+        /**рівень 6**/
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 6);
+        normalInputValues.put("text", "За одночасного перестроювання транспортних засобів в одному напрямку дорогу має дати водій, що рухається...");
+        normalInputValues.put("answer", "ліворуч");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 6);
+        normalInputValues.put("text", "Чи дозволяється розворот на залізничному переїзді?");
+        normalInputValues.put("answer", "ні");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 6);
+        normalInputValues.put("text", "Чи дозволяється розворот у тунелі?");
+        normalInputValues.put("answer", "ні");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 6);
+        normalInputValues.put("text", "Розворот забороняється за видимості менше... (у м)");
+        normalInputValues.put("answer", "100");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 6);
+        normalInputValues.put("text", "Чи має водій давати дорогу іншим, виїжджаючи з житлової зони?");
+        normalInputValues.put("answer", "так");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+        /**рівень 7**/
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 7);
+        normalInputValues.put("text", "Чи дозволяється виїжджати на трамвайну колію зустрічного напрямку?");
+        normalInputValues.put("answer", "ні");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 7);
+        normalInputValues.put("text", "Транспортні засоби, швидкість руху яких не повинна перевищувати 40 км/год, повинні рухатися якнайближче до _______ краю проїзної частини.");
+        normalInputValues.put("answer", "правого");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 7);
+        normalInputValues.put("text", "Чи можна займати дві смуги одночасно під час руху?");
+        normalInputValues.put("answer", "ні");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 7);
+        normalInputValues.put("text", "Наїжджати на переривчасті лінії розмітки дозволяється лише під час...");
+        normalInputValues.put("answer", "перестроювання");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+       /**рівень 8**/
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 8);
+        normalInputValues.put("text", "Зі швидкістю не більше 50 км/год дозволяється рух у...");
+        normalInputValues.put("answer", "населених пунктах");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 8);
+        normalInputValues.put("text", "Під час буксирування швидкість не повинна перевищувати... (у км/год)");
+        normalInputValues.put("answer", "50");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 8);
+        normalInputValues.put("text", "Поза населеними пунктами швидкість автобусів не повинна перевищувати 90 км/год за винятком...");
+        normalInputValues.put("answer", "мікроавтобусів");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 8);
+        normalInputValues.put("text", "Чи дозволяється різко гальмувати, якщо без цього не запобігти ДТП?");
+        normalInputValues.put("answer", "так");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 8);
+        normalInputValues.put("text", "Чи дозволяється без потреби рухатися з дуже малою швидкістю?");
+        normalInputValues.put("answer", "ні");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+        /**рівень 9**/
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 9);
+        normalInputValues.put("text", "На дорогах, позначених знаками Крутий підйом або Крутий спуск, за наявності перешкоди дати дорогу повинен водій, що рухається...");
+        normalInputValues.put("answer", "на спуск");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+
+
+        /**рівень 12**/
+
+        normalInputValues = new ContentValues();
         normalInputValues.put("levelNumb", 12);
         normalInputValues.put("text", "Хто має перевагу на пішохідному переході?");
-        normalInputValues.put("answer", "Пішоходи");
+        normalInputValues.put("answer", "пішоходи");
 
         db.insert("normalTextInputQuestion", null, normalInputValues);
 
