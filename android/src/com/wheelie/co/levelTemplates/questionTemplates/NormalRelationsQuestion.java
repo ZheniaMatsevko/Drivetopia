@@ -106,6 +106,9 @@ public class NormalRelationsQuestion {
         for(int i=0;i<keyList.size();i++){
             if(i!=0 && i%3==0){
                 list.add(normalRelationsQuestion);
+                if(i+3 > keyList.size()){
+                    break;
+                }
                 normalRelationsQuestion = new NormalRelationsQuestion(type);
             }
             if(type=="image")

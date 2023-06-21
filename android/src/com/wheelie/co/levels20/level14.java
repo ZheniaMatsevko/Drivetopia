@@ -15,7 +15,7 @@ import java.util.LinkedList;
 /**Тема 14. Дорожні знаки і розмітка
         * 2 флеш-картки - 10 балів
         * 2 запитання на відповідність (з картинкою)  - 12 балів
-        *???
+        *ще додати: ???
 **/
 public class level14 extends Level{
     public level14(Drivetopia app, int userID) {

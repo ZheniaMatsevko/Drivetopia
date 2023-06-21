@@ -37,6 +37,7 @@ import com.wheelie.co.levels20.level10;
 import com.wheelie.co.levels20.level12;
 import com.wheelie.co.levels20.level14;
 import com.wheelie.co.levels20.level2;
+import com.wheelie.co.levels20.level3;
 import com.wheelie.co.levels20.level4;
 import com.wheelie.co.levels20.level5;
 
@@ -64,6 +65,8 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
     private final GlyphLayout layout;
 
     private ImageButton mainMenuBtn;
+    private ImageButton finalTestButton;
+
     private List<ImageButton> levelsBtns;
     private Image soundBtn;
 
@@ -178,6 +181,9 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
 
 
 
+
+
+
         for(int i=0;i<15;i++){
             String path = "level" + (i+1) + ".png";
             Texture myTexture = new Texture(Gdx.files.internal(path));
@@ -212,6 +218,15 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         levelsBtns.get(14).setPosition(GraphicConstants.screenWidth-GraphicConstants.colWidth*2+20,GraphicConstants.rowHeight*2-100);
        // levelsBtns.get(14).setSize(290,220);
 
+        Texture finTexture = new Texture(Gdx.files.internal("finalTestButton.png"));
+        TextureRegion finRegion = new TextureRegion(finTexture);
+        final TextureRegionDrawable finRegionDrawable = new TextureRegionDrawable(finRegion);
+
+        finalTestButton = new ImageButton(finRegionDrawable);
+
+        finalTestButton.setPosition(GraphicConstants.centerX-(finalTestButton.getWidth()/2F),GraphicConstants.rowHeight/2);
+        finalTestButton.setScale(0.5f,0.5f);
+        stage.addActor(finalTestButton);
 
 
         sprite = new Sprite(new Texture(Gdx.files.internal("levels1.jpg")));
@@ -247,6 +262,10 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
                 }
                 if(dialog.getLevel()==2) {
                     app.setScreen(new IntermediateScreen(app,new level2(app,userID),userID,0,false));
+                    dispose();
+                }
+                if(dialog.getLevel()==3) {
+                    app.setScreen(new IntermediateScreen(app,new level3(app,userID),userID,0,false));
                     dispose();
                 }
                 if(dialog.getLevel()==4) {
