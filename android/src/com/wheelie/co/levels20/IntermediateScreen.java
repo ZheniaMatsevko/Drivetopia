@@ -2,6 +2,7 @@ package com.wheelie.co.levels20;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -159,7 +160,7 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
                if(!failure && level.failureScoreCount==0) {
                    updateUserStateForLevel(app.getDatabase(),userId,level.levelNumb,2);
                }
-               /**якщо не на максимум, то стан 1**/
+               /**якщо не на максимум, то стан 1 || ЯКЩО СТАН УЖЕ 2, ТО НЕ ОНОВЛЮЄТЬСЯ**/
                else if(!failure) {
                    updateUserStateForLevel(app.getDatabase(),userId,level.levelNumb,1);
 
@@ -253,11 +254,24 @@ dispose();
     }
 
     public void updateUserStateForLevel(SQLiteDatabase database, int userId, int levelNumb, int newState) {
-        String query = "UPDATE scores SET state = ? WHERE userId = ? AND levelNumb = ?";
-        Object[] args = {newState, userId, levelNumb};
+        String query = "SELECT state FROM scores WHERE userId = ? AND levelNumb = ?";
+        String[] args = {String.valueOf(userId), String.valueOf(levelNumb)};
+        Cursor cursor = database.rawQuery(query, args);
 
-        database.execSQL(query, args);
+        if (cursor.moveToFirst()) {
+            int currentState = cursor.getInt(cursor.getColumnIndexOrThrow("state"));
+            if (newState > currentState) {
+                String updateQuery = "UPDATE scores SET state = ? WHERE userId = ? AND levelNumb = ?";
+                Object[] updateArgs = {newState, userId, levelNumb};
+
+                database.execSQL(updateQuery, updateArgs);
+                Log.d("state of user " + userId + ", level " + levelNumb, "set to " + newState);
+            }
+        }
+
+        cursor.close();
     }
+
 
     public int getUserScoreForLevel(SQLiteDatabase database, int userId, int levelNumb) {
         String query = "SELECT score FROM scores WHERE userId = ? AND levelNumb = ?";

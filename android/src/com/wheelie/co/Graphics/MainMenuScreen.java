@@ -103,13 +103,10 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
             }
         });
         stage.addActor(startBtn);
-        settingsBtn = new TextButton("Налаштування",skin);
-        settingsBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
-        settingsBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,startBtn.getY()-startBtn.getHeight()*1.2F);
-        stage.addActor(settingsBtn);
+
         aboutBtn = new TextButton("Про додаток",skin);
         aboutBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
-        aboutBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,settingsBtn.getY()-startBtn.getHeight()*1.2F);
+        aboutBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,startBtn.getY()-startBtn.getHeight()*1.2F);
         aboutBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
                 app.setScreen(new AboutScreen(app,userId));

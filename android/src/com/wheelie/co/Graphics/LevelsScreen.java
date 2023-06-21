@@ -113,7 +113,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
 
         mainMenuBtn = new ImageButton(myTexRegionDrawable0);
         mainMenuBtn.setSize(280,170);
-        mainMenuBtn.setPosition(0, GraphicConstants.rowHeight*7.3F);
+        mainMenuBtn.setPosition(GraphicConstants.colWidth*7-mainMenuBtn.getWidth()/2, GraphicConstants.rowHeight*7.3F);
         mainMenuBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
                 app.setScreen(new MainMenuScreen(app,userID));
@@ -136,46 +136,6 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         TextureRegion myTextureRegion3 = new TextureRegion(myTexture3);
         final TextureRegionDrawable myTexRegionDrawable3 = new TextureRegionDrawable(myTextureRegion3);
 
-
-        if(soundState==1) {
-            soundBtn = new Image(new Texture(Gdx.files.internal("sound2.png")));
-        }
-        else if(soundState==2){
-            soundBtn = new Image(new Texture(Gdx.files.internal("sound2small.png")));
-
-        }
-        else if (soundState==3) {
-
-            soundBtn = new Image(new Texture(Gdx.files.internal("sound2no.png")));
-
-        }
-        soundBtn.setSize(250,150);
-        soundBtn.setPosition(GraphicConstants.colWidth*7-soundBtn.getWidth()/2, GraphicConstants.rowHeight*7.3F);
-        soundState = 1;
-
-        /**це чомусь не працює :( upd": працює**/
-        soundBtn.addListener(new ClickListener() {
-            public void clicked(InputEvent event,float x, float y) {
-                switch(soundState) {
-                    case 1:
-                        soundBtn.setDrawable(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("sound2small.png")))));
-                        soundState  = 2;
-                        break;
-                    case 2:
-                        soundBtn.setDrawable(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("sound2no.png")))));
-                        soundState  = 3;
-                        break;
-                    default:
-                        soundBtn.setDrawable(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("sound2.png")))));
-                        soundState  = 1;
-                        break;
-                }
-            }
-        });
-
-
-
-        stage.addActor(soundBtn);
 
         levelsBtns = new LinkedList<>();
 
@@ -215,7 +175,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         //levelsBtns.get(12).setSize(290,220);
         levelsBtns.get(13).setPosition(GraphicConstants.colWidth*5-40,GraphicConstants.rowHeight*2+30);
         //levelsBtns.get(13).setSize(290,220);
-        levelsBtns.get(14).setPosition(GraphicConstants.screenWidth-GraphicConstants.colWidth*2+20,GraphicConstants.rowHeight*2-100);
+        levelsBtns.get(14).setPosition(GraphicConstants.screenWidth-GraphicConstants.colWidth*2+10,GraphicConstants.rowHeight*2-130);
        // levelsBtns.get(14).setSize(290,220);
 
         Texture finTexture = new Texture(Gdx.files.internal("finalTestButton.png"));
