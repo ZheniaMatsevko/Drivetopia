@@ -182,8 +182,8 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         values2.put("fathername", "Миколаївна");
         values2.put("score", 700);
         values2.put("dateOfBirth", "1996-02-03");
-        values2.put("failures", 3);
-        values2.put("pass", 1);
+        values2.put("failures", 0);
+        values2.put("pass", 0);
 
         newRowId = db.insertWithOnConflict("users", null, values2,SQLiteDatabase.CONFLICT_REPLACE);
 
@@ -208,7 +208,9 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
                 valuess.put("userId", userId);
                 valuess.put("levelNumb", levelNumb);
                 valuess.put("score", 0);
-                valuess.put("state", 0);
+
+                if(userId==1 || levelNumb==16)valuess.put("state", 0);
+                else valuess.put("state", 1);
 
                 long rowId = db.insert("scores", null, valuess);
 

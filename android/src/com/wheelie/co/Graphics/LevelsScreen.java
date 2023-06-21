@@ -186,6 +186,12 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
 
         finalTestButton.setPosition(GraphicConstants.centerX-(finalTestButton.getWidth()/2F),GraphicConstants.rowHeight/2);
         //finalTestButton.setScale(0.5f,0.5f);
+        finalTestButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event,float x, float y) {
+                app.setScreen(new FinalTestBeginningScreen(app,userID));
+                dispose();
+            }
+        });
         stage.addActor(finalTestButton);
 
 
