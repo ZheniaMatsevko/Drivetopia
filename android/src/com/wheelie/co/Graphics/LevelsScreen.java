@@ -199,7 +199,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         levelsBtns.get(1).setPosition(levelsBtns.get(0).getWidth() - 65,GraphicConstants.rowHeight*6 - 55);
         levelsBtns.get(2).setPosition(levelsBtns.get(0).getWidth()*2 - 120,GraphicConstants.rowHeight*6 - 65);
         levelsBtns.get(3).setPosition(GraphicConstants.screenWidth-GraphicConstants.colWidth*2-60,GraphicConstants.rowHeight*5+190);
-        levelsBtns.get(4).setPosition(GraphicConstants.screenWidth-GraphicConstants.colWidth*2,GraphicConstants.rowHeight*4 +215);
+        levelsBtns.get(4).setPosition(GraphicConstants.screenWidth-GraphicConstants.colWidth*2,GraphicConstants.rowHeight*4 +225);
         levelsBtns.get(5).setPosition(levelsBtns.get(0).getWidth()*2 +140,GraphicConstants.rowHeight*4 + 5);
         levelsBtns.get(6).setPosition(levelsBtns.get(1).getX()+280,levelsBtns.get(5).getY());
         levelsBtns.get(7).setPosition(levelsBtns.get(0).getX()+300,levelsBtns.get(5).getY());
@@ -225,7 +225,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         finalTestButton = new ImageButton(finRegionDrawable);
 
         finalTestButton.setPosition(GraphicConstants.centerX-(finalTestButton.getWidth()/2F),GraphicConstants.rowHeight/2);
-        finalTestButton.setScale(0.5f,0.5f);
+        //finalTestButton.setScale(0.5f,0.5f);
         stage.addActor(finalTestButton);
 
 

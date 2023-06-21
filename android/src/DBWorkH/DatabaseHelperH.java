@@ -986,6 +986,23 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
         db.insert("normalTextInputQuestion", null, normalInputValues);
 
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 9);
+        normalInputValues.put("text", "Відстань до транспортного засобу, що рухається попереду:");
+        normalInputValues.put("answer", "дистанція");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 9);
+        normalInputValues.put("text", "Відстань до транспортного засобу, що рухається по суміжній смузі:");
+        normalInputValues.put("answer", "інтервал");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        /**рівень 10**/
+
+
 
 
 

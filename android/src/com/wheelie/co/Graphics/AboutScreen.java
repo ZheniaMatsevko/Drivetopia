@@ -54,21 +54,6 @@ public class AboutScreen extends ScreenAdapter implements InputProcessor {
     private GlyphLayout layout;
     private TextButton backButton;
 
-    private TextButton editButton;
-
-    private Label PIB;
-
-    private Label age;
-
-    private Label failures;
-
-    private Integer ageBD = 19;
-
-    private String PIBBD = "Зубенко Михайло Петрович";
-
-    private Integer failuresBD = 1;
-
-
 
 
 
@@ -119,7 +104,7 @@ public class AboutScreen extends ScreenAdapter implements InputProcessor {
         skin2.load(Gdx.files.internal("skin-composer-ui.json"));
 
         ScrollPane scrollPane = new ScrollPane(null);
-        scrollPane.setBounds(10, 10, GraphicConstants.screenWidth - 20, GraphicConstants.rowHeight*6);
+        scrollPane.setBounds(10, GraphicConstants.rowHeight + 10, GraphicConstants.screenWidth - 20, GraphicConstants.rowHeight*5);
 
         String text = FileService.readFile("about.txt");
 
@@ -160,7 +145,7 @@ public class AboutScreen extends ScreenAdapter implements InputProcessor {
 
 
 
-        sprite = new Sprite(new Texture(Gdx.files.internal("white.jpg")));
+        sprite = new Sprite(new Texture(Gdx.files.internal("backblue.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(stage);
         layout = new GlyphLayout(font2, "Drivetopia");

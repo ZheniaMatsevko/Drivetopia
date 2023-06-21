@@ -156,7 +156,7 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
                    updateUserScoreForLevel(app.getDatabase(),userId, level.levelNumb, level.currentscore);
                }
                 /**якщо пройдено на максимум, заноситься стан 2 в базу даних цього рівня і користувача**/
-               if(!failure && level.currentscore>=level.maximumScore) {
+               if(!failure && level.failureScoreCount==0) {
                    updateUserStateForLevel(app.getDatabase(),userId,level.levelNumb,2);
                }
                /**якщо не на максимум, то стан 1**/

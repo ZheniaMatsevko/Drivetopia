@@ -114,7 +114,7 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         ukrLocale = new Locale("uk", "UA");
         font1=fontFactory.getFont(ukrLocale,1);
         font2=fontFactory.getFont(enLocale,1);
-        font3=fontFactory.getFont(ukrLocale,2);
+        font3=fontFactory.getFont(ukrLocale,11);
         emailFont=fontFactory.getFont(enLocale,5);
 
 
@@ -129,7 +129,7 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         skin2.load(Gdx.files.internal("skin-composer-ui.json"));
 
         emailSkin = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
-        emailSkin.add("font", emailFont);
+        emailSkin.add("font", font3);
 
         emailSkin.load(Gdx.files.internal("skin-composer-ui.json"));
 
@@ -245,7 +245,7 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
 
 
 
-        sprite = new Sprite(new Texture(Gdx.files.internal("mountbgr.png")));
+        sprite = new Sprite(new Texture(Gdx.files.internal("backsun.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(stage);
         layout = new GlyphLayout(font2, "User profile");

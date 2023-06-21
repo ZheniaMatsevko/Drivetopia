@@ -31,6 +31,7 @@ public class FontFactory {
     private BitmapFont prettyUkr;
 
     private BitmapFont verySmallEn;
+    private BitmapFont prettyProfileUkr;
 
 
 
@@ -64,6 +65,7 @@ public class FontFactory {
         else if ("uk".equals(locale.getLanguage()) && numb==3) return interUkr;
         else if ("uk".equals(locale.getLanguage()) && numb==2) return smallUkr;
         else if ("uk".equals(locale.getLanguage()) && numb==10) return prettyUkr;
+        else if ("uk".equals(locale.getLanguage()) && numb==11) return prettyProfileUkr;
 
         //НЕ ВИКОРИСТОВУЙТЕ НОМЕР 2 НІ В ЯКОМУ РАЗІ ДЛЯ ШРИФТІВ ЯКЩО БУДЕТЕ СТВОРЮВАТИ НОВІ//
 
@@ -74,14 +76,15 @@ public class FontFactory {
         if (enFont != null) enFont.dispose();
         if (enSmallFont != null) enSmallFont.dispose();
         if (ukrFont != null) ukrFont.dispose();
-        if (smallUkr != null) ukrFont.dispose();
-        if (smallUkrWhite != null) ukrFont.dispose();
-        if (verySmallUkr != null) verySmallUkr.dispose();
         if (smallUkr != null) smallUkr.dispose();
+        if (smallUkrWhite != null) smallUkrWhite.dispose();
+        if (verySmallUkr != null) verySmallUkr.dispose();
         if (smallUkrWhite != null) smallUkrWhite.dispose();
         if (interUkr != null) interUkr.dispose();
         if (verySmallEn != null) verySmallEn.dispose();
         if (prettyUkr != null) prettyUkr.dispose();
+        if (prettyProfileUkr != null) prettyProfileUkr.dispose();
+
 
 
 
@@ -102,5 +105,8 @@ public class FontFactory {
         verySmallEn = generateFont(ENGLISH_FONT_NAME2, ALL_CHARACTERS,55, Color.BLACK);
 
         prettyUkr = generateFont(PRETTY_UKR_FONT_NAME, ALL_CHARACTERS,55, Color.BLACK);
+        prettyProfileUkr = generateFont(PRETTY_UKR_FONT_NAME, ALL_CHARACTERS,70, Color.BLACK);
+
+
     }
 }
