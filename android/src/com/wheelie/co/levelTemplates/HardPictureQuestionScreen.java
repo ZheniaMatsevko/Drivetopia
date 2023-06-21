@@ -64,7 +64,7 @@ public class HardPictureQuestionScreen extends ScreenAdapter implements InputPro
     private Locale ukrLocale;
     private FontFactory fontFactory;
     private final GlyphLayout layout;
-    private TextButton exitButton;
+
     private HardPictureQuestion question;
 
 
@@ -113,7 +113,7 @@ public class HardPictureQuestionScreen extends ScreenAdapter implements InputPro
         //ScrollPane scrollPane  = new ScrollPane(null);
         //scrollPane.setBounds(10, 10, GraphicConstants.screenWidth - 20, GraphicConstants.screenHeight - 20);
         Image image = new Image(new Texture(question.getBackgroundImagePath()));
-        image.setSize(2000f,1000);
+        //image.setSize(2000f,1000);
 
         String text = question.getQuestion();
 
@@ -122,11 +122,11 @@ public class HardPictureQuestionScreen extends ScreenAdapter implements InputPro
 
 
         Table table = new Table();
-        table.defaults().pad(10,10,150,10);
-        table.setPosition(10, 10); // Replace x and y with the desired coordinates
-        table.setSize(GraphicConstants.screenWidth, GraphicConstants.screenHeight);
+        table.defaults().pad(10,10,70,10);
+        table.setPosition(10, GraphicConstants.rowHeight); // Replace x and y with the desired coordinates
+        table.setSize(GraphicConstants.screenWidth-20, GraphicConstants.screenHeight - GraphicConstants.rowHeight*2);
 
-        table.add(image).width(GraphicConstants.screenWidth-20).row();
+        table.add(image).row();
         table.add(label).width(GraphicConstants.screenWidth-20).row();
         //scrollPane.setActor(table);
         //scrollPane.setScrollingDisabled(true, false); // Enable vertical scrolling
@@ -137,8 +137,20 @@ public class HardPictureQuestionScreen extends ScreenAdapter implements InputPro
         for(ImageButton b : buttons){
             b.addListener(new ClickListener() {
                 public void clicked(InputEvent event,float x, float y) {
-                    System.out.println("Hit");
-                    showDialog("Подумай краще");
+                    level.failureScoreCount+=7;
+                    if (level.failureScoreCount>=level.failureScore)app.setScreen(new IntermediateScreen(app,level,userId,2,true));
+                    else {
+                        if(level.getTasks().size()==level.currentTaskNumber()){
+                            app.setScreen(new IntermediateScreen(app,level,userId,2,false));
+                            dispose();
+                        }
+                        else {
+                            level.increaseTaskCounter();
+                            app.setScreen(level.tasks.get(level.currentTaskNumber()-1));
+                            dispose();
+                        }
+
+                    }
                 }
             });
             stage.addActor(b);
@@ -146,27 +158,23 @@ public class HardPictureQuestionScreen extends ScreenAdapter implements InputPro
 
         question.getCorrectAnswer().addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
-                System.out.println("Hit");
-                showDialog("Молодець");
+                /**Якщо це ще не останнє питання рівню, збільшує номер поточного завдання в рівні на 1 і відкриває наступне завдання**/
+                if(level.getTasks().size()!=level.currentTaskNumber()) {
+                    level.increaseTaskCounter();
+                    level.currentscore+=7;
+                    app.setScreen(level.tasks.get(level.currentTaskNumber()-1));
+                    dispose();
+                }
+                /**Якщо це останнє питання, відкриває IntermediateScreen з результатами**/
+                else {
+                    level.currentscore+=7;
+                    app.setScreen(new IntermediateScreen(app,level,userId,2,false));
+                    dispose();
+                }
             }
         });
 
         stage.addActor(question.getCorrectAnswer());
-
-        exitButton = new TextButton("Завершити",skin2);
-        exitButton.setSize(GraphicConstants.colWidth*5,GraphicConstants.rowHeight*0.7F);
-        exitButton.setPosition(GraphicConstants.centerX- exitButton.getWidth()/2,300- exitButton.getHeight()*1.2F);
-
-        exitButton.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y) {
-                app.setScreen(new LevelsScreen(app,userId));
-                dispose();
-            }
-        });
-
-        stage.addActor(exitButton);
-
-
 
         sprite = new Sprite(new Texture(Gdx.files.internal("white.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

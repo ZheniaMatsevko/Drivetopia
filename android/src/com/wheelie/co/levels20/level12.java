@@ -6,8 +6,10 @@ import android.util.Log;
 
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Graphics.InteractiveCrosswalkScreen;
+import com.wheelie.co.levelTemplates.HardPictureQuestionScreen;
 import com.wheelie.co.levelTemplates.NormalTextInputQuestionScreen;
 import com.wheelie.co.levelTemplates.SimpleTextChoiceQuestionScreen;
+import com.wheelie.co.levelTemplates.questionTemplates.HardPictureQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalTextInputQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 
@@ -48,6 +50,8 @@ public class level12 extends Level {
         ) {
             tasks.add(new NormalTextInputQuestionScreen(app,q,this,userID));
         }
+
+        tasks.add(new HardPictureQuestionScreen(app,new HardPictureQuestion(levelNumb,false),this,userID));
 
 
         Collections.shuffle(tasks);

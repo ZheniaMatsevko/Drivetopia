@@ -34,12 +34,15 @@ import com.wheelie.co.Tools.MyDialog;
 import com.wheelie.co.levels20.IntermediateScreen;
 import com.wheelie.co.levels20.level1;
 import com.wheelie.co.levels20.level10;
+import com.wheelie.co.levels20.level11;
 import com.wheelie.co.levels20.level12;
 import com.wheelie.co.levels20.level14;
+import com.wheelie.co.levels20.level15;
 import com.wheelie.co.levels20.level2;
 import com.wheelie.co.levels20.level3;
 import com.wheelie.co.levels20.level4;
 import com.wheelie.co.levels20.level5;
+import com.wheelie.co.levels20.level7;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -242,8 +245,16 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
                     app.setScreen(new IntermediateScreen(app,new level5(app,userID),userID,0,false));
                     dispose();
                 }
+                if(dialog.getLevel()==7) {
+                    app.setScreen(new IntermediateScreen(app,new level7(app,userID),userID,0,false));
+                    dispose();
+                }
                 if(dialog.getLevel()==10) {
                     app.setScreen(new IntermediateScreen(app,new level10(app,userID),userID,0,false));
+                    dispose();
+                }
+                if(dialog.getLevel()==11) {
+                    app.setScreen(new IntermediateScreen(app,new level11(app,userID),userID,0,false));
                     dispose();
                 }
                 if(dialog.getLevel()==12) {
@@ -252,6 +263,10 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
                 }
                 if(dialog.getLevel()==14) {
                     app.setScreen(new IntermediateScreen(app,new level14(app,userID),userID,0,false));
+                    dispose();
+                }
+                if(dialog.getLevel()==15) {
+                    app.setScreen(new IntermediateScreen(app,new level15(app,userID),userID,0,false));
                     dispose();
                 }
             }

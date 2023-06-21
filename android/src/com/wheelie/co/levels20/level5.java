@@ -32,7 +32,7 @@ public class level5 extends Level{
 
 
 
-      tasks.add(new HardPictureQuestionScreen(app,new HardPictureQuestion(1),this,userID));
+      tasks.add(new HardPictureQuestionScreen(app,new HardPictureQuestion(4,false),this,userID));
 
         this.numberOfTasks = tasks.size();
         this.taskCounter = 1;

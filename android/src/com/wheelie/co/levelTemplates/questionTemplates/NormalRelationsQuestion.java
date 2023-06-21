@@ -115,7 +115,6 @@ public class NormalRelationsQuestion {
                 normalRelationsQuestion.addImageTask(keyList.get(i),questions.get(keyList.get(i)));
             else
                 normalRelationsQuestion.addTextTask(keyList.get(i),questions.get(keyList.get(i)));
-
         }
 
         return list;
