@@ -132,6 +132,21 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputPr
 
         carControl = new InteractiveCarController();
         stage.addActor(carControl);
+
+        MyDialog instruct = new MyDialog("Завдання", skin);
+        instruct.setMessage("Проїдь пішохідний перехід!");
+        instruct.getButtonTable().add("ок");
+        instruct.setColor(Color.BLACK);
+
+        instruct.addListener(new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                instruct.setVisible(false);
+                return true;
+            }
+        });
+
+        instruct.setVisible(true);
+        instruct.show(stage);
     }
 
     @Override
