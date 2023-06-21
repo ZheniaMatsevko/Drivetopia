@@ -4,11 +4,13 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.wheelie.co.Drivetopia;
+import com.wheelie.co.levelTemplates.HardPictureQuestionScreen;
 import com.wheelie.co.levelTemplates.NormalFlashCardQuestionScreen;
 import com.wheelie.co.levelTemplates.NormalRelationsQuestionScreen;
 import com.wheelie.co.levelTemplates.NormalRelationsTextQuestionScreen;
 import com.wheelie.co.levelTemplates.NormalTextInputQuestionScreen;
 import com.wheelie.co.levelTemplates.SimpleTextChoiceQuestionScreen;
+import com.wheelie.co.levelTemplates.questionTemplates.HardPictureQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalFlashCardQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalRelationsQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalTextInputQuestion;
@@ -78,6 +80,7 @@ public class level4 extends Level{
         ) {
             tasks.add(new NormalRelationsTextQuestionScreen(app,q,this,userID));
         }
+        tasks.add(new HardPictureQuestionScreen(app,new HardPictureQuestion(levelNumb,false),this,userID));
 
 
        Collections.shuffle(tasks);
