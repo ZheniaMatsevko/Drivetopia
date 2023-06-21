@@ -173,6 +173,21 @@ public class InteractiveParkingScreen extends ScreenAdapter implements InputProc
 
         correctParkingArea = new Rectangle(GraphicConstants.centerX*1.05f, GraphicConstants.centerY*1.3f, userCar.getWidth()*1.25f, userCar.getHeight()*1.2f);
         incorrectParkingArea = new Rectangle(GraphicConstants.centerX*0.8f, GraphicConstants.centerY*0.76f, userCar.getHeight()*1.15f, userCar.getWidth()*1.2f);
+
+        MyDialog instruct = new MyDialog("Завдання", skin);
+        instruct.setMessage("Припаркуй вантажівку!");
+        instruct.getButtonTable().add("ок");
+        instruct.setColor(Color.BLACK);
+
+        instruct.addListener(new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                instruct.setVisible(false);
+                return true;
+            }
+        });
+
+        instruct.setVisible(true);
+        instruct.show(stage);
     }
 
     @Override

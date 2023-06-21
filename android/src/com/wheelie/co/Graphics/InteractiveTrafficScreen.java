@@ -112,6 +112,21 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         carControl = new InteractiveCarController();
         stage.addActor(carControl);
         Gdx.input.setInputProcessor(stage);
+
+        MyDialog instruct = new MyDialog("Завдання", skin);
+        instruct.setMessage("Проїдь світлофор!");
+        instruct.getButtonTable().add("ок");
+        instruct.setColor(Color.BLACK);
+
+        instruct.addListener(new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                instruct.setVisible(false);
+                return true;
+            }
+        });
+
+        instruct.setVisible(true);
+        instruct.show(stage);
     }
 
     @Override
