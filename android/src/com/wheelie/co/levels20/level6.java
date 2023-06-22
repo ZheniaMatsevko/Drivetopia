@@ -61,7 +61,6 @@ public class level6 extends Level{
         ) {
             tasks.add(new NormalTextInputQuestionScreen(app,q,this,userID));
         }
-
         /**Дістаємо всі тестові завдання з вибором, що відносяться до рівню 6**/
         LinkedList<SimpleTextChoiceQuestion> choiceQuestions = SimpleTextChoiceQuestion.extractSimpleTextChoiceQuestionsFromDB(db,levelNumb);
 

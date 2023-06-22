@@ -1584,7 +1584,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         /**рівень 5**/
 
         simpleValues = new ContentValues();
-        simpleValues.put("levelNumb", 6);
+        simpleValues.put("levelNumb", 5);
         simpleValues.put("text", "Розворот дозволяється...");
         simpleValues.put("answer", "на перехресті");
         simpleValues.put("picture", "noPicture");
