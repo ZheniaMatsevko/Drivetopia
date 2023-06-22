@@ -28,7 +28,7 @@ public class level4 extends Level{
      * 2 запитання з вводом - 10 балів
      * 1 тест - 3 бали
      * 1 запитання на відповідність - 6 балів
-     * * завдання з натисканням на картинку(поворот)  - 7 балів (НЕ ДОДАНО)
+     * * завдання з натисканням на картинку(поворот)  - 7 балів
      * * Всього: 26 балів, прохідний - 20 **/
 
     public level4(Drivetopia app, int userID) {
@@ -56,7 +56,7 @@ public class level4 extends Level{
             tasks.add(new NormalTextInputQuestionScreen(app,q,this,userID));
         }
 
-        /**Дістаємо всі тестові завдання з вибором, що відносяться до рівню 1**/
+        /**Дістаємо всі тестові завдання з вибором, що відносяться до рівню 4**/
         LinkedList<SimpleTextChoiceQuestion> choiceQuestions = SimpleTextChoiceQuestion.extractSimpleTextChoiceQuestionsFromDB(db,4);
 
         /**Обираємо 1 серед них**/

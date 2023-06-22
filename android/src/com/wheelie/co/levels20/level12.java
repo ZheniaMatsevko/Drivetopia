@@ -32,10 +32,11 @@ public class level12 extends Level {
         this.app = app;
         this.userId = userID;
         this.currentscore = 0;
-        this.maximumScore = 20;
+        this.maximumScore = 30;
         this.failureScore = 7;
 
 
+        /**завдання з пішоходом**/
        tasks.add(new InteractiveCrosswalkScreen(app,this,userID));
 
         LinkedList<NormalTextInputQuestion> inputQuestions = NormalTextInputQuestion.extractNormalTextInputQuestionsFromDB(db,levelNumb);
@@ -50,6 +51,20 @@ public class level12 extends Level {
         ) {
             tasks.add(new NormalTextInputQuestionScreen(app,q,this,userID));
         }
+
+        /**Дістаємо всі тестові завдання з вибором, що відносяться до рівню 12**/
+        LinkedList<SimpleTextChoiceQuestion> choiceQuestions = SimpleTextChoiceQuestion.extractSimpleTextChoiceQuestionsFromDB(db,levelNumb);
+
+        /**Обираємо 1 серед них**/
+        LinkedList<SimpleTextChoiceQuestion> finalChoiceQuestions = selectRandomSimpleChoiceQuestions(choiceQuestions,1);
+
+        /**Створюємо екрани для кожного запитання з вибором і додаємо в список екранів рівня**/
+        for (SimpleTextChoiceQuestion q: finalChoiceQuestions
+        ) {
+            tasks.add(new SimpleTextChoiceQuestionScreen(app,q,this,userID));
+        }
+
+
 
         tasks.add(new HardPictureQuestionScreen(app,new HardPictureQuestion(levelNumb,false),this,userID));
 

@@ -133,10 +133,12 @@ public class SimpleTextChoiceQuestionScreen extends ScreenAdapter implements Inp
 
             // Create the button with the appropriate text
             answerButtons[i] = new TextButton(buttonText, skin);
-            answerButtons[i].setSize(GraphicConstants.colWidth * 4, GraphicConstants.rowHeight * 0.7F);
-            float xPos = GraphicConstants.centerX - answerButtons[i].getWidth()*0.5F;
-            float yPos = GraphicConstants.centerY - 200 - (answerButtons[i].getHeight() * i) - answerButtons[i].getHeight();
+            answerButtons[i].setSize(GraphicConstants.colWidth * 8, GraphicConstants.rowHeight * 0.7F);
+            float gap = 10F;
+            float xPos = GraphicConstants.centerX - answerButtons[i].getWidth() * 0.5F;
+            float yPos = GraphicConstants.centerY - 200 - (answerButtons[i].getHeight() + gap) * i - answerButtons[i].getHeight();
             answerButtons[i].setPosition(xPos, yPos);
+
 
             // Add a click listener to each button
             final int buttonIndex = i;

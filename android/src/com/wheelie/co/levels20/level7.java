@@ -17,8 +17,10 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 /**Тема 7: Розташування транспорту на дорозі
+ *  3 запитання з вводом - 15 балів
  * завдання з натисканням на картинку (вантажівка-порушник)  - 7 балів
- *???**/
+ *1 тест -  3 бали (не зроблено)
+ * Всього: 25 балів, прохідний - 19**/
 
  public class level7 extends Level{
  public level7() {}
@@ -31,11 +33,23 @@ import java.util.LinkedList;
   this.tasks=new LinkedList<>();
   this.app = app;
   this.currentscore = 0;
-  this.maximumScore = 7;
+  this.maximumScore = 25;
   this.failureScore = 7;
 
   tasks.add(new HardPictureQuestionScreen(app,new HardPictureQuestion(levelNumb,false),this,userID));
 
+  LinkedList<NormalTextInputQuestion> inputQuestions = NormalTextInputQuestion.extractNormalTextInputQuestionsFromDB(db,levelNumb);
+
+  /**Обираємо 3 серед них**/
+  LinkedList<NormalTextInputQuestion> finalInputQuestions = selectRandomInputQuestions(inputQuestions,3);
+
+  Collections.shuffle(finalInputQuestions);
+
+  /**Створюємо екрани для кожного запитання з вводом і додаємо в список екранів рівня**/
+  for (NormalTextInputQuestion q: finalInputQuestions
+  ) {
+   tasks.add(new NormalTextInputQuestionScreen(app,q,this,userID));
+  }
 
   this.numberOfTasks = tasks.size();
   this.taskCounter = 1;

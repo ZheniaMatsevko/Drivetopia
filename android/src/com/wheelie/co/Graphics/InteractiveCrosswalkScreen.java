@@ -172,7 +172,7 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter implements InputPr
         justSomeDude.setPedestrianBounds(justSomeDude.getX(), justSomeDude.getY(), justSomeDude.getWidth(), justSomeDude.getHeight());
 
         if (CollisionUtils.collides(car.getCarBounds(), justSomeDude.getPedestrianBounds()) && !isDudePassed) {
-            showDialog("Задів пішохода!");
+            showDialog("як ти смієш");
             failed=true;
             isDudePassed = true;
         } else if (car.getY() >= justSomeDude.getY() + justSomeDude.getHeight() && !isDudePassed) {

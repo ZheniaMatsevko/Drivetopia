@@ -21,7 +21,7 @@ import java.util.LinkedList;
  *1 завдання на відповідність - 6 балів
  *1 тест - 3 бали
  *Всього: 24 бали, прохідний - 19*/
-/**НЕ ДОРОБЛЕНО**/
+/**ДОРОБЛЕНО**/
 public class level3 extends Level{
 
     public level3(Drivetopia app, int userID) {

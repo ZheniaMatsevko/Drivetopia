@@ -21,7 +21,7 @@ import java.util.LinkedList;
   // (app,1,new SimpleTextChoiceQuestion()));
   final SQLiteDatabase db = app.getDatabase();
 
-  this.levelNumb = 7;
+  this.levelNumb = 15;
   this.tasks=new LinkedList<>();
   this.app = app;
   this.currentscore = 0;

@@ -254,6 +254,7 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
                     app.setScreen(new IntermediateScreen(app,new level7(app,userID),userID,0,false));
                     dispose();
                 }
+
                 if(dialog.getLevel()==10) {
                     app.setScreen(new IntermediateScreen(app,new level10(app,userID),userID,0,false));
                     dispose();
