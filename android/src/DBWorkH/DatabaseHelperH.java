@@ -618,6 +618,14 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
         db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
 
+        flashCardValues = new ContentValues();
+        flashCardValues.put("levelNumb", 11);
+        flashCardValues.put("text", "На якій картинці всі транспортні засоби зупинились правильно?");
+        flashCardValues.put("answer", "stopOK.jpg");
+        flashCardValues.put("type", "stop");
+
+        db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
+
 
         for(int i=1;i<16;i++){
             ContentValues flashCardImageValues = new ContentValues();
@@ -629,6 +637,12 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
             ContentValues flashCardImageValues = new ContentValues();
             flashCardImageValues.put("image", "turn"+i+".jpg");
             flashCardImageValues.put("type", "turn");
+            db.insert(DBConstants.FLASHCARD_IMAGES_TABLE, null, flashCardImageValues);
+        }
+        for(int i=1;i<7;i++){
+            ContentValues flashCardImageValues = new ContentValues();
+            flashCardImageValues.put("image", "stop"+i+".jpg");
+            flashCardImageValues.put("type", "stop");
             db.insert(DBConstants.FLASHCARD_IMAGES_TABLE, null, flashCardImageValues);
         }
 
@@ -659,6 +673,18 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
             relationsValues.put("levelNumb", 14);
             relationsValues.put("text", texts[i-1]);
             relationsValues.put("answer", "sign"+i+".png");
+            relationsValues.put("type", "image");
+            db.insert(DBConstants.RELATIONS_TABLE, null, relationsValues);
+        }
+
+        texts = new String[]{"Знак 'Діти'","Знак 'Водій з інвалідністю'",
+                "Знак 'Колона'","Знак 'Обмеження максимальної швидкості'",
+                "Знак 'Учбовий транспортний засіб'"};
+        for(int i=1;i<6;i++){
+            relationsValues = new ContentValues();
+            relationsValues.put("levelNumb", 13);
+            relationsValues.put("text", texts[i-1]);
+            relationsValues.put("answer", "13RQ"+i+".png");
             relationsValues.put("type", "image");
             db.insert(DBConstants.RELATIONS_TABLE, null, relationsValues);
         }
