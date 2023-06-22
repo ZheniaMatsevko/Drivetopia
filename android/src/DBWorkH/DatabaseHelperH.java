@@ -610,6 +610,14 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
         db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
 
+        flashCardValues = new ContentValues();
+        flashCardValues.put("levelNumb", 6);
+        flashCardValues.put("text", "На якій картинці розворот дозволено?");
+        flashCardValues.put("answer", "turnOK.jpg");
+        flashCardValues.put("type", "turn");
+
+        db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
+
 
         for(int i=1;i<16;i++){
             ContentValues flashCardImageValues = new ContentValues();
@@ -617,7 +625,12 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
             flashCardImageValues.put("type", "sign");
             db.insert(DBConstants.FLASHCARD_IMAGES_TABLE, null, flashCardImageValues);
         }
-
+        for(int i=1;i<5;i++){
+            ContentValues flashCardImageValues = new ContentValues();
+            flashCardImageValues.put("image", "turn"+i+".jpg");
+            flashCardImageValues.put("type", "turn");
+            db.insert(DBConstants.FLASHCARD_IMAGES_TABLE, null, flashCardImageValues);
+        }
 
 
 
