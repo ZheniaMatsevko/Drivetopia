@@ -67,9 +67,13 @@ public class NormalFlashCardQuestion {
         this.correctAnswer=correctAnswer;
     }
 
-    public NormalFlashCardQuestion(LinkedList<String> objects, String correctAnswer, String question){
+    public NormalFlashCardQuestion(LinkedList<String> objects, String correctAnswer, String question, int level){
         this.question=question;
         this.objects = new LinkedList<>();
+        this.level=level;
+        int size=500;
+        if(level==6)
+            size=1000;
         for(int i=0;i<3;i++){
             Texture myTexture = new Texture(Gdx.files.internal(objects.get(i)));
             ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
@@ -77,7 +81,7 @@ public class NormalFlashCardQuestion {
 
             ImageButton obj1 = new ImageButton(style);
 
-            obj1.setSize(500,500);
+            obj1.setSize(size,size);
             this.objects.add(obj1);
         }
 
@@ -85,7 +89,7 @@ public class NormalFlashCardQuestion {
         TextureRegionDrawable t = new TextureRegionDrawable(new TextureRegion(myTexture1));
 
         ImageButton obj = new ImageButton(t);
-        obj.setSize(500,500);
+        obj.setSize(size,size);
         this.correctAnswer=obj;
         this.objects.add(this.correctAnswer);
 
@@ -115,7 +119,7 @@ public class NormalFlashCardQuestion {
 
                 LinkedList<String> wrongAnswers = getWrongAnswers(allImages, answer);
 
-                NormalFlashCardQuestion s = new NormalFlashCardQuestion(wrongAnswers,answer,text);
+                NormalFlashCardQuestion s = new NormalFlashCardQuestion(wrongAnswers,answer,text, levelNumb);
                 list.add(s);
 
             } while (cursor.moveToNext());

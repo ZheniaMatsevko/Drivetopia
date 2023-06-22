@@ -151,12 +151,22 @@ dispose();
         table.setSize(GraphicConstants.screenWidth, GraphicConstants.screenHeight);
 
 
-        table.add(buttons.get(0));
-        table.add(buttons.get(1));
-        table.row();
-        table.add(buttons.get(2));
-        table.add(buttons.get(3));
-        table.row();
+        if(question.getLevel()==6){
+            table.add(buttons.get(0)).width(600);
+            table.add(buttons.get(1)).width(600);
+            table.row();
+            table.add(buttons.get(2)).width(600);
+            table.add(buttons.get(3)).width(600);
+            table.row();
+        }else{
+            table.add(buttons.get(0));
+            table.add(buttons.get(1));
+            table.row();
+            table.add(buttons.get(2));
+            table.add(buttons.get(3));
+            table.row();
+        }
+
         //table.add(label).padLeft(50f).padTop(20).row();
 
 
