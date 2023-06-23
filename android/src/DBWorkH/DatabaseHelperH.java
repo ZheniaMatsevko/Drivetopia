@@ -226,10 +226,18 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
          */
         ContentValues theoryValues = new ContentValues();
         theoryValues.put("levelNumb", 1);
+        theoryValues.put("text", "theory1-4.txt");
+        theoryValues.put("image", "theory1-4.png");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 1);
         theoryValues.put("text", "theory1.txt");
         theoryValues.put("image", "theory1.jpg");
 
         db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
 
         theoryValues = new ContentValues();
         theoryValues.put("levelNumb", 1);
@@ -312,6 +320,13 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         theoryValues.put("levelNumb", 3);
         theoryValues.put("text", "theory3-3.txt");
         theoryValues.put("image", "theory3-3.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 3);
+        theoryValues.put("text", "theory3-4.txt");
+        theoryValues.put("image", "theory3-4.jpg");
 
         db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
 
@@ -706,6 +721,13 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         theoryValues.put("levelNumb", 15);
         theoryValues.put("text", "theory15-3.txt");
         theoryValues.put("image", "theory15-3.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 15);
+        theoryValues.put("text", "theory15-4.txt");
+        theoryValues.put("image", "theory15-4.jpg");
 
         db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
 
