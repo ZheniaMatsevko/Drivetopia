@@ -30,6 +30,9 @@ import com.wheelie.co.Tools.MyDialog;
 
 import java.util.Locale;
 
+/**
+ * Даний клас реалізовує логіку та графічний інтерфейс екрану редагування профілю користувача
+ */
 public class UserEditScreen extends ScreenAdapter{
     Drivetopia app;
     private SpriteBatch batch;

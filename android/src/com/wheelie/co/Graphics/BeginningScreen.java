@@ -25,6 +25,9 @@ import com.wheelie.co.Tools.FontFactory;
 
 import java.util.Locale;
 
+/**
+ * Даний клас реалізовує логіку та графічний інтерфейс початкового екрану (реєстрація/авторизація)
+ */
 public class BeginningScreen extends ScreenAdapter {
     Drivetopia app;
     private SpriteBatch batch;

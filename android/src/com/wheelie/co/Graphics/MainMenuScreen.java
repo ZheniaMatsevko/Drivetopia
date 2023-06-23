@@ -33,6 +33,9 @@ import DBWorkH.DatabaseUtils;
 import java.util.Locale;
 
 
+/**
+ * Даний клас реалізовує логіку та графічний інтерфейс головного меню програми
+ */
 public class MainMenuScreen extends ScreenAdapter{
     Drivetopia app;
     private SpriteBatch batch;

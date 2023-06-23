@@ -20,11 +20,15 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
-/**Тема 5: Попереджувальні сигнали
+
+/**
+ * Даний клас реалізовує логіку роботи практики 5 рівня: формування завдань, підрахунок балів, навігація між завданнями
+ Тема 5: Попереджувальні сигнали
  * 3 запитання з вводом - 15 балів
  * 2 тести - 6 балів
  * 1 завдання на відповідність (текст) - 6 балів
- * Всього: 27 балів, прохідний - 22**/
+ * Всього: 27 балів, прохідний - 22
+ */
 public class level5 extends Level{
     public level5() {}
     public level5(Drivetopia app, int userID) {

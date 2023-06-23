@@ -15,6 +15,9 @@ import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**
+ * Даний клас реалізовує логіку роботи фінального тесту: формування завдань, підрахунок балів, навігація між завданнями
+ */
 public class finalTest extends Level {
 
     public finalTest(Drivetopia app, int userID) {

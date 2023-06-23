@@ -52,6 +52,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Даний клас реалізовує логіку та графічний інтерфейс екрану з рівнями
+ */
 public class LevelsScreen extends ScreenAdapter{
 
     Drivetopia app;

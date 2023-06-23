@@ -39,7 +39,10 @@ import com.wheelie.co.levels20.level6;
 
 import java.util.Locale;
 
-/**екран перед початком фінального тесту**/
+
+/**
+ * Даний клас реалізовує логіку та графічний інтерфейс екрану перед початком фінального тесту
+ */
 public class FinalTestBeginningScreen extends ScreenAdapter {
     Drivetopia app;
     private SpriteBatch batch;

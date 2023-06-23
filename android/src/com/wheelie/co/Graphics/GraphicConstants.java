@@ -2,6 +2,9 @@ package com.wheelie.co.Graphics;
 
 import com.badlogic.gdx.Gdx;
 
+/**
+ * Даний клас містить статичні константи для роботи з розміром екрану
+ */
 public class GraphicConstants {
     public static final int screenWidth= Gdx.graphics.getWidth();
     public static final int screenHeight= Gdx.graphics.getHeight();

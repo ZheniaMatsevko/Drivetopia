@@ -12,6 +12,9 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * Даний абстрактний клас містить базові налаштування, поля та методи, які унаслідують класи всіх рівнів
+ */
 public abstract class Level {
 
     public int levelNumb;

@@ -36,7 +36,10 @@ import com.wheelie.co.levels20.Level;
 
 import java.util.Locale;
 
-public class InteractiveParkingScreen extends ScreenAdapter implements InputProcessor {
+/**
+ * Даний клас реалізовує логіку та графічний інтерфейс екрану з практичним завданням (паркування)
+ */
+public class InteractiveParkingScreen extends ScreenAdapter {
     Drivetopia app;
     private SpriteBatch batch;
     private Sprite sprite;
@@ -352,43 +355,4 @@ public class InteractiveParkingScreen extends ScreenAdapter implements InputProc
         dialog.show(stage);
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return true;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return true;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(float amountX, float amountY) {
-        return false;
-    }
 }

@@ -30,6 +30,9 @@ import com.wheelie.co.Tools.FontFactory;
 
 import java.util.Locale;
 
+/**
+ * Даний клас реалізовує логіку та графічний інтерфейс екрану реєстрації
+ */
 public class RegistrationScreen extends ScreenAdapter {
 
     Drivetopia app;

@@ -41,6 +41,9 @@ import java.util.Locale;
 
 import DBWorkH.DatabaseUtils;
 
+/**
+ * Даний клас реалізовує логіку та графічний інтерфейс екрану профіля користувача
+ */
 public class ProfileScreen extends ScreenAdapter {
     Drivetopia app;
     private SpriteBatch batch;

@@ -29,7 +29,9 @@ import com.wheelie.co.Tools.FontFactory;
 
 import java.util.Locale;
 
-/**Марина: поки що це просто копія екрану профіля,якщо воно так і залишено це значить що я ще не доробила**/
+/**
+ * Даний клас реалізовує логіку та графічний інтерфейс екрану з інформацією про програму
+ */
 public class AboutScreen extends ScreenAdapter{
     Drivetopia app;
     private SpriteBatch batch;

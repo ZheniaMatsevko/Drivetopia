@@ -30,6 +30,9 @@ import com.wheelie.co.Tools.FontFactory;
 
 import java.util.Locale;
 
+/**
+ * Даний клас реалізовує логіку та графічний інтерфейс екрану авторизації
+ */
 public class AuthorizationScreen extends ScreenAdapter{
 
     Drivetopia app;

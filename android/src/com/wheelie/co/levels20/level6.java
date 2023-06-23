@@ -16,12 +16,16 @@ import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 import java.util.Collections;
 import java.util.LinkedList;
 
-/**Тема 6: Початок руху та зміна напрямку
+
+/**
+ * Даний клас реалізовує логіку роботи практики 6 рівня: формування завдань, підрахунок балів, навігація між завданнями
+ Тема 6: Початок руху та зміна напрямку
  * * 3 запитання з вводом - 15 балів
  * 1 флеш-картка - 5 балів
  * 2 тести - 6 балів
  * Всього: 26 балів, прохідний - 20
  * **/
+
 public class level6 extends Level{
     public level6() {}
 
