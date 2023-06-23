@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 /**Тема 9: Дистанція, інтервал, зустрічний роз'їзд
- *
+ *3 запитання з вводом - 15 балів
  */
 public class level9 extends Level {
 
@@ -21,8 +21,8 @@ public class level9 extends Level {
         this.levelNumb = 9;
         this.tasks=new LinkedList<>();
         this.currentscore = 0;
-        this.maximumScore = 10;
-        this.failureScore = 6;
+        this.maximumScore = 15;
+        this.failureScore = 5;
 
 
 

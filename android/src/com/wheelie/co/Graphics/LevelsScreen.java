@@ -45,6 +45,8 @@ import com.wheelie.co.levels20.level4;
 import com.wheelie.co.levels20.level5;
 import com.wheelie.co.levels20.level6;
 import com.wheelie.co.levels20.level7;
+import com.wheelie.co.levels20.level8;
+import com.wheelie.co.levels20.level9;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -253,6 +255,15 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
                 }
                 if(dialog.getLevel()==7) {
                     app.setScreen(new IntermediateScreen(app,new level7(app,userID),userID,0,false));
+                    dispose();
+                }
+
+                if(dialog.getLevel()==8) {
+                    app.setScreen(new IntermediateScreen(app,new level8(app,userID),userID,0,false));
+                    dispose();
+                }
+                if(dialog.getLevel()==9) {
+                    app.setScreen(new IntermediateScreen(app,new level9(app,userID),userID,0,false));
                     dispose();
                 }
 
