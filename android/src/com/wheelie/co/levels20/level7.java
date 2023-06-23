@@ -19,7 +19,7 @@ import java.util.LinkedList;
 /**Тема 7: Розташування транспорту на дорозі
  *  3 запитання з вводом - 15 балів
  * завдання з натисканням на картинку (вантажівка-порушник)  - 7 балів
- *1 тест -  3 бали (не зроблено)
+ *1 тест -  3 бали
  * Всього: 25 балів, прохідний - 19**/
 
  public class level7 extends Level{
@@ -50,6 +50,24 @@ import java.util.LinkedList;
   ) {
    tasks.add(new NormalTextInputQuestionScreen(app,q,this,userID));
   }
+
+
+  /**Дістаємо всі тестові завдання з вибором, що відносяться до рівню 7**/
+  LinkedList<SimpleTextChoiceQuestion> choiceQuestions = SimpleTextChoiceQuestion.extractSimpleTextChoiceQuestionsFromDB(db,levelNumb);
+
+  /**Обираємо 1 серед них**/
+  LinkedList<SimpleTextChoiceQuestion> finalChoiceQuestions = selectRandomSimpleChoiceQuestions(choiceQuestions,1);
+
+  /**Створюємо екрани для кожного запитання з вибором і додаємо в список екранів рівня**/
+  for (SimpleTextChoiceQuestion q: finalChoiceQuestions
+  ) {
+   tasks.add(new SimpleTextChoiceQuestionScreen(app,q,this,userID));
+  }
+
+
+
+  Collections.shuffle(tasks);
+
 
   this.numberOfTasks = tasks.size();
   this.taskCounter = 1;

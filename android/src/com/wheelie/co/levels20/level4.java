@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.wheelie.co.Drivetopia;
+import com.wheelie.co.Graphics.InteractiveTrafficScreen;
 import com.wheelie.co.levelTemplates.HardPictureQuestionScreen;
 import com.wheelie.co.levelTemplates.NormalFlashCardQuestionScreen;
 import com.wheelie.co.levelTemplates.NormalRelationsQuestionScreen;
@@ -29,7 +30,8 @@ public class level4 extends Level{
      * 1 тест - 3 бали
      * 1 запитання на відповідність - 6 балів
      * * завдання з натисканням на картинку(поворот)  - 7 балів
-     * * Всього: 26 балів, прохідний - 20 **/
+     * інтерактивне завдання зі світлофором - 10 балів
+     * * Всього: 36 балів, прохідний - 29 **/
 
     public level4(Drivetopia app, int userID) {
         // (app,1,new SimpleTextChoiceQuestion()));
@@ -39,9 +41,8 @@ public class level4 extends Level{
         this.tasks=new LinkedList<>();
         this.app = app;
         this.currentscore = 0;
-        this.maximumScore = 26;
-        this.failureScore = 7;
-
+        this.maximumScore = 36;
+        this.failureScore = 8;
 
         LinkedList<NormalTextInputQuestion> inputQuestions = NormalTextInputQuestion.extractNormalTextInputQuestionsFromDB(db,levelNumb);
 
@@ -82,6 +83,8 @@ public class level4 extends Level{
         }
         tasks.add(new HardPictureQuestionScreen(app,new HardPictureQuestion(levelNumb,false),this,userID));
 
+
+        tasks.add(new InteractiveTrafficScreen(app,this,userID));
 
        Collections.shuffle(tasks);
 
