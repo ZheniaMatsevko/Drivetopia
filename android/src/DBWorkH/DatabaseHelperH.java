@@ -560,6 +560,140 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
         db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
 
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 11);
+        theoryValues.put("text", "theory11.txt");
+        theoryValues.put("image", "theory11.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 11);
+        theoryValues.put("text", "theory11-1.txt");
+        theoryValues.put("image", "theory11-1.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 11);
+        theoryValues.put("text", "theory11-2.txt");
+        theoryValues.put("image", "theory11-2.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 11);
+        theoryValues.put("text", "theory11-3.txt");
+        theoryValues.put("image", "theory11-3.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 11);
+        theoryValues.put("text", "theory11-4.txt");
+        theoryValues.put("image", "theory11-4.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 12);
+        theoryValues.put("text", "theory12.txt");
+        theoryValues.put("image", "theory12.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 12);
+        theoryValues.put("text", "theory12-1.txt");
+        theoryValues.put("image", "theory12-1.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 12);
+        theoryValues.put("text", "theory12-2.txt");
+        theoryValues.put("image", "theory12-2.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 12);
+        theoryValues.put("text", "theory12-3.txt");
+        theoryValues.put("image", "theory12-3.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 13);
+        theoryValues.put("text", "theory13.txt");
+        theoryValues.put("image", "theory13.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 13);
+        theoryValues.put("text", "theory13-1.txt");
+        theoryValues.put("image", "theory13-1.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 13);
+        theoryValues.put("text", "theory13-2.txt");
+        theoryValues.put("image", "theory13-2.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 13);
+        theoryValues.put("text", "theory13-3.txt");
+        theoryValues.put("image", "theory13-3.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 13);
+        theoryValues.put("text", "theory13-4.txt");
+        theoryValues.put("image", "theory13-4.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 13);
+        theoryValues.put("text", "theory13-5.txt");
+        theoryValues.put("image", "theory13-5.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 15);
+        theoryValues.put("text", "theory15.txt");
+        theoryValues.put("image", "theory15.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 15);
+        theoryValues.put("text", "theory15-1.txt");
+        theoryValues.put("image", "theory15-1.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 15);
+        theoryValues.put("text", "theory15-2.txt");
+        theoryValues.put("image", "theory15-2.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 15);
+        theoryValues.put("text", "theory15-3.txt");
+        theoryValues.put("image", "theory15-3.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+
         /**Заповнюємо інформацію про рівні**/
 
         ContentValues flashCardValues = new ContentValues();
