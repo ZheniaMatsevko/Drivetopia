@@ -1,22 +1,18 @@
 package com.wheelie.co.levelTemplates.questionTemplates;
 
-import static org.sqlite.SQLiteJDBCLoader.initialize;
-
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.wheelie.co.Graphics.GraphicConstants;
-import com.wheelie.co.Graphics.ProfileScreen;
-import com.wheelie.co.Tools.Coordinates;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 
+/**
+ * Даний клас реалізовує логіку створення, заповнення та роботи завдання з вибором актора на картинці
+ * **/
 public class HardPictureQuestion {
     private LinkedList<ImageButton> objects;
     private ImageButton correctAnswer;

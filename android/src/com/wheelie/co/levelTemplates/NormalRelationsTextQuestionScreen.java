@@ -36,6 +36,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
 
+/**
+ * Даний клас реалізовує графічний інтерфейс та логіку екрану текстового завдання на відповідність
+ * **/
 public class NormalRelationsTextQuestionScreen extends ScreenAdapter {
     Drivetopia app;
     private SpriteBatch batch;

@@ -32,6 +32,9 @@ import com.wheelie.co.levels20.Level;
 import java.util.LinkedList;
 import java.util.Locale;
 
+/**
+ * Даний клас реалізовує графічний інтерфейс та логіку екрану завдання з флешкартами
+ * **/
 public class HardPictureQuestionScreen extends ScreenAdapter {
 
     Drivetopia app;

@@ -14,6 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.wheelie.co.Graphics.GraphicConstants;
 
+/**
+ * Даний клас відповідає за можливість керування машиною в інтерактивних рівнях
+ * **/
 public class InteractiveCarController extends Group implements InputProcessor {
     private Image moveForward, moveBackward, turnLeft, turnRight;
     Table btnTable;

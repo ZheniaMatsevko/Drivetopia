@@ -19,6 +19,9 @@ import java.util.Map;
 
 import DBWorkH.DBConstants;
 
+/**
+ * Даний клас реалізовує логіку створення, заповнення та роботи завдання на відповідність
+ * **/
 public class NormalRelationsQuestion {
     //private LinkedList<ImageButton> images;
 

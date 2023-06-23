@@ -4,6 +4,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+/**
+ * Даний клас містить методи для роботи з базою даних
+ * **/
 public class DatabaseUtils {
 
 

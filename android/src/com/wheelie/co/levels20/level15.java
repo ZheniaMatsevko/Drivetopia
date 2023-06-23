@@ -9,11 +9,12 @@ import com.wheelie.co.levelTemplates.questionTemplates.HardPictureQuestion;
 
 import java.util.LinkedList;
 
+
 /**
+ * Даний клас реалізовує логіку роботи практики 14 рівня: формування завдань, підрахунок балів, навігація між завданнями
  Тема 15. Рух: у житловій та пішохідній зоні, по автомагістралях і дорогах для автомобілів
  * завдання з натисканням на картинку(причеп)  - 7 балів
-**/
-
+ * **/
  public class level15 extends Level{
  public level15() {}
 

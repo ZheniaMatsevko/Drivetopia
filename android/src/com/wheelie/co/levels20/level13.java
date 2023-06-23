@@ -16,13 +16,15 @@ import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 import java.util.Collections;
 import java.util.LinkedList;
 
-/***Тема 13: Номерні, розпізнавальні знаки, написи і позначення
+
+/**
+ * Даний клас реалізовує логіку роботи практики 13 рівня: формування завдань, підрахунок балів, навігація між завданнями
+ Тема 13: Номерні, розпізнавальні знаки, написи і позначення
  * запитання на відповідність (з картинкою)  - 6 балів
  *3 тести - 9 балів
  *2 запитання з вводом - 10 балів
- Всього: 25, прохідний 20**/
-
-
+ Всього: 25, прохідний 20
+ * **/
 public class level13 extends Level{
     public level13(Drivetopia app, int userID) {
         // (app,1,new SimpleTextChoiceQuestion()));

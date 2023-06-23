@@ -34,6 +34,9 @@ import com.wheelie.co.levels20.Level;
 import java.util.LinkedList;
 import java.util.Locale;
 
+/**
+ * Даний клас реалізовує графічний інтерфейс та логіку екрану з теорією
+ * **/
 public class TheoryScreen extends ScreenAdapter{
     Drivetopia app;
     private SpriteBatch batch;

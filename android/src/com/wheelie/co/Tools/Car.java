@@ -9,6 +9,9 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
+/**
+ * Даний клас реалізовує логіку роботи актора-машини в усіх практичних завданнях інтерактивного типу
+ * **/
 public class Car extends Actor {
     private Polygon carBounds;
     private TextureRegion carTexture;

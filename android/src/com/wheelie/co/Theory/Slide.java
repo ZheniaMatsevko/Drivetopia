@@ -15,6 +15,9 @@ import java.util.LinkedList;
 
 import DBWorkH.DBConstants;
 
+/**
+ * Даний клас реалізовує створення слайдів та зчитування їх з бази даних
+ * **/
 public class Slide {
     private String image;
     private String text;
@@ -22,9 +25,7 @@ public class Slide {
     public Slide(String image, String path){
         this.text= FileService.readFile(path);
         this.image=image;
-        //image = new Image(new Texture(path));
-        //image.setSize(GraphicConstants.screenWidth-10,GraphicConstants.rowHeight*2.5f);
-    }
+     }
 
     public static LinkedList<Slide> extractSlidesFromDB(SQLiteDatabase db, int levelNumb) {
         String[] columns = {"text", "image"};

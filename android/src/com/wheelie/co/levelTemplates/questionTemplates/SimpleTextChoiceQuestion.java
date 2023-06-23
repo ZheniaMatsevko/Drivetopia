@@ -9,6 +9,9 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * Даний клас реалізовує логіку створення, заповнення та роботи тестового завдання
+ * **/
 public class SimpleTextChoiceQuestion {
 
 

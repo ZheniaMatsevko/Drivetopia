@@ -2,6 +2,9 @@ package DBWorkH;
 
 import com.badlogic.gdx.Gdx;
 
+/**
+ * Даний клас містить константи з назвами табличок в базі даних
+ * **/
 public class DBConstants {
     public static final String TEXT_INPUT_QUESTION_TABLE= "normalTextInputQuestion";
     public static final String FLASHCARD_QUESTION_TABLE= "normalFlashCardQuestion";

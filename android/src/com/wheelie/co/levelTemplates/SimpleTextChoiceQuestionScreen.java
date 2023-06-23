@@ -31,6 +31,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Locale;
 
+/**
+ * Даний клас реалізовує графічний інтерфейс та логіку екрану тестового завдання
+ * **/
 public class SimpleTextChoiceQuestionScreen extends ScreenAdapter  {
 
     Drivetopia app;

@@ -6,6 +6,9 @@ import com.wheelie.co.Drivetopia;
 
 import java.util.LinkedList;
 
+/**
+ * Даний клас реалізовує взаємодію слайдів теорії з базою даних
+ * **/
 public class BasicTheory {
     private static SQLiteDatabase db;
     private static Drivetopia app;

@@ -3,6 +3,9 @@ package com.wheelie.co.Tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
+/**
+ * Даний клас відповідає за зчитування файлів
+ * **/
 public class FileService {
     public static String readTheory(int level){
 

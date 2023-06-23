@@ -16,12 +16,17 @@ import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 import java.util.Collections;
 import java.util.LinkedList;
 
-/**Тема 12: Проїзд перехресть, пішохідних переходів
+
+
+/**
+ * Даний клас реалізовує логіку роботи практики 12 рівня: формування завдань, підрахунок балів, навігація між завданнями
+ Тема 12: Проїзд перехресть, пішохідних переходів
  ** інтерактивне завдання пішоходним переходом - 10 балів
  * * 2 завдання зі вводом - 10 балів
  * * 1 тестове запитання - 3 бали
  * * завдання з натисканням на картинку(перехрестя)  - 7 балів
- * *Всього: 30 балів, прохідний - 24**/
+ * *Всього: 30 балів, прохідний - 24
+ * **/
 public class level12 extends Level {
     public level12(Drivetopia app, int userID) {
         // (app,1,new SimpleTextChoiceQuestion()));
