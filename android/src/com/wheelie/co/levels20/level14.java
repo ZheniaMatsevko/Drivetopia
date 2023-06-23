@@ -13,10 +13,9 @@ import java.util.LinkedList;
 
 
 /**Тема 14. Дорожні знаки і розмітка
-        * 2 флеш-картки - 10 балів
+        * 4 флеш-картки - 20 балів
         * 2 запитання на відповідність (з картинкою)  - 12 балів
-        **1 запитання з вводом - 5 балів (не зроблено)
- *      **Всього: 27 балів, прохідний - 22
+ *      **Всього: 32 бали, прохідний - 24
 **/
 public class level14 extends Level{
     public level14(Drivetopia app, int userID) {
@@ -28,8 +27,8 @@ public class level14 extends Level{
         this.app = app;
         this.userId = userID;
         this.currentscore = 0;
-        this.maximumScore = 27;
-        this.failureScore = 6;
+        this.maximumScore = 32;
+        this.failureScore = 8;
 
 
 
@@ -61,6 +60,21 @@ public class level14 extends Level{
             tasks.add(new NormalFlashCardQuestionScreen(app,q,this,userID));
         }
 
+        /**Дістаємо всі флеш-картки, що відносяться до рівню 14**/
+        LinkedList<NormalFlashCardQuestion> flashCardQuestions2 = NormalFlashCardQuestion.extractNormalFlashCardQuestionFromDB(db,levelNumb, "marking");
+
+        /**Обираємо 2 серед них**/
+        LinkedList<NormalFlashCardQuestion> finalFlashCardQuestions2 = selectRandomFlashCardQuestions(flashCardQuestions2,2);
+
+        Collections.shuffle(finalFlashCardQuestions2);
+        // LinkedList<SimpleTextChoiceQuestionScreen> simpleScreens = new LinkedList<>();
+        /**Створюємо екрани для кожного запитання з вибором і додаємо в список екранів рівня**/
+        for (NormalFlashCardQuestion q: finalFlashCardQuestions2
+        ) {
+            tasks.add(new NormalFlashCardQuestionScreen(app,q,this,userID));
+        }
+
+        Collections.shuffle(tasks);
 
         this.numberOfTasks = tasks.size();
         this.taskCounter = 1;
