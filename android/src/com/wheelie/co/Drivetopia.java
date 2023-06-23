@@ -71,9 +71,9 @@ public class Drivetopia extends Game {
         //level1 l = new level1(this,1);
 		//setScreen(l.tasks.get(0));
 	  // setScreen(new SimpleTextChoiceQuestionScreen(this,q.get(0),new level1(this,1),1));
-		//finalTest f = new finalTest(this,1);
-		//	f.failureScoreCount+=6;
-       setScreen(new IntermediateScreen(this,new finalTest(this,1),1,2,true));
+		finalTest f = new finalTest(this,1);
+	//	f.failureScoreCount+=6;
+       setScreen(new IntermediateScreen(this,f,1,2,false));
 
 		//setScreen(new RegistrationScreen(this));
 

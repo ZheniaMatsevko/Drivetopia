@@ -1,5 +1,8 @@
 package com.wheelie.co.Graphics;
 
+import static DBWorkH.DatabaseUtils.getLevelsWithStateZero;
+import static DBWorkH.DatabaseUtils.getUserFailures;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -214,22 +217,7 @@ public class FinalTestBeginningScreen extends ScreenAdapter implements InputProc
         stage.draw();
     }
 
-    /**повертає кількість завалів фінального тесту юзером**/
-    public int getUserFailures(SQLiteDatabase database, int userId) {
-        String query = "SELECT failures FROM users WHERE id = ?";
-        int failures = 0;
 
-        Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(userId)});
-        if (cursor != null && cursor.moveToFirst()) {
-            failures = cursor.getInt(cursor.getColumnIndexOrThrow("failures"));
-        }
-
-        if (cursor != null) {
-            cursor.close();
-        }
-
-        return failures;
-    }
 
 /**повертає, чи пройдено вже фінальний тест юзером; passValue=0 ні, passValue=1 - так**/
     public int getUserPassValue(SQLiteDatabase database, int userId) {
@@ -262,27 +250,7 @@ public class FinalTestBeginningScreen extends ScreenAdapter implements InputProc
     public boolean keyTyped(char character) {
         return false;
     }
-    public int[] getLevelsWithStateZero(SQLiteDatabase database, int userId) {
-        String query = "SELECT levelNumb FROM scores WHERE userId = ? AND state = ? AND levelNumb != ?";
-        String[] args = {String.valueOf(userId), "0", "16"};
-        Cursor cursor = database.rawQuery(query, args);
 
-        int[] levelNumbers;
-
-        if (cursor.moveToFirst()) {
-            levelNumbers = new int[cursor.getCount()];
-            int index = 0;
-            do {
-                levelNumbers[index] = cursor.getInt(cursor.getColumnIndexOrThrow("levelNumb"));
-                index++;
-            } while (cursor.moveToNext());
-        } else {
-            levelNumbers = new int[0]; // No levels found with state 0
-        }
-
-        cursor.close();
-        return levelNumbers;
-    }
     /**
      * Відбувається дія при натисканні на екран лівою кнопкою миші
      */

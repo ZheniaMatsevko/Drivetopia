@@ -1,5 +1,7 @@
 package com.wheelie.co.levels20;
 
+import static DBWorkH.DatabaseUtils.getLevelsWithStateZero;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -14,24 +16,31 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
+import com.wheelie.co.Graphics.FinalTestBeginningScreen;
 import com.wheelie.co.Graphics.GraphicConstants;
 import com.wheelie.co.Graphics.LevelsScreen;
 import com.wheelie.co.Graphics.MainMenuScreen;
 import com.wheelie.co.Tools.FontFactory;
 
 import java.util.Locale;
+
+import DBWorkH.DatabaseUtils;
 
 
 /**
@@ -58,9 +67,10 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
 
     private BitmapFont finalFont;
 
+    /**показ кубку після завершення фінального рівню**/
+   private Image cup;
 
-
-
+   private String cupFile;
     private Skin skin;
 
     private Skin skin2;
@@ -250,12 +260,14 @@ dispose();
                 finaltext += "Вітаємо з успішним проходженням фінального тесту!\n";
                 //якщо складено на максимум
                 if(level.failureScoreCount==0) {
-                    finaltext += "Ви скали його на максимальний бал і можете переглянути свій кубок у профілі.";
+                    finaltext += "Ви склали його на максимальний бал і можете переглянути свій кубок у профілі.";
+                     cupFile = DatabaseUtils.getCup(app.getDatabase(),userId,true);
                     //записується state 2 до рівню 16 юзеру в таблицю scores
                 }
                 else {
                     finaltext += "До ідеального результату вам не вистачило " + level.failureScoreCount + " балів. Ви можете перескласти тест пізніше на більш високий бал.";
-                     //записується failureScoreCount і state=1 юзеру в таблицю до рівню 16
+                    cupFile = DatabaseUtils.getCup(app.getDatabase(),userId,false);
+                    //записується failureScoreCount і state=1 юзеру в таблицю до рівню 16
                 }
             }
             label = new Label(finaltext, skinfinal);
@@ -268,8 +280,22 @@ dispose();
 
         }
 
+        /**встановлення кубку**/
+        if(level.levelNumb==16) {
+            // Load the image
+            Texture cupTexture = new Texture(Gdx.files.internal(cupFile));
+            Drawable cupDrawable = new TextureRegionDrawable(new TextureRegion(cupTexture));
+            cup = new Image(cupDrawable);
+            cup.setPosition(GraphicConstants.centerX - cup.getWidth()/2F,GraphicConstants.centerY - cup.getHeight()*1.5F);
+            stage.addActor(cup);
+
+        }
+
         if(level.levelNumb!=16)sprite = new Sprite(new Texture(Gdx.files.internal("white.jpg")));
         else sprite = new Sprite(new Texture(Gdx.files.internal("backsun.jpg")));
+
+
+
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(stage);
 
@@ -278,7 +304,7 @@ dispose();
     }
 
     /**
-     * Малюємо головне меню
+     * Малюємо проміжний екран
      */
     @Override
     public void render(float delta) {
@@ -343,6 +369,14 @@ dispose();
 
         return score;
     }
+
+
+
+
+
+
+
+
 
 
     @Override
