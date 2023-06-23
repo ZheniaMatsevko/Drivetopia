@@ -53,14 +53,6 @@ public class Drivetopia extends Game {
 	@Override
 	public void create () {
 
-		ArrayList<String> list = new ArrayList<>();
-		list.add("автомагістраль");
-		list.add("головна дорога");
-		list.add("Пєчкурова");
-
-
-
-
 
 
 
@@ -72,8 +64,8 @@ public class Drivetopia extends Game {
 		//setScreen(l.tasks.get(0));
 	  // setScreen(new SimpleTextChoiceQuestionScreen(this,q.get(0),new level1(this,1),1));
 		finalTest f = new finalTest(this,1);
-	//	f.failureScoreCount+=6;
-       setScreen(new IntermediateScreen(this,f,1,2,false));
+		//f.failureScoreCount+=6;
+       setScreen(new IntermediateScreen(this,f,2,2,false));
 
 		//setScreen(new RegistrationScreen(this));
 

@@ -14,15 +14,20 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
@@ -33,6 +38,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import DBWorkH.DatabaseUtils;
 
 public class ProfileScreen extends ScreenAdapter implements InputProcessor {
     Drivetopia app;
@@ -83,6 +90,10 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
 
     private String emailBD = "zubenko@gmail.com";
 
+    /**показ кубку в профілі**/
+    private ImageButton cup;
+
+    private String cupFile;
 
 
 
@@ -230,17 +241,35 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         email = new Label(emailBD,emailSkin);
 
         PIB.setSize(40,25);
-        PIB.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,1500);
-        email.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,1250);
-        age.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,1150);
-        points.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,1000);
-        failures.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,900);
+        PIB.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,GraphicConstants.rowHeight*6.1F);
+        email.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,PIB.getY() - 175);
+        age.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,email.getY() - 100);
+        points.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,age.getY() - 100);
+        failures.setPosition(GraphicConstants.centerX- backButton.getWidth()/2 - 195,points.getY() - 100);
 
         stage.addActor(PIB);
         stage.addActor(age);
         stage.addActor(failures);
         stage.addActor(points);
         stage.addActor(email);
+
+
+        /**якщо було складено фінальний тест**/
+        if(DatabaseUtils.getUserPassValue(db,userId)!=0) {
+            int finTestMaxInt = DatabaseUtils.getUserStateForLevel(db,userId,16);
+            if(finTestMaxInt==2)cupFile = DatabaseUtils.getCup(db,userId,true);
+            else cupFile = DatabaseUtils.getCup(db,userId,false);
+            Log.d("fin for user " + userId, String.valueOf(finTestMaxInt));
+            Texture cupTexture = new Texture(Gdx.files.internal(cupFile));
+            Drawable cupDrawable = new TextureRegionDrawable(new TextureRegion(cupTexture));
+            cup = new ImageButton(cupDrawable);
+            cup.setPosition(GraphicConstants.centerX - cup.getWidth()/2F,GraphicConstants.centerY - cup.getHeight());
+            stage.addActor(cup);
+
+        }
+       else {
+           Log.d("fintest value =",String.valueOf(DatabaseUtils.getUserPassValue(db,userId)));
+        }
 
 
 
@@ -261,10 +290,8 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         ScreenUtils.clear(0, 0, 0, 1);
         batch.begin();
         sprite.draw(batch);
-        //font2.draw(batch, "DRIVETOPIA", Gdx.graphics.getWidth()/6,Gdx.graphics.getHeight()/4*3);
-        font2.draw(batch, layout, GraphicConstants.centerX-layout.width/2,GraphicConstants.rowHeight*6.8F);
+        font2.draw(batch, layout, GraphicConstants.centerX-layout.width/2,GraphicConstants.rowHeight*7.2F);
 
-        //fontFactory.getFont(ukrLocale).draw(batch, "Приав", Gdx.graphics.getWidth()/4-20,Gdx.graphics.getHeight()/4*3+200);
 
 
 

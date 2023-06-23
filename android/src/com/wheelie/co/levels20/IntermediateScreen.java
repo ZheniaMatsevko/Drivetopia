@@ -1,6 +1,7 @@
 package com.wheelie.co.levels20;
 
 import static DBWorkH.DatabaseUtils.getLevelsWithStateZero;
+import static DBWorkH.DatabaseUtils.setUserPassed;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -175,21 +176,21 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
             public void clicked(InputEvent event, float x, float y) {
                 /**якщо це екран завершення практики, повертати в головне меню**/
             if(state!=0)  {
+              if(level.levelNumb!=16) {
+                  /**оновлення очків юзера за цю практику якщо він набрав більше за попередній результат**/
+                  if (getUserScoreForLevel(app.getDatabase(), userId, level.levelNumb) < level.currentscore && !failure) {
+                      updateUserScoreForLevel(app.getDatabase(), userId, level.levelNumb, level.currentscore);
+                  }
+                  /**якщо пройдено на максимум, заноситься стан 2 в базу даних цього рівня і користувача**/
+                  if (!failure && level.failureScoreCount == 0) {
+                      updateUserStateForLevel(app.getDatabase(), userId, level.levelNumb, 2);
+                  }
+                  /**якщо не на максимум, то стан 1 || ЯКЩО СТАН УЖЕ 2, ТО НЕ ОНОВЛЮЄТЬСЯ**/
+                  else if (!failure) {
+                      updateUserStateForLevel(app.getDatabase(), userId, level.levelNumb, 1);
 
-                /**оновлення очків юзера за цю практику якщо він набрав більше за попередній результат**/
-               if(getUserScoreForLevel(app.getDatabase(),userId,level.levelNumb)<level.currentscore && !failure) {
-                   updateUserScoreForLevel(app.getDatabase(),userId, level.levelNumb, level.currentscore);
-               }
-                /**якщо пройдено на максимум, заноситься стан 2 в базу даних цього рівня і користувача**/
-               if(!failure && level.failureScoreCount==0) {
-                   updateUserStateForLevel(app.getDatabase(),userId,level.levelNumb,2);
-               }
-               /**якщо не на максимум, то стан 1 || ЯКЩО СТАН УЖЕ 2, ТО НЕ ОНОВЛЮЄТЬСЯ**/
-               else if(!failure) {
-                   updateUserStateForLevel(app.getDatabase(),userId,level.levelNumb,1);
-
-               }
-
+                  }
+              }
 
                 app.setScreen(new LevelsScreen(app,userId));
 dispose();
@@ -262,12 +263,18 @@ dispose();
                 if(level.failureScoreCount==0) {
                     finaltext += "Ви склали його на максимальний бал і можете переглянути свій кубок у профілі.";
                      cupFile = DatabaseUtils.getCup(app.getDatabase(),userId,true);
+                     updateUserScoreForLevel(app.getDatabase(),userId,16,0);
+                     updateUserStateForLevel(app.getDatabase(),userId,16,2);
+                    setUserPassed(app.getDatabase(),userId,1);
                     //записується state 2 до рівню 16 юзеру в таблицю scores
                 }
                 else {
                     finaltext += "До ідеального результату вам не вистачило " + level.failureScoreCount + " балів. Ви можете перескласти тест пізніше на більш високий бал.";
                     cupFile = DatabaseUtils.getCup(app.getDatabase(),userId,false);
                     //записується failureScoreCount і state=1 юзеру в таблицю до рівню 16
+                    updateUserScoreForLevel(app.getDatabase(),userId,16,level.failureScoreCount);
+                    updateUserStateForLevel(app.getDatabase(),userId,16,1);
+                    setUserPassed(app.getDatabase(),userId,1);
                 }
             }
             label = new Label(finaltext, skinfinal);

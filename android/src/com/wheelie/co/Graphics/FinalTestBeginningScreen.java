@@ -2,6 +2,7 @@ package com.wheelie.co.Graphics;
 
 import static DBWorkH.DatabaseUtils.getLevelsWithStateZero;
 import static DBWorkH.DatabaseUtils.getUserFailures;
+import static DBWorkH.DatabaseUtils.getUserPassValue;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -219,22 +220,7 @@ public class FinalTestBeginningScreen extends ScreenAdapter implements InputProc
 
 
 
-/**повертає, чи пройдено вже фінальний тест юзером; passValue=0 ні, passValue=1 - так**/
-    public int getUserPassValue(SQLiteDatabase database, int userId) {
-        String query = "SELECT pass FROM users WHERE id = ?";
-        int passValue = 0;
 
-        Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(userId)});
-        if (cursor != null && cursor.moveToFirst()) {
-            passValue = cursor.getInt(cursor.getColumnIndexOrThrow("pass"));
-        }
-
-        if (cursor != null) {
-            cursor.close();
-        }
-
-        return passValue;
-    }
 
     @Override
     public boolean keyDown(int keycode) {

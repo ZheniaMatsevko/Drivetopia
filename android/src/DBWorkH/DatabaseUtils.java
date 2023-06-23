@@ -2,6 +2,7 @@ package DBWorkH;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class DatabaseUtils {
 
@@ -67,5 +68,56 @@ public DatabaseUtils(){}
         else return "bronze.png";
 
     }
+
+
+    /**повертає, чи пройдено вже фінальний тест юзером; passValue=0 ні, passValue=1 - так**/
+    public static int getUserPassValue(SQLiteDatabase database, int userId) {
+        String query = "SELECT pass FROM users WHERE id = ?";
+        int passValue = 0;
+
+        Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(userId)});
+        if (cursor != null && cursor.moveToFirst()) {
+            passValue = cursor.getInt(cursor.getColumnIndexOrThrow("pass"));
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        return passValue;
+    }
+
+
+/**Повертає стан юзера стосовного певного рівню. 0 - не пройдено/завалено; 1 - пройдено не ідеально
+ * 2 - пройдено ідеально**/
+    public static int getUserStateForLevel(SQLiteDatabase database, int userId, int levelNumb) {
+        String query = "SELECT state FROM scores WHERE userId = ? AND levelNumb = ?";
+        String[] selectionArgs = {String.valueOf(userId), String.valueOf(levelNumb)};
+        int state = 0;
+
+        Cursor cursor = database.rawQuery(query, selectionArgs);
+        if (cursor != null && cursor.moveToFirst()) {
+            int stateIndex = cursor.getColumnIndex("state");
+            if (stateIndex != -1) {
+                state = cursor.getInt(stateIndex);
+            }
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        return state;
+    }
+
+/**встановлює значення щодо проходження фінального тесту (1 - пройшов)**/
+    public static void setUserPassed(SQLiteDatabase database, int userId, int passedValue) {
+        String query = "UPDATE users SET pass = ? WHERE id = ?";
+        Object[] args = {passedValue, userId};
+
+        database.execSQL(query, args);
+        Log.d("User " + userId, "pass set to " + passedValue);
+    }
+
 
 }
