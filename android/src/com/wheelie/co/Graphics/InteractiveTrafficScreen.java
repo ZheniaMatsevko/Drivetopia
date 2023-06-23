@@ -26,6 +26,8 @@ import com.wheelie.co.Tools.Car;
 import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.Tools.InteractiveCarController;
 import com.wheelie.co.Tools.MyDialog;
+import com.wheelie.co.levels20.IntermediateScreen;
+import com.wheelie.co.levels20.Level;
 
 import java.util.Locale;
 
@@ -34,7 +36,7 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
     private SpriteBatch batch;
     private Sprite sprite;
     private Stage stage;
-    private int level;
+    private Level level;
 
     private BitmapFont font;
     private BitmapFont font2;
@@ -54,7 +56,10 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
     private Locale ukrLocale;
     private FontFactory fontFactory;
 
-    public InteractiveTrafficScreen(final Drivetopia app, int level, int userID) {
+    private boolean failed;
+
+
+    public InteractiveTrafficScreen(final Drivetopia app, Level level, int userID) {
         fontFactory = new FontFactory();
         fontFactory.initialize();
 
@@ -111,7 +116,6 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         // Drawing and positioning the button to move the car
         carControl = new InteractiveCarController();
         stage.addActor(carControl);
-        Gdx.input.setInputProcessor(stage);
 
         MyDialog instruct = new MyDialog("Завдання", skin);
         instruct.setMessage("Проїдь світлофор!");
@@ -131,6 +135,8 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
 
     @Override
     public void render(float delta) {
+        Gdx.input.setInputProcessor(stage);
+
         Gdx.gl.glClearColor(86/255f, 168/255f, 50/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
@@ -153,9 +159,11 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         car.setCarBounds(car.getCarBounds().getVertices());
 
         if (car.getCarBounds().getY() >= light.getBounds().getY() && light.getCurrent() == light.green && !isLightPassed) {
+            failed = false;
             showDialog("Молодець!");
             isLightPassed = true;
         } else if (car.getCarBounds().getY() >= light.getBounds().getY() && light.getCurrent() != light.green && !isLightPassed) {
+            failed = true;
             showDialog("Неправильно!");
             isLightPassed = true;
         } else if (car.getCarBounds().getY() < light.getBounds().getY()) {
@@ -200,7 +208,27 @@ public class InteractiveTrafficScreen extends ScreenAdapter implements InputProc
         dialog.addListener(new InputListener() {
            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                dialog.setVisible(false);
-               app.setScreen(new MainMenuScreen(app, userID));
+
+               if(failed) {
+                   level.failureScoreCount+=10;
+                   if (level.failureScoreCount>=level.failureScore)app.setScreen(new IntermediateScreen(app,level,userID,2,true));
+
+               }
+               else {
+                   if(level.getTasks().size()!=level.currentTaskNumber()) {
+                       level.increaseTaskCounter();
+                       level.currentscore += 10;
+                       app.setScreen(level.tasks.get(level.currentTaskNumber() - 1));
+                   }
+                   else {
+                       level.currentscore += 10;
+                       app.setScreen(new IntermediateScreen(app,level,userID,2,false));
+
+                   }
+               }
+
+
+
                return true;
            }
         });

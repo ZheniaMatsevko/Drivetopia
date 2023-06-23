@@ -28,8 +28,11 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Tools.FontFactory;
+import com.wheelie.co.Tools.MyDialog;
 
 import java.util.Locale;
+
+import DBWorkH.DatabaseUtils;
 
 public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
     Drivetopia app;
@@ -42,7 +45,11 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
     private BitmapFont font2;
     private BitmapFont font3;
 
+    private BitmapFont fontDialog;
+
     private Skin skin;
+
+    private Skin skinDialog;
     private int userId =2;
     private int backgroundOffset;
     private Locale enLocale;
@@ -86,13 +93,18 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         ukrLocale = new Locale("uk", "UA");
         font2=fontFactory.getFont(enLocale,1);
         font3=fontFactory.getFont(ukrLocale,1);
-
+        fontDialog=fontFactory.getFont(ukrLocale,11);
 
 
         skin = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
         skin.add("font", font3);
-
         skin.load(Gdx.files.internal("skin-composer-ui.json"));
+
+        skinDialog = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
+        skinDialog.add("font", fontDialog);
+
+        skinDialog.load(Gdx.files.internal("skin-composer-ui.json"));
+
         startBtn = new TextButton("Уроки",skin);
         startBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
         startBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,GraphicConstants.rowHeight*5);
@@ -115,13 +127,23 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         });
         stage.addActor(aboutBtn);
 
+        final MyDialog dialog = new MyDialog("", skinDialog);
+        dialog.setMessage("Ви вже пройшли\nфінальний тест\nна максимальний бал!\n" +
+                "Відпочивайте :)");
+        dialog.setColor(Color.valueOf("#066c35"));
+
 
         finalTestBtn = new TextButton("Фінальний тест",skin);
         finalTestBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
         finalTestBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,aboutBtn.getY()-startBtn.getHeight()*1.2F);
         finalTestBtn.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
+                if(DatabaseUtils.getUserStateForLevel(app.getDatabase(),userId,16)!=2)
                 app.setScreen(new FinalTestBeginningScreen(app,userId));
+                else {
+                  dialog.show(stage);
+                }
+
        dispose();
             }
         });
