@@ -29,6 +29,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Tools.FileService;
 import com.wheelie.co.Tools.FontFactory;
+import com.wheelie.co.levels20.IntermediateScreen;
+import com.wheelie.co.levels20.finalTest;
+import com.wheelie.co.levels20.level6;
 
 import java.util.Locale;
 
@@ -122,11 +125,9 @@ public class FinalTestBeginningScreen extends ScreenAdapter implements InputProc
 
 
         int[] p = getLevelsWithStateZero(app.getDatabase(),userID);
-        String text = "лох";
+        String text = "життя бентежне";
+        /**якщо всі практики пройдені, можна розпочати фінальний тест**/
         if(p.length==0) {
-            text = "Вітаємо з проходженням усіх рівнів! Настав час перевірити ваші знання на фінальному тесті. Він буде охоплювати" +
-                    " всі попередньо вивчені теми. За бажанням можете переглянути теорію ще раз перед тим, як продовжити.\n" +
-                    "Якщо ж впевнені у своїх силах, бажаємо удачі!";
 
             startButton = new TextButton("Розпочати",skin2);
             startButton.setSize(GraphicConstants.colWidth*5,GraphicConstants.rowHeight*0.7F);
@@ -134,13 +135,29 @@ public class FinalTestBeginningScreen extends ScreenAdapter implements InputProc
 
             startButton.addListener(new ClickListener() {
                 public void clicked(InputEvent event, float x, float y) {
-                  //  тут має розпочинатись фінальний тест//
-                    //dispose();
+                    app.setScreen(new IntermediateScreen(app,new finalTest(app,userID),userID,0,false));
+                    dispose();
                 }
             });
 
             stage.addActor(startButton);
+
+            /**якщо фінальний тест ще не було успішно пройдено**/
+            if(getUserPassValue(app.getDatabase(),userID)==0) {
+                text = "Вітаємо з проходженням усіх рівнів! Настав час перевірити ваші знання на фінальному тесті. Він буде охоплювати" +
+                        " всі попередньо вивчені теми. За бажанням можете переглянути теорію ще раз перед тим, як продовжити.\n" +
+                        "Якщо ж впевнені у своїх силах, бажаємо удачі!";
+                int i = getUserFailures(app.getDatabase(), userID);
+                if (i != 0) text += "\nВже було спроб скласти фінальний тест: " + i;
+            }
+            /**інакше**/
+            else {
+
+            }
+
         }
+
+        /**якщо не всі практики пройдені, фінальний тест не можна розпочати**/
         else {
              text = "Ви не допущені до фінального тесту, поки не пройдете практику до всіх рівнів!\n" +
                     "Ви не завершили наступні практики: ";
@@ -195,6 +212,40 @@ public class FinalTestBeginningScreen extends ScreenAdapter implements InputProc
         batch.end();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+    }
+
+    /**повертає кількість завалів фінального тесту юзером**/
+    public int getUserFailures(SQLiteDatabase database, int userId) {
+        String query = "SELECT failures FROM users WHERE id = ?";
+        int failures = 0;
+
+        Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(userId)});
+        if (cursor != null && cursor.moveToFirst()) {
+            failures = cursor.getInt(cursor.getColumnIndexOrThrow("failures"));
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        return failures;
+    }
+
+/**повертає, чи пройдено вже фінальний тест юзером; passValue=0 ні, passValue=1 - так**/
+    public int getUserPassValue(SQLiteDatabase database, int userId) {
+        String query = "SELECT pass FROM users WHERE id = ?";
+        int passValue = 0;
+
+        Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(userId)});
+        if (cursor != null && cursor.moveToFirst()) {
+            passValue = cursor.getInt(cursor.getColumnIndexOrThrow("pass"));
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        return passValue;
     }
 
     @Override

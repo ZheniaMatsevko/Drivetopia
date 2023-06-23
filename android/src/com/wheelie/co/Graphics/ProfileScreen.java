@@ -354,7 +354,7 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
     }
 
     public int calculateTotalScoreForUser(SQLiteDatabase database, int userId) {
-        String query = "SELECT SUM(score) FROM scores WHERE userId = ?";
+        String query = "SELECT SUM(score) FROM scores WHERE userId = ? AND levelNumb != 16";
         int totalScore = 0;
 
         Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(userId)});
