@@ -926,6 +926,11 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
             db.insert(DBConstants.RELATIONS_TABLE, null, relationsValues);
         }
 
+
+
+
+
+
         texts = new String[]{"попереджувальні знаки", "знаки пріоритету",
         "заборонні знаки", "наказові знаки", "інформаційно-вказівні знаки",
                 "знаки сервісу", "таблички до дорожніх знаків"};
@@ -961,6 +966,23 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
 
 
+        texts = new String[]{"світловий покажчик повороту", "аварійна сигналізація",
+                "дальнє світло фар", "перемикання світла фар", "звуковий сигнал",
+                "ближнє світло фар"};
+        answers = new String[]{"має подаватись перед початком руху і зупинкою, перестроюванням або поворотом.",
+                "має подаватись у разі вимушеної зупинки на дорозі.",
+                "забороняється в умовах, коли це може призвести до засліплення інших водіїв.",
+                "можна використовувати для привертання уваги водія, який обганяється.",
+                "зазвичай забороняється у населених пунктах",
+                "вважається попереджувальним сигналом лише у світлу пору доби."};
+        for(int i=0;i<texts.length;i++){
+            relationsValues = new ContentValues();
+            relationsValues.put("levelNumb", 5);
+            relationsValues.put("text", texts[i]);
+            relationsValues.put("answer", answers[i]);
+            relationsValues.put("type", "text");
+            db.insert(DBConstants.RELATIONS_TABLE, null, relationsValues);
+        }
 
 
 
@@ -1844,10 +1866,101 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
 
 
+        /**рівень 5**/
+
+        simpleValues = new ContentValues();
+        simpleValues.put("levelNumb", 5);
+        simpleValues.put("text", "Цим сигналом заборонено користуватися у населених пунктах окрім випадків, коли без цього не запобігти ДТП.");
+        simpleValues.put("answer", "звуковий сигнал");
+        simpleValues.put("picture", "noPicture");
+
+        questionId = db.insert("simpleChoiceQuestion", null, simpleValues);
+
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "дальнє світло фар");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "перемикання світла фар");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "покажчик повороту");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "проблисковий маячок");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "ліхтар заднього ходу");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
 
 
 
 
+        simpleValues = new ContentValues();
+        simpleValues.put("levelNumb", 5);
+        simpleValues.put("text", "У разі зупинки водій має подати сигнал...");
+        simpleValues.put("answer", "покажчиком повороту");
+        simpleValues.put("picture", "noPicture");
+
+        questionId = db.insert("simpleChoiceQuestion", null, simpleValues);
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "ліхтарем заднього ходу");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "рукою");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "звуковим сигналом");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "ближнім світлом фар");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "аварійною сигналізацією");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "дальнім світлом фар");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "перемиканням світла фар");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
 
 
 
@@ -1952,6 +2065,79 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         db.insert("wrongChoices", null, wrongChoiceValues);
         wrongChoiceValues.clear();
 
+
+
+
+        /**рівень 7**/
+
+        simpleValues = new ContentValues();
+        simpleValues.put("levelNumb", 7);
+        simpleValues.put("text", "Чи дозволяється рух по проїзній частині на велосипедах?");
+        simpleValues.put("answer", "так, якомога правіше");
+        simpleValues.put("picture", "noPicture");
+
+        questionId = db.insert("simpleChoiceQuestion", null, simpleValues);
+
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "так, якомога лівіше");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "ні за яких умов");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "так, без обмежень");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "тільки в світлу пору доби");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+
+
+
+        simpleValues = new ContentValues();
+        simpleValues.put("levelNumb", 7);
+        simpleValues.put("text", "Чи дозволено вершникам рухатися по проїзній частині?");
+        simpleValues.put("answer", "так, якомога правіше");
+        simpleValues.put("picture", "noPicture");
+
+        questionId = db.insert("simpleChoiceQuestion", null, simpleValues);
+
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "так, якомога лівіше");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "ні за яких умов");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "так, без обмежень");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "тільки в світлу пору доби");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
 
 
 
