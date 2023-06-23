@@ -41,7 +41,7 @@ import java.util.Locale;
 
 import DBWorkH.DatabaseUtils;
 
-public class ProfileScreen extends ScreenAdapter implements InputProcessor {
+public class ProfileScreen extends ScreenAdapter {
     Drivetopia app;
     private SpriteBatch batch;
     private Sprite sprite;
@@ -349,37 +349,6 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         return email;
     }
 
-
-
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    /**
-     * Відбувається дія при натисканні на екран лівою кнопкою миші
-     */
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-      /**  Vector2 coord = stage.screenToStageCoordinates(new Vector2((float)screenX,(float) screenY));
-        Actor hitActor = stage.hit(coord.x,coord.y,true);
-        if(hitActor== backButton){
-            System.out.println("Hit " + hitActor.getClass());
-            app.setScreen(new MainMenuScreen(app,2));
-        }**/
-        return true;
-    }
-
     public int calculateTotalScoreForUser(SQLiteDatabase database, int userId) {
         String query = "SELECT SUM(score) FROM scores WHERE userId = ? AND levelNumb != 16";
         int totalScore = 0;
@@ -393,24 +362,5 @@ public class ProfileScreen extends ScreenAdapter implements InputProcessor {
         return totalScore;
     }
 
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return true;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(float amountX, float amountY) {
-        return false;
-    }
 }
 

@@ -50,7 +50,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-public class LevelsScreen extends ScreenAdapter implements InputProcessor {
+public class LevelsScreen extends ScreenAdapter{
 
     Drivetopia app;
     private SpriteBatch batch;
@@ -340,66 +340,6 @@ public class LevelsScreen extends ScreenAdapter implements InputProcessor {
         batch.end();
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
-    }
-
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    /**
-     * Відбувається дія при натисканні на екран лівою кнопкою миші
-     */
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector2 coord = stage.screenToStageCoordinates(new Vector2((float)screenX,(float) screenY));
-        Actor hitActor = stage.hit(coord.x,coord.y,true);
-        //   if(finalTestBtn.isPressed()) app.setScreen(new BeginningScreen(app,1,1));
-        // if(hitActor==profileBtn.getImage()){
-        //if(app.soundState) app.clicksound.play();
-        //   System.out.println("Hit " + hitActor.getClass());
-        //app.setScreen(new ProfileScreen(app,1,1));
-        //} *else if(hitActor==helpButton.getImage()){
-        //if(game.soundState)  game.clicksound.play();
-        //  System.out.println("Hit " + hitActor.getClass());
-        //game.setScreen(new HelpScreen(game,level,bonusScore));
-        //}
-        //else if(hitActor==settingsButton.getImage()){
-        //if(game.soundState)  game.clicksound.play();
-        //  System.out.println("Hit " + hitActor.getClass());
-        //game.setScreen(new OptionsScreen(game,level,bonusScore,game.musicStage,game.soundState));
-        //}*/
-        return true;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return true;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(float amountX, float amountY) {
-        return false;
     }
 
 }

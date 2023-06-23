@@ -10,33 +10,21 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Graphics.GraphicConstants;
-import com.wheelie.co.Graphics.LevelsScreen;
-import com.wheelie.co.Graphics.MainMenuScreen;
-import com.wheelie.co.Graphics.ProfileScreen;
-import com.wheelie.co.Graphics.TheoryScreen;
-import com.wheelie.co.Tools.FileService;
 import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.Tools.MyDialog;
-import com.wheelie.co.Tools.TheoryScrollPane;
 import com.wheelie.co.levelTemplates.questionTemplates.HardPictureQuestion;
 import com.wheelie.co.levels20.IntermediateScreen;
 import com.wheelie.co.levels20.Level;
@@ -44,7 +32,7 @@ import com.wheelie.co.levels20.Level;
 import java.util.LinkedList;
 import java.util.Locale;
 
-public class HardPictureQuestionScreen extends ScreenAdapter implements InputProcessor {
+public class HardPictureQuestionScreen extends ScreenAdapter {
 
     Drivetopia app;
     private SpriteBatch batch;
@@ -220,44 +208,5 @@ public class HardPictureQuestionScreen extends ScreenAdapter implements InputPro
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
         Gdx.input.setInputProcessor(stage);
-    }
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(float amountX, float amountY) {
-        return false;
     }
 }

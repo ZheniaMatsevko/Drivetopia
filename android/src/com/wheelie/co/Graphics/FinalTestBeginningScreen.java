@@ -40,7 +40,7 @@ import com.wheelie.co.levels20.level6;
 import java.util.Locale;
 
 /**екран перед початком фінального тесту**/
-public class FinalTestBeginningScreen extends ScreenAdapter implements InputProcessor {
+public class FinalTestBeginningScreen extends ScreenAdapter {
     Drivetopia app;
     private SpriteBatch batch;
     private Sprite sprite;
@@ -218,56 +218,4 @@ public class FinalTestBeginningScreen extends ScreenAdapter implements InputProc
         stage.draw();
     }
 
-
-
-
-
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    /**
-     * Відбувається дія при натисканні на екран лівою кнопкою миші
-     */
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector2 coord = stage.screenToStageCoordinates(new Vector2((float)screenX,(float) screenY));
-        Actor hitActor = stage.hit(coord.x,coord.y,true);
-        if(hitActor== backButton){
-            System.out.println("Hit " + hitActor.getClass());
-            app.setScreen(new MainMenuScreen(app,userID));
-        }
-        return true;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return true;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(float amountX, float amountY) {
-        return false;
-    }
 }

@@ -30,7 +30,7 @@ import com.wheelie.co.Tools.FontFactory;
 
 import java.util.Locale;
 
-public class RegistrationScreen extends ScreenAdapter implements InputProcessor {
+public class RegistrationScreen extends ScreenAdapter {
 
     Drivetopia app;
     private SpriteBatch batch;
@@ -306,49 +306,5 @@ public class RegistrationScreen extends ScreenAdapter implements InputProcessor 
 
 
 
-    }
-
-
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    /**
-     * Відбувається дія при натисканні на екран лівою кнопкою миші
-     */
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return true;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return true;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(float amountX, float amountY) {
-        return false;
     }
 }

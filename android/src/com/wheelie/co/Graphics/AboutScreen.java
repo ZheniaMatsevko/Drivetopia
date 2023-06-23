@@ -30,7 +30,7 @@ import com.wheelie.co.Tools.FontFactory;
 import java.util.Locale;
 
 /**Марина: поки що це просто копія екрану профіля,якщо воно так і залишено це значить що я ще не доробила**/
-public class AboutScreen extends ScreenAdapter implements InputProcessor {
+public class AboutScreen extends ScreenAdapter{
     Drivetopia app;
     private SpriteBatch batch;
     private Sprite sprite;
@@ -174,52 +174,4 @@ public class AboutScreen extends ScreenAdapter implements InputProcessor {
         stage.draw();
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    /**
-     * Відбувається дія при натисканні на екран лівою кнопкою миші
-     */
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector2 coord = stage.screenToStageCoordinates(new Vector2((float)screenX,(float) screenY));
-        Actor hitActor = stage.hit(coord.x,coord.y,true);
-        if(hitActor== backButton){
-            System.out.println("Hit " + hitActor.getClass());
-            app.setScreen(new MainMenuScreen(app,userID));
-        }
-        return true;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return true;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(float amountX, float amountY) {
-        return false;
-    }
 }
