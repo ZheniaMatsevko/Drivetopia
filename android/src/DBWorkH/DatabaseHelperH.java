@@ -560,6 +560,22 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
         db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
 
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 14);
+        theoryValues.put("text", "theory14.txt");
+        theoryValues.put("image", "theory14.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        for(int i=2;i<17;i++){
+            theoryValues = new ContentValues();
+            theoryValues.put("levelNumb", 14);
+            theoryValues.put("text", "theory14-"+i+".txt");
+            theoryValues.put("image", "theory14-"+i+".jpg");
+
+            db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+        }
         /**Заповнюємо інформацію про рівні**/
 
         ContentValues flashCardValues = new ContentValues();
@@ -572,7 +588,59 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
         flashCardValues = new ContentValues();
         flashCardValues.put("levelNumb", 14);
-        flashCardValues.put("text", "На якій картинці зображений знак 'Кінець велосипедної смуги'?");
+        flashCardValues.put("text", "Розмітка, що поділяє транспортні потоки протилежних напрямків (осьова розмітка) на дорогах з двома чи трьома (2 + 1) смугами руху в обох напрямках?");
+        flashCardValues.put("answer", "r1.png");
+        flashCardValues.put("type", "marking");
+
+        db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
+
+        flashCardValues = new ContentValues();
+        flashCardValues.put("levelNumb", 14);
+        flashCardValues.put("text", "Розмітка, що позначає місця, де заборонено стоянку транспортних засобів (з тієї сторони, де її нанесено)?");
+        flashCardValues.put("answer", "r6.png");
+        flashCardValues.put("type", "marking");
+
+        db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
+
+        flashCardValues = new ContentValues();
+        flashCardValues.put("levelNumb", 14);
+        flashCardValues.put("text", "Розмітка, що позначає наближення до ділянок, де проїзна частина звужується на одну смугу руху в попутному напрямку або закінчення смуги розгону?");
+        flashCardValues.put("answer", "r10.png");
+        flashCardValues.put("type", "marking");
+
+        db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
+
+        flashCardValues = new ContentValues();
+        flashCardValues.put("levelNumb", 14);
+        flashCardValues.put("text", "Розмітка, що позначає ліву торцеву частину штучної споруди та інші вертикальні поверхні масивних перешкод?");
+        flashCardValues.put("answer", "r12.png");
+        flashCardValues.put("type", "marking");
+
+        db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
+
+        flashCardValues = new ContentValues();
+        flashCardValues.put("levelNumb", 14);
+        flashCardValues.put("text", "Розмітка, що позначає виділену смугу для руху маршрутних транспортних засобів?");
+        flashCardValues.put("answer", "r11.png");
+        flashCardValues.put("type", "marking");
+
+        db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
+        flashCardValues = new ContentValues();
+        flashCardValues.put("levelNumb", 14);
+        flashCardValues.put("text", "Розмітка, що позначає нерегульований і регульований пішохідний перехід?");
+        flashCardValues.put("answer", "r7.png");
+        flashCardValues.put("type", "marking");
+
+        db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
+
+
+
+
+
+
+        flashCardValues = new ContentValues();
+        flashCardValues.put("levelNumb", 14);
+        flashCardValues.put("text", "На якій картинці зображений знак 'Перша медична допомога'?");
         flashCardValues.put("answer", "sign1.png");
         flashCardValues.put("type", "sign");
 
@@ -580,7 +648,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
         flashCardValues = new ContentValues();
         flashCardValues.put("levelNumb", 14);
-        flashCardValues.put("text", "На якій картинці зображений знак 'Кінець пішохідної зони'?");
+        flashCardValues.put("text", "На якій картинці зображений знак 'Прилягання другорядної дороги'?");
         flashCardValues.put("answer", "sign14.png");
         flashCardValues.put("type", "sign");
 
@@ -604,11 +672,35 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
         flashCardValues = new ContentValues();
         flashCardValues.put("levelNumb", 14);
-        flashCardValues.put("text", "На якій картинці зображений знак 'Дорога із зустрічною велосипедною смугою'?");
+        flashCardValues.put("text", "На якій картинці зображений знак 'Нерівна дорога'?");
         flashCardValues.put("answer", "sign10.png");
         flashCardValues.put("type", "sign");
 
         db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
+        flashCardValues = new ContentValues();
+        flashCardValues.put("levelNumb", 14);
+        flashCardValues.put("text", "На якій картинці зображений знак 'Круговий рух'?");
+        flashCardValues.put("answer", "sign23.png");
+        flashCardValues.put("type", "sign");
+
+        db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
+
+        flashCardValues = new ContentValues();
+        flashCardValues.put("levelNumb", 14);
+        flashCardValues.put("text", "На якій картинці зображений знак 'Дати дорогу'?");
+        flashCardValues.put("answer", "sign18.png");
+        flashCardValues.put("type", "sign");
+
+        db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
+
+        flashCardValues = new ContentValues();
+        flashCardValues.put("levelNumb", 14);
+        flashCardValues.put("text", "На якій картинці зображений знак 'Напрямок головної дороги'?");
+        flashCardValues.put("answer", "sign5.png");
+        flashCardValues.put("type", "sign");
+
+        db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
+
 
         flashCardValues = new ContentValues();
         flashCardValues.put("levelNumb", 6);
@@ -620,17 +712,23 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
         flashCardValues = new ContentValues();
         flashCardValues.put("levelNumb", 11);
-        flashCardValues.put("text", "На якій картинці всі транспортні засоби зупинились правильно?");
+        flashCardValues.put("text", "На якій картинці для всіх транспортних засобів зупинка дозволена?");
         flashCardValues.put("answer", "stopOK.jpg");
         flashCardValues.put("type", "stop");
 
         db.insert(DBConstants.FLASHCARD_QUESTION_TABLE, null, flashCardValues);
 
 
-        for(int i=1;i<16;i++){
+        for(int i=1;i<25;i++){
             ContentValues flashCardImageValues = new ContentValues();
             flashCardImageValues.put("image", "sign"+i+".png");
             flashCardImageValues.put("type", "sign");
+            db.insert(DBConstants.FLASHCARD_IMAGES_TABLE, null, flashCardImageValues);
+        }
+        for(int i=1;i<16;i++){
+            ContentValues flashCardImageValues = new ContentValues();
+            flashCardImageValues.put("image", "r"+i+".png");
+            flashCardImageValues.put("type", "marking");
             db.insert(DBConstants.FLASHCARD_IMAGES_TABLE, null, flashCardImageValues);
         }
         for(int i=1;i<5;i++){
@@ -663,12 +761,17 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
         ContentValues relationsValues = new ContentValues();
 
 
-        String[] texts = new String[]{"Кінець велосипедної смуги","Місце для стоянки", "Виїзд на дорогу із смугою для руху маршрутних транспортних засобів", "Кінець смуги для руху маршрутних транспортних засобів", "Кінець додаткової смуги руху",
-        "Місце для розвороту","Пішохідна зона","Підземний пішохідний перехід",
-                "Велосипедна смуга","Дорога із зустрічною велосипедною смугою",
-        "Дорога з одностороннім рухом", "Кінець дороги із смугою для руху маршрутних транспортних засобів",
-        "Смуга руху для аварійної зупинки", "Кінець пішохідної зони","Пішохідний перехід"};
-        for(int i=1;i<16;i++){
+        String[] texts = new String[]{"Пункт медичної допомоги","Місце для стоянки", "Автозаправна станція", "Відстань до об’єкта", "Напрямок головної дороги",
+        "Ожеледиця","Пішохідна зона","Небезпечний поворот праворуч",
+                "Декілька поворотів","Нерівна дорога",
+        "Дорога з одностороннім рухом", "Падіння каміння",
+        "Смуга руху для аварійної зупинки", "Прилягання другорядної дороги","Пішохідний перехід",
+        "Головна дорога","Проїзд без зупинки заборонено",
+        "Дати дорогу","Рух механічних транспортних засобів заборонено",
+        "Рух транспортних засобів, що перевозять легкозаймисті вантажі, заборонено", "Зупинку заборонено",
+        "Обмеження максимальної швидкості", "Круговий рух",
+        "Доріжка для пішоходів"};
+        for(int i=1;i<25;i++){
             relationsValues = new ContentValues();
             relationsValues.put("levelNumb", 14);
             relationsValues.put("text", texts[i-1]);
