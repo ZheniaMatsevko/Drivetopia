@@ -57,24 +57,24 @@ public class Drivetopia extends Game {
 
 
 		shapeRenderer = new ShapeRenderer();
-	//	setScreen(new BeginningScreen(this));
+		//setScreen(new BeginningScreen(this));
 		//LinkedList<SimpleTextChoiceQuestion> q = SimpleTextChoiceQuestion.extractSimpleTextChoiceQuestionsFromDB(database,1);
 		//setScreen(new SimpleTextChoiceQuestionScreen(this,q.get(0),new level1(this,1),1));
         //level1 l = new level1(this,1);
 		//setScreen(l.tasks.get(0));
 	  // setScreen(new SimpleTextChoiceQuestionScreen(this,q.get(0),new level1(this,1),1));
-		finalTest f = new finalTest(this,1);
+		//finalTest f = new finalTest(this,1);
 		//f.failureScoreCount+=6;
-       setScreen(new IntermediateScreen(this,f,1,2,false));
+      // setScreen(new IntermediateScreen(this,f,2,2,false));
 
 		//setScreen(new RegistrationScreen(this));
 
 		//setScreen(new AuthorizationScreen(this));
 	//	setScreen(new MainMenuScreen(this,1));
 		//setScreen(new NormalRelationsTextQuestionScreen(this,new NormalRelationsQuestion("text"), new level4(),1));
-      //setScreen(new LevelsScreen(this,2));
+//	setScreen(new LevelsScreen(this,1));
 		//setScreen(new HardPictureQuestionScreen(this, new HardPictureQuestion(11, true),new level3(),1));
-		//	setScreen(new LevelsScreen(this,2));
+			setScreen(new LevelsScreen(this,2));
 		/*LinkedList<Slide> slides = new LinkedList<>();
 		slides.add(new Slide("theory1.jpg", FileService.readTheory(1)));
 		slides.add(new Slide("theory2-3.jpg", FileService.readTheory(2)));
