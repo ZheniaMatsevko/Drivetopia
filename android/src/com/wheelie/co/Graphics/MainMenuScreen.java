@@ -32,10 +32,8 @@ import com.wheelie.co.Tools.MyDialog;
 import DBWorkH.DatabaseUtils;
 import java.util.Locale;
 
+
 public class MainMenuScreen extends ScreenAdapter{
-
-
-public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
     Drivetopia app;
     private SpriteBatch batch;
     private Sprite sprite;
@@ -51,7 +49,7 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
     private Skin skin;
 
     private Skin skinDialog;
-    private int userId =2;
+    private int userId = 2;
     private int backgroundOffset;
     private Locale enLocale;
     private Locale ukrLocale;
@@ -74,13 +72,13 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
 
         this.app = app;
         this.userId = userId;
-        backgroundOffset=0;
+        backgroundOffset = 0;
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Zyana.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 135;
         parameter.borderWidth = 1.5F;
 
-        parameter.color=Color.BLACK;
+        parameter.color = Color.BLACK;
         parameter.borderColor = Color.BLACK;
         font = generator.generateFont(parameter);
         stage = new Stage(new ScreenViewport());
@@ -92,9 +90,9 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         // Initialize locales
         enLocale = new Locale("en", "US");
         ukrLocale = new Locale("uk", "UA");
-        font2=fontFactory.getFont(enLocale,1);
-        font3=fontFactory.getFont(ukrLocale,1);
-        fontDialog=fontFactory.getFont(ukrLocale,11);
+        font2 = fontFactory.getFont(enLocale, 1);
+        font3 = fontFactory.getFont(ukrLocale, 1);
+        fontDialog = fontFactory.getFont(ukrLocale, 11);
 
 
         skin = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
@@ -106,23 +104,23 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
 
         skinDialog.load(Gdx.files.internal("skin-composer-ui.json"));
 
-        startBtn = new TextButton("Уроки",skin);
-        startBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
-        startBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,GraphicConstants.rowHeight*5);
+        startBtn = new TextButton("Уроки", skin);
+        startBtn.setSize(GraphicConstants.colWidth * 6, GraphicConstants.rowHeight * 0.7F);
+        startBtn.setPosition(GraphicConstants.centerX - startBtn.getWidth() / 2, GraphicConstants.rowHeight * 5);
         startBtn.addListener(new ClickListener() {
-            public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new LevelsScreen(app,userId));
+            public void clicked(InputEvent event, float x, float y) {
+                app.setScreen(new LevelsScreen(app, userId));
                 dispose();
             }
         });
         stage.addActor(startBtn);
 
-        aboutBtn = new TextButton("Про додаток",skin);
-        aboutBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
-        aboutBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,startBtn.getY()-startBtn.getHeight()*1.2F);
+        aboutBtn = new TextButton("Про додаток", skin);
+        aboutBtn.setSize(GraphicConstants.colWidth * 6, GraphicConstants.rowHeight * 0.7F);
+        aboutBtn.setPosition(GraphicConstants.centerX - startBtn.getWidth() / 2, startBtn.getY() - startBtn.getHeight() * 1.2F);
         aboutBtn.addListener(new ClickListener() {
-            public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new AboutScreen(app,userId));
+            public void clicked(InputEvent event, float x, float y) {
+                app.setScreen(new AboutScreen(app, userId));
                 dispose();
             }
         });
@@ -134,28 +132,28 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         dialog.setColor(Color.valueOf("#066c35"));
 
 
-        finalTestBtn = new TextButton("Фінальний тест",skin);
-        finalTestBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
-        finalTestBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,aboutBtn.getY()-startBtn.getHeight()*1.2F);
+        finalTestBtn = new TextButton("Фінальний тест", skin);
+        finalTestBtn.setSize(GraphicConstants.colWidth * 6, GraphicConstants.rowHeight * 0.7F);
+        finalTestBtn.setPosition(GraphicConstants.centerX - startBtn.getWidth() / 2, aboutBtn.getY() - startBtn.getHeight() * 1.2F);
         finalTestBtn.addListener(new ClickListener() {
-            public void clicked(InputEvent event,float x, float y) {
-                if(DatabaseUtils.getUserStateForLevel(app.getDatabase(),userId,16)!=2)
-                app.setScreen(new FinalTestBeginningScreen(app,userId));
+            public void clicked(InputEvent event, float x, float y) {
+                if (DatabaseUtils.getUserStateForLevel(app.getDatabase(), userId, 16) != 2)
+                    app.setScreen(new FinalTestBeginningScreen(app, userId));
                 else {
-                  dialog.show(stage);
+                    dialog.show(stage);
                 }
 
-       dispose();
+                dispose();
             }
         });
         stage.addActor(finalTestBtn);
 
 
-        exitBtn = new TextButton("Вийти",skin);
-        exitBtn.setSize(GraphicConstants.colWidth*6,GraphicConstants.rowHeight*0.7F);
-        exitBtn.setPosition(GraphicConstants.centerX-startBtn.getWidth()/2,finalTestBtn.getY()-startBtn.getHeight()*1.2F);
+        exitBtn = new TextButton("Вийти", skin);
+        exitBtn.setSize(GraphicConstants.colWidth * 6, GraphicConstants.rowHeight * 0.7F);
+        exitBtn.setPosition(GraphicConstants.centerX - startBtn.getWidth() / 2, finalTestBtn.getY() - startBtn.getHeight() * 1.2F);
         exitBtn.addListener(new ClickListener() {
-            public void clicked(InputEvent event,float x, float y) {
+            public void clicked(InputEvent event, float x, float y) {
                 app.setScreen(new BeginningScreen(app));
                 dispose();
             }
@@ -167,11 +165,11 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         TextureRegionDrawable myTexRegionDrawable = new TextureRegionDrawable(myTextureRegion);
 
         profileBtn = new ImageButton(myTexRegionDrawable);
-        profileBtn.setSize(250,150);
-        profileBtn.setPosition(10, GraphicConstants.rowHeight*7.3F);
+        profileBtn.setSize(250, 150);
+        profileBtn.setPosition(10, GraphicConstants.rowHeight * 7.3F);
         profileBtn.addListener(new ClickListener() {
-            public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new ProfileScreen(app,userId));
+            public void clicked(InputEvent event, float x, float y) {
+                app.setScreen(new ProfileScreen(app, userId));
                 dispose();
             }
         });
@@ -180,42 +178,39 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         /**звичайна іконка звуку**/
 
 
-        if(soundState==1) {
+        if (soundState == 1) {
             soundBtn = new Image(new Texture(Gdx.files.internal("sound2.png")));
-        }
-        else if(soundState==2){
+        } else if (soundState == 2) {
             soundBtn = new Image(new Texture(Gdx.files.internal("sound2small.png")));
 
-        }
-        else if (soundState==3) {
+        } else if (soundState == 3) {
 
             soundBtn = new Image(new Texture(Gdx.files.internal("sound2no.png")));
 
         }
-        soundBtn.setSize(250,150);
-        soundBtn.setPosition(GraphicConstants.colWidth*7-soundBtn.getWidth()/2, GraphicConstants.rowHeight*7.3F);
-       soundState = 1;
+        soundBtn.setSize(250, 150);
+        soundBtn.setPosition(GraphicConstants.colWidth * 7 - soundBtn.getWidth() / 2, GraphicConstants.rowHeight * 7.3F);
+        soundState = 1;
 
         /**це чомусь не працює :( upd": працює**/
         soundBtn.addListener(new ClickListener() {
-            public void clicked(InputEvent event,float x, float y) {
-                switch(soundState) {
+            public void clicked(InputEvent event, float x, float y) {
+                switch (soundState) {
                     case 1:
                         soundBtn.setDrawable(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("sound2small.png")))));
-                        soundState  = 2;
+                        soundState = 2;
                         break;
                     case 2:
                         soundBtn.setDrawable(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("sound2no.png")))));
-                        soundState  = 3;
+                        soundState = 3;
                         break;
                     default:
                         soundBtn.setDrawable(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("sound2.png")))));
-                        soundState  = 1;
+                        soundState = 1;
                         break;
                 }
             }
         });
-
 
 
         stage.addActor(soundBtn);
@@ -237,10 +232,9 @@ public class MainMenuScreen extends ScreenAdapter implements InputProcessor {
         batch.begin();
         sprite.draw(batch);
         //font2.draw(batch, "DRIVETOPIA", Gdx.graphics.getWidth()/6,Gdx.graphics.getHeight()/4*3);
-        font2.draw(batch, layout, GraphicConstants.centerX-layout.width/2,GraphicConstants.rowHeight*6.8F);
+        font2.draw(batch, layout, GraphicConstants.centerX - layout.width / 2, GraphicConstants.rowHeight * 6.8F);
 
         //fontFactory.getFont(ukrLocale).draw(batch, "Приав", Gdx.graphics.getWidth()/4-20,Gdx.graphics.getHeight()/4*3+200);
-
 
 
         batch.end();
