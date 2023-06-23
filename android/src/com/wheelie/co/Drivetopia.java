@@ -22,6 +22,7 @@ import com.wheelie.co.levelTemplates.questionTemplates.HardPictureQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalRelationsQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 import com.wheelie.co.levels20.IntermediateScreen;
+import com.wheelie.co.levels20.finalTest;
 import com.wheelie.co.levels20.level1;
 import com.wheelie.co.levels20.level3;
 import com.wheelie.co.levels20.level4;
@@ -52,25 +53,19 @@ public class Drivetopia extends Game {
 	@Override
 	public void create () {
 
-		ArrayList<String> list = new ArrayList<>();
-		list.add("автомагістраль");
-		list.add("головна дорога");
-		list.add("Пєчкурова");
-
-
-
-
 
 
 
 		shapeRenderer = new ShapeRenderer();
-
+		setScreen(new BeginningScreen(this));
 		//LinkedList<SimpleTextChoiceQuestion> q = SimpleTextChoiceQuestion.extractSimpleTextChoiceQuestionsFromDB(database,1);
 		//setScreen(new SimpleTextChoiceQuestionScreen(this,q.get(0),new level1(this,1),1));
         //level1 l = new level1(this,1);
 		//setScreen(l.tasks.get(0));
 	  // setScreen(new SimpleTextChoiceQuestionScreen(this,q.get(0),new level1(this,1),1));
-       // setScreen(new IntermediateScreen())
+		//finalTest f = new finalTest(this,1);
+		//f.failureScoreCount+=6;
+      // setScreen(new IntermediateScreen(this,f,2,2,false));
 
 		//setScreen(new RegistrationScreen(this));
 
@@ -79,7 +74,7 @@ public class Drivetopia extends Game {
 		//setScreen(new NormalRelationsTextQuestionScreen(this,new NormalRelationsQuestion("text"), new level4(),1));
 //	setScreen(new LevelsScreen(this,1));
 		//setScreen(new HardPictureQuestionScreen(this, new HardPictureQuestion(11, true),new level3(),1));
-	setScreen(new LevelsScreen(this,1));
+		//	setScreen(new LevelsScreen(this,2));
 		/*LinkedList<Slide> slides = new LinkedList<>();
 		slides.add(new Slide("theory1.jpg", FileService.readTheory(1)));
 		slides.add(new Slide("theory2-3.jpg", FileService.readTheory(2)));

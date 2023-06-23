@@ -576,6 +576,140 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
             db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
         }
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 11);
+        theoryValues.put("text", "theory11.txt");
+        theoryValues.put("image", "theory11.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 11);
+        theoryValues.put("text", "theory11-1.txt");
+        theoryValues.put("image", "theory11-1.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 11);
+        theoryValues.put("text", "theory11-2.txt");
+        theoryValues.put("image", "theory11-2.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 11);
+        theoryValues.put("text", "theory11-3.txt");
+        theoryValues.put("image", "theory11-3.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 11);
+        theoryValues.put("text", "theory11-4.txt");
+        theoryValues.put("image", "theory11-4.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 12);
+        theoryValues.put("text", "theory12.txt");
+        theoryValues.put("image", "theory12.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 12);
+        theoryValues.put("text", "theory12-1.txt");
+        theoryValues.put("image", "theory12-1.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 12);
+        theoryValues.put("text", "theory12-2.txt");
+        theoryValues.put("image", "theory12-2.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 12);
+        theoryValues.put("text", "theory12-3.txt");
+        theoryValues.put("image", "theory12-3.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 13);
+        theoryValues.put("text", "theory13.txt");
+        theoryValues.put("image", "theory13.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 13);
+        theoryValues.put("text", "theory13-1.txt");
+        theoryValues.put("image", "theory13-1.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 13);
+        theoryValues.put("text", "theory13-2.txt");
+        theoryValues.put("image", "theory13-2.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 13);
+        theoryValues.put("text", "theory13-3.txt");
+        theoryValues.put("image", "theory13-3.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 13);
+        theoryValues.put("text", "theory13-4.txt");
+        theoryValues.put("image", "theory13-4.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 13);
+        theoryValues.put("text", "theory13-5.txt");
+        theoryValues.put("image", "theory13-5.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 15);
+        theoryValues.put("text", "theory15.txt");
+        theoryValues.put("image", "theory15.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 15);
+        theoryValues.put("text", "theory15-1.txt");
+        theoryValues.put("image", "theory15-1.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 15);
+        theoryValues.put("text", "theory15-2.txt");
+        theoryValues.put("image", "theory15-2.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+        theoryValues = new ContentValues();
+        theoryValues.put("levelNumb", 15);
+        theoryValues.put("text", "theory15-3.txt");
+        theoryValues.put("image", "theory15-3.jpg");
+
+        db.insert(DBConstants.THEORY_TABLE, null, theoryValues);
+
+
         /**Заповнюємо інформацію про рівні**/
 
         ContentValues flashCardValues = new ContentValues();
@@ -1710,24 +1844,6 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
 
 
-        /**рівень 5**/
-
-        simpleValues = new ContentValues();
-        simpleValues.put("levelNumb", 5);
-        simpleValues.put("text", "Розворот дозволяється...");
-        simpleValues.put("answer", "на перехресті");
-        simpleValues.put("picture", "noPicture");
-
-        questionId = db.insert("simpleChoiceQuestion", null, simpleValues);
-
-
-        wrongChoiceValues = new ContentValues();
-        wrongChoiceValues.put("questionId", questionId);
-        wrongChoiceValues.put("wrongAnswer", "під мостом");
-        db.insert("wrongChoices", null, wrongChoiceValues);
-        wrongChoiceValues.clear();
-
-
 
 
 
@@ -1845,9 +1961,111 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
 
 
+        /**рівень 11**/
+
+        simpleValues = new ContentValues();
+        simpleValues.put("levelNumb", 11);
+        simpleValues.put("text", "Якщо дорога у населеному пункті має по одній смузі для руху" +
+                " у кожному напрямку і розділена переривчастою лінією розмітки, зупинка дозволяється... ");
+        simpleValues.put("answer", "з обох боків");
+        simpleValues.put("picture", "noPicture");
+
+        questionId = db.insert("simpleChoiceQuestion", null, simpleValues);
+
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "з лівого боку");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "з правого боку");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "з жодного боку");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "лише на узбіччі");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
 
 
 
+        simpleValues = new ContentValues();
+        simpleValues.put("levelNumb", 11);
+        simpleValues.put("text", "У два ряди на проїзній частині дозволяється ставити...");
+        simpleValues.put("answer", "велосипеди");
+        simpleValues.put("picture", "noPicture");
+
+        questionId = db.insert("simpleChoiceQuestion", null, simpleValues);
+
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "автобуси");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "вантажівки");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "будь-який транспорт");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "гужовий транспорт");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+
+
+        simpleValues = new ContentValues();
+        simpleValues.put("levelNumb", 11);
+        simpleValues.put("text", "У два ряди на проїзній частині дозволяється ставити...");
+        simpleValues.put("answer", "мотоцикли");
+        simpleValues.put("picture", "noPicture");
+
+        questionId = db.insert("simpleChoiceQuestion", null, simpleValues);
+
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "автобуси");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "вантажівки");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "будь-який транспорт");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
+
+        wrongChoiceValues = new ContentValues();
+        wrongChoiceValues.put("questionId", questionId);
+        wrongChoiceValues.put("wrongAnswer", "гужовий транспорт");
+        db.insert("wrongChoices", null, wrongChoiceValues);
+        wrongChoiceValues.clear();
 
 
 

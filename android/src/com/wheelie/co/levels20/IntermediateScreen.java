@@ -1,5 +1,8 @@
 package com.wheelie.co.levels20;
 
+import static DBWorkH.DatabaseUtils.getLevelsWithStateZero;
+import static DBWorkH.DatabaseUtils.setUserPassed;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -10,27 +13,35 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
+import com.wheelie.co.Graphics.FinalTestBeginningScreen;
 import com.wheelie.co.Graphics.GraphicConstants;
 import com.wheelie.co.Graphics.LevelsScreen;
 import com.wheelie.co.Graphics.MainMenuScreen;
 import com.wheelie.co.Tools.FontFactory;
 
 import java.util.Locale;
+
+import DBWorkH.DatabaseUtils;
 
 
 /**
@@ -55,9 +66,17 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
     private BitmapFont font4;
 
 
+    private BitmapFont finalFont;
+
+    /**показ кубку після завершення фінального рівню**/
+   private Image cup;
+
+   private String cupFile;
     private Skin skin;
 
     private Skin skin2;
+
+    private Skin skinfinal;
     private int userId;
     private int backgroundOffset;
     private Locale enLocale;
@@ -69,6 +88,8 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
 
   //  private Level theLevel;
     private Label label;
+
+    private GlyphLayout layout = new GlyphLayout();
 
     private boolean failure;
 
@@ -125,19 +146,23 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
         //для великих назв
         font4=fontFactory.getFont(ukrLocale,3);
 
+        //для для фінального тесту
+        finalFont=fontFactory.getFont(ukrLocale,11);
+
+
 
 
         skin = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
         skin.add("font", font4);
-
         skin.load(Gdx.files.internal("skin-composer-ui.json"));
 
         skin2 = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
         skin2.add("font", font1);
-
         skin2.load(Gdx.files.internal("skin-composer-ui.json"));
 
-
+        skinfinal = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
+        skinfinal.add("font", finalFont);
+        skinfinal.load(Gdx.files.internal("skin-composer-ui.json"));
 
 
         nextButton = new TextButton("Назад",skin2);
@@ -151,21 +176,21 @@ public class IntermediateScreen extends ScreenAdapter implements InputProcessor 
             public void clicked(InputEvent event, float x, float y) {
                 /**якщо це екран завершення практики, повертати в головне меню**/
             if(state!=0)  {
+              if(level.levelNumb!=16) {
+                  /**оновлення очків юзера за цю практику якщо він набрав більше за попередній результат**/
+                  if (getUserScoreForLevel(app.getDatabase(), userId, level.levelNumb) < level.currentscore && !failure) {
+                      updateUserScoreForLevel(app.getDatabase(), userId, level.levelNumb, level.currentscore);
+                  }
+                  /**якщо пройдено на максимум, заноситься стан 2 в базу даних цього рівня і користувача**/
+                  if (!failure && level.failureScoreCount == 0) {
+                      updateUserStateForLevel(app.getDatabase(), userId, level.levelNumb, 2);
+                  }
+                  /**якщо не на максимум, то стан 1 || ЯКЩО СТАН УЖЕ 2, ТО НЕ ОНОВЛЮЄТЬСЯ**/
+                  else if (!failure) {
+                      updateUserStateForLevel(app.getDatabase(), userId, level.levelNumb, 1);
 
-                /**оновлення очків юзера за цю практику якщо він набрав більше за попередній результат**/
-               if(getUserScoreForLevel(app.getDatabase(),userId,level.levelNumb)<level.currentscore && !failure) {
-                   updateUserScoreForLevel(app.getDatabase(),userId, level.levelNumb, level.currentscore);
-               }
-                /**якщо пройдено на максимум, заноситься стан 2 в базу даних цього рівня і користувача**/
-               if(!failure && level.failureScoreCount==0) {
-                   updateUserStateForLevel(app.getDatabase(),userId,level.levelNumb,2);
-               }
-               /**якщо не на максимум, то стан 1 || ЯКЩО СТАН УЖЕ 2, ТО НЕ ОНОВЛЮЄТЬСЯ**/
-               else if(!failure) {
-                   updateUserStateForLevel(app.getDatabase(),userId,level.levelNumb,1);
-
-               }
-
+                  }
+              }
 
                 app.setScreen(new LevelsScreen(app,userId));
 dispose();
@@ -182,45 +207,102 @@ dispose();
         stage.addActor(nextButton);
 
 
+        if(level.levelNumb!=16) {
 
-        label = new Label("Практика рівню " + level.levelNumb,skin);
+            label = new Label("Практика рівню " + level.levelNumb, skin);
 
 
+            switch (state) {
 
-        switch(state) {
+                //початок практики
+                case 0:
 
-            //початок практики
-            case 0:
+                    break;
 
-                break;
+                //після звичайної таски
+                // upd 11.06: ми не використовуємо це.
+                case 1:
+                    if (failure) {
+                        label = new Label("Провал!", skin);
+                        label.setColor(Color.RED);
+                    } else {
+                        label = new Label("Правильно!", skin);
 
-            //після звичайної таски
-            // upd 11.06: ми не використовуємо це.
-            case 1:
-            if (failure) {
-               label = new Label("Провал!",skin);
-                label.setColor(Color.RED);
-            } else {
-                label = new Label("Правильно!",skin);
+                    }
+                    break;
+
+
+                //після завершення практики
+                case 2:
+                    String message;
+                    if (failure) message = "\nПрактику провалено!\nПеречитайте теорію.\n";
+                    else
+                        message = "\nПрактику успішно\nзавершено!\n" + level.currentscore + "/" + level.maximumScore;
+                    label.setText(message);
+
+
+                    break;
 
             }
-            break;
 
+        }
+        /**якщо це фінальний тест**/
+        else {
+            layout = new GlyphLayout(font2, "Final test");
 
-            //після завершення практики
-            case 2:
-                String message;
-                if(failure) message="\nПрактику провалено!\nПеречитайте теорію.\n";
-                else message="\nПрактику успішно\n завершено!\n" + level.currentscore + "/" + level.maximumScore;
-             label.setText(message);
+            String finaltext="";
+            if(failure) {
+                finaltext += "На жаль, ви не склали фінальний тест! Передивіться теми, з якими у вас виникли труднощі," +
+                        " і поверніться пізніше.\n";
+                finaltext += "\nПід час проходження ви втратили балів: " + level.failureScoreCount;
+                //додавання failures++ для юзера
+            }
+            else {
+                finaltext += "Вітаємо з успішним проходженням фінального тесту!\n";
+                //якщо складено на максимум
+                if(level.failureScoreCount==0) {
+                    finaltext += "Ви склали його на максимальний бал і можете переглянути свій кубок у профілі.";
+                     cupFile = DatabaseUtils.getCup(app.getDatabase(),userId,true);
+                     updateUserScoreForLevel(app.getDatabase(),userId,16,0);
+                     updateUserStateForLevel(app.getDatabase(),userId,16,2);
+                    setUserPassed(app.getDatabase(),userId,1);
+                    //записується state 2 до рівню 16 юзеру в таблицю scores
+                }
+                else {
+                    finaltext += "До ідеального результату вам не вистачило " + level.failureScoreCount + " балів. Ви можете перескласти тест пізніше на більш високий бал.";
+                    cupFile = DatabaseUtils.getCup(app.getDatabase(),userId,false);
+                    //записується failureScoreCount і state=1 юзеру в таблицю до рівню 16
+                    updateUserScoreForLevel(app.getDatabase(),userId,16,level.failureScoreCount);
+                    updateUserStateForLevel(app.getDatabase(),userId,16,1);
+                    setUserPassed(app.getDatabase(),userId,1);
+                }
+            }
+            label = new Label(finaltext, skinfinal);
+            label.setWrap(true);
+            label.setWidth(GraphicConstants.screenWidth-GraphicConstants.screenWidth*0.05F);
+            label.setPosition(GraphicConstants.screenWidth*0.025F,GraphicConstants.centerY + label.getHeight()/2F);
+            if(failure) label.setPosition(GraphicConstants.screenWidth*0.025F,nextButton.getY() + GraphicConstants.rowHeight + 3F*nextButton.getHeight());
 
-
-                break;
+            stage.addActor(label);
 
         }
 
+        /**встановлення кубку**/
+        if(level.levelNumb==16) {
+            // Load the image
+            Texture cupTexture = new Texture(Gdx.files.internal(cupFile));
+            Drawable cupDrawable = new TextureRegionDrawable(new TextureRegion(cupTexture));
+            cup = new Image(cupDrawable);
+            cup.setPosition(GraphicConstants.centerX - cup.getWidth()/2F,GraphicConstants.centerY - cup.getHeight()*1.5F);
+            stage.addActor(cup);
 
-        sprite = new Sprite(new Texture(Gdx.files.internal("white.jpg")));
+        }
+
+        if(level.levelNumb!=16)sprite = new Sprite(new Texture(Gdx.files.internal("white.jpg")));
+        else sprite = new Sprite(new Texture(Gdx.files.internal("backsun.jpg")));
+
+
+
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(stage);
 
@@ -229,17 +311,19 @@ dispose();
     }
 
     /**
-     * Малюємо головне меню
+     * Малюємо проміжний екран
      */
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
         batch.begin();
         sprite.draw(batch);
-        if(state==0) {
+        if(level.levelNumb==16)font2.draw(batch, layout, GraphicConstants.centerX-layout.width/2,GraphicConstants.rowHeight*6.8F);
+
+        if(state==0 && level.levelNumb!=16) {
             font4.draw(batch, label.getText(), GraphicConstants.centerX - label.getWidth() / 2, Gdx.graphics.getHeight() / 4F * 2);
         }
-          else {
+          else if(level.levelNumb!=16) {
             font3.draw(batch, label.getText(), GraphicConstants.centerX - label.getWidth() /2, Gdx.graphics.getHeight() / 4F * 2);
         }
         batch.end();
@@ -273,7 +357,7 @@ dispose();
     }
 
 
-    public int getUserScoreForLevel(SQLiteDatabase database, int userId, int levelNumb) {
+    public static int getUserScoreForLevel(SQLiteDatabase database, int userId, int levelNumb) {
         String query = "SELECT score FROM scores WHERE userId = ? AND levelNumb = ?";
         String[] selectionArgs = {String.valueOf(userId), String.valueOf(levelNumb)};
         int score = 0;
@@ -292,6 +376,14 @@ dispose();
 
         return score;
     }
+
+
+
+
+
+
+
+
 
 
     @Override

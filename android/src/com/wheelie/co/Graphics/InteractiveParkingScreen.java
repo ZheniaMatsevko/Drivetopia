@@ -31,6 +31,8 @@ import com.wheelie.co.Tools.Car;
 import com.wheelie.co.Tools.FontFactory;
 import com.wheelie.co.Tools.InteractiveCarController;
 import com.wheelie.co.Tools.MyDialog;
+import com.wheelie.co.levels20.IntermediateScreen;
+import com.wheelie.co.levels20.Level;
 
 import java.util.Locale;
 
@@ -39,7 +41,7 @@ public class InteractiveParkingScreen extends ScreenAdapter implements InputProc
     private SpriteBatch batch;
     private Sprite sprite;
     private Stage stage;
-    private int level;
+    private Level level;
 
     private BitmapFont font;
     private BitmapFont font2;
@@ -59,12 +61,13 @@ public class InteractiveParkingScreen extends ScreenAdapter implements InputProc
     private Locale ukrLocale;
     private ShapeRenderer shapeRenderer;
     private FontFactory fontFactory;
+    private boolean failed;
 
-    public InteractiveParkingScreen(final Drivetopia app, int level, int userID) {
+    public InteractiveParkingScreen(final Drivetopia app, Level level, int userID) {
         fontFactory = new FontFactory();
         fontFactory.initialize();
-
         this.level = level;
+
         this.app = app;
         this.userID = userID;
 
@@ -154,7 +157,7 @@ public class InteractiveParkingScreen extends ScreenAdapter implements InputProc
         // Drawing and positioning the button to move the car
         carControl = new InteractiveCarController();
         stage.addActor(carControl);
-        Gdx.input.setInputProcessor(stage);
+       // Gdx.input.setInputProcessor(stage);
 
         onlyCarsPark = new Image(new Texture(Gdx.files.internal("onlyCarsPark.png")));
         onlyCarsPark.setSize(onlyCarsPark.getWidth()*1.2f, onlyCarsPark.getHeight()*1.2f);
@@ -175,6 +178,7 @@ public class InteractiveParkingScreen extends ScreenAdapter implements InputProc
         incorrectParkingArea = new Rectangle(GraphicConstants.centerX*0.8f, GraphicConstants.centerY*0.76f, userCar.getHeight()*1.15f, userCar.getWidth()*1.2f);
 
         MyDialog instruct = new MyDialog("Завдання", skin);
+
         instruct.setMessage("Припаркуй вантажівку!");
         instruct.getButtonTable().add("ок");
         instruct.setColor(Color.BLACK);
@@ -192,6 +196,7 @@ public class InteractiveParkingScreen extends ScreenAdapter implements InputProc
 
     @Override
     public void render(float delta) {
+        Gdx.input.setInputProcessor(stage);
         Gdx.gl.glClearColor(166/255f, 166/255f, 166/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
@@ -258,6 +263,7 @@ public class InteractiveParkingScreen extends ScreenAdapter implements InputProc
 
         if ((Intersector.overlapConvexPolygons(userCarBounds, car1Bounds) || Intersector.overlapConvexPolygons(userCarBounds, car2Bounds)) && !isCarCollided) {
             isCarCollided = true;
+            failed = true;
             showDialog("Задів машину!");
         }
     }
@@ -267,9 +273,11 @@ public class InteractiveParkingScreen extends ScreenAdapter implements InputProc
 
         if(isPolygonFullyInsideRectangle(carHitbox, correctParkingArea) && !isCarParked) {
             isCarParked = true;
+            failed = false;
             showDialog("Молодець!");
         } else if(isPolygonFullyInsideRectangle(carHitbox, incorrectParkingArea) && !isCarParked) {
             isCarParked = true;
+            failed = true;
             showDialog("Не туди!");
         }
     }
@@ -315,7 +323,27 @@ public class InteractiveParkingScreen extends ScreenAdapter implements InputProc
         dialog.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 dialog.setVisible(false);
-                app.setScreen(new MainMenuScreen(app, userID));
+
+                if(failed) {
+                    level.failureScoreCount+=10;
+                    if (level.failureScoreCount>=level.failureScore)app.setScreen(new IntermediateScreen(app,level,userID,2,true));
+
+                }
+                else {
+                    if(level.getTasks().size()!=level.currentTaskNumber()) {
+                        level.increaseTaskCounter();
+                        level.currentscore += 10;
+                        app.setScreen(level.tasks.get(level.currentTaskNumber() - 1));
+                    }
+                    else {
+                        level.currentscore += 10;
+                        app.setScreen(new IntermediateScreen(app,level,userID,2,false));
+
+                    }
+                }
+
+             //   app.setScreen(new MainMenuScreen(app, userID));
+                dispose();
                 return true;
             }
         });

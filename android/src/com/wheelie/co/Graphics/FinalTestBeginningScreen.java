@@ -1,5 +1,9 @@
 package com.wheelie.co.Graphics;
 
+import static DBWorkH.DatabaseUtils.getLevelsWithStateZero;
+import static DBWorkH.DatabaseUtils.getUserFailures;
+import static DBWorkH.DatabaseUtils.getUserPassValue;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -29,6 +33,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.wheelie.co.Drivetopia;
 import com.wheelie.co.Tools.FileService;
 import com.wheelie.co.Tools.FontFactory;
+import com.wheelie.co.levels20.IntermediateScreen;
+import com.wheelie.co.levels20.finalTest;
+import com.wheelie.co.levels20.level6;
 
 import java.util.Locale;
 
@@ -122,11 +129,9 @@ public class FinalTestBeginningScreen extends ScreenAdapter implements InputProc
 
 
         int[] p = getLevelsWithStateZero(app.getDatabase(),userID);
-        String text = "лох";
+        String text = "життя бентежне";
+        /**якщо всі практики пройдені, можна розпочати фінальний тест**/
         if(p.length==0) {
-            text = "Вітаємо з проходженням усіх рівнів! Настав час перевірити ваші знання на фінальному тесті. Він буде охоплювати" +
-                    " всі попередньо вивчені теми. За бажанням можете переглянути теорію ще раз перед тим, як продовжити.\n" +
-                    "Якщо ж впевнені у своїх силах, бажаємо удачі!";
 
             startButton = new TextButton("Розпочати",skin2);
             startButton.setSize(GraphicConstants.colWidth*5,GraphicConstants.rowHeight*0.7F);
@@ -134,13 +139,29 @@ public class FinalTestBeginningScreen extends ScreenAdapter implements InputProc
 
             startButton.addListener(new ClickListener() {
                 public void clicked(InputEvent event, float x, float y) {
-                  //  тут має розпочинатись фінальний тест//
-                    //dispose();
+                    app.setScreen(new IntermediateScreen(app,new finalTest(app,userID),userID,0,false));
+                    dispose();
                 }
             });
 
             stage.addActor(startButton);
+
+            /**якщо фінальний тест ще не було успішно пройдено**/
+            if(getUserPassValue(app.getDatabase(),userID)==0) {
+                text = "Вітаємо з проходженням усіх рівнів! Настав час перевірити ваші знання на фінальному тесті. Він буде охоплювати" +
+                        " всі попередньо вивчені теми. За бажанням можете переглянути теорію ще раз перед тим, як продовжити.\n" +
+                        "Якщо ж впевнені у своїх силах, бажаємо удачі!";
+                int i = getUserFailures(app.getDatabase(), userID);
+                if (i != 0) text += "\nВже було спроб скласти фінальний тест: " + i;
+            }
+            /**інакше**/
+            else {
+
+            }
+
         }
+
+        /**якщо не всі практики пройдені, фінальний тест не можна розпочати**/
         else {
              text = "Ви не допущені до фінального тесту, поки не пройдете практику до всіх рівнів!\n" +
                     "Ви не завершили наступні практики: ";
@@ -197,6 +218,10 @@ public class FinalTestBeginningScreen extends ScreenAdapter implements InputProc
         stage.draw();
     }
 
+
+
+
+
     @Override
     public boolean keyDown(int keycode) {
         return false;
@@ -211,27 +236,7 @@ public class FinalTestBeginningScreen extends ScreenAdapter implements InputProc
     public boolean keyTyped(char character) {
         return false;
     }
-    public int[] getLevelsWithStateZero(SQLiteDatabase database, int userId) {
-        String query = "SELECT levelNumb FROM scores WHERE userId = ? AND state = ? AND levelNumb != ?";
-        String[] args = {String.valueOf(userId), "0", "16"};
-        Cursor cursor = database.rawQuery(query, args);
 
-        int[] levelNumbers;
-
-        if (cursor.moveToFirst()) {
-            levelNumbers = new int[cursor.getCount()];
-            int index = 0;
-            do {
-                levelNumbers[index] = cursor.getInt(cursor.getColumnIndexOrThrow("levelNumb"));
-                index++;
-            } while (cursor.moveToNext());
-        } else {
-            levelNumbers = new int[0]; // No levels found with state 0
-        }
-
-        cursor.close();
-        return levelNumbers;
-    }
     /**
      * Відбувається дія при натисканні на екран лівою кнопкою миші
      */
