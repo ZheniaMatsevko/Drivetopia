@@ -119,5 +119,13 @@ public DatabaseUtils(){}
         Log.d("User " + userId, "pass set to " + passedValue);
     }
 
+    public static void incrementFailures(SQLiteDatabase database, int userId) {
+        String query = "UPDATE users SET failures = failures + 1 WHERE id = ?";
+        Object[] args = {userId};
+
+        database.execSQL(query, args);
+        Log.d("User " + userId, "failed final test.");
+    }
+
 
 }

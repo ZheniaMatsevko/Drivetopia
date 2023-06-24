@@ -142,7 +142,7 @@ public class FinalTestBeginningScreen extends ScreenAdapter {
 
             startButton.addListener(new ClickListener() {
                 public void clicked(InputEvent event, float x, float y) {
-                    app.setScreen(new IntermediateScreen(app,new finalTest(app,userID),userID,0,false));
+                    app.setScreen(new finalTest(app,userID).tasks.get(0));
                     dispose();
                 }
             });
@@ -159,7 +159,7 @@ public class FinalTestBeginningScreen extends ScreenAdapter {
             }
             /**інакше**/
             else {
-
+              text = "Ви вже склали фінальний тест, але можете перепройти його на більш високий результат.";
             }
 
         }

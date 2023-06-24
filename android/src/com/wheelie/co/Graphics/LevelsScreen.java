@@ -52,12 +52,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+import DBWorkH.DatabaseUtils;
+
 /**
  * Даний клас реалізовує логіку та графічний інтерфейс екрану з рівнями
  */
 public class LevelsScreen extends ScreenAdapter{
 
     Drivetopia app;
+
+    private Skin skinDialog;
     private SpriteBatch batch;
     private Sprite sprite;
     private Stage stage;
@@ -66,6 +70,8 @@ public class LevelsScreen extends ScreenAdapter{
     private BitmapFont font;
     private BitmapFont font2;
     private BitmapFont font3;
+
+    private BitmapFont fontDialog;
 
     private Skin skin;
     private int userID;
@@ -109,6 +115,8 @@ public class LevelsScreen extends ScreenAdapter{
         ukrLocale = new Locale("uk", "UA");
         font2=fontFactory.getFont(enLocale,1);
         font3=fontFactory.getFont(ukrLocale,4);
+        fontDialog = fontFactory.getFont(ukrLocale, 11);
+
 
 
 
@@ -116,6 +124,18 @@ public class LevelsScreen extends ScreenAdapter{
         skin.add("font", font3);
 
         skin.load(Gdx.files.internal("skin-composer-ui.json"));
+
+
+        skinDialog = new Skin(new TextureAtlas(Gdx.files.internal("skin-composer-ui.atlas")));
+        skinDialog.add("font", fontDialog);
+
+        skinDialog.load(Gdx.files.internal("skin-composer-ui.json"));
+
+        final MyDialog dialogF = new MyDialog("", skinDialog);
+        dialogF.setMessage("Ви вже пройшли\nфінальний тест\nна максимальний бал!\n" +
+                "Відпочивайте :)");
+        dialogF.setColor(Color.valueOf("#066c35"));
+
 
         Texture myTexture0 = new Texture(Gdx.files.internal("mainMenu.png"));
         TextureRegion myTextureRegion0 = new TextureRegion(myTexture0);
@@ -198,7 +218,12 @@ public class LevelsScreen extends ScreenAdapter{
         //finalTestButton.setScale(0.5f,0.5f);
         finalTestButton.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
-                app.setScreen(new FinalTestBeginningScreen(app,userID));
+                if (DatabaseUtils.getUserStateForLevel(app.getDatabase(), userID, 16) != 2)
+                    app.setScreen(new FinalTestBeginningScreen(app, userID));
+                else {
+                    dialogF.show(stage);
+                }
+
                 dispose();
             }
         });

@@ -5,6 +5,7 @@ import static DBWorkH.DatabaseUtils.setUserPassed;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.badlogic.gdx.Gdx;
@@ -256,6 +257,7 @@ dispose();
                         " і поверніться пізніше.\n";
                 finaltext += "\nПід час проходження ви втратили балів: " + level.failureScoreCount;
                 //додавання failures++ для юзера
+                DatabaseUtils.incrementFailures(app.getDatabase(),userId);
             }
             else {
                 finaltext += "Вітаємо з успішним проходженням фінального тесту!\n";
@@ -288,7 +290,7 @@ dispose();
         }
 
         /**встановлення кубку**/
-        if(level.levelNumb==16) {
+        if(level.levelNumb==16 && !failure) {
             // Load the image
             Texture cupTexture = new Texture(Gdx.files.internal(cupFile));
             Drawable cupDrawable = new TextureRegionDrawable(new TextureRegion(cupTexture));

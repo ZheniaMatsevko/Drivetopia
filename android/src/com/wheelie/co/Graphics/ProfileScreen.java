@@ -98,6 +98,8 @@ public class ProfileScreen extends ScreenAdapter {
 
     private String cupFile;
 
+    private boolean disposed = false;
+
 
 
     public ProfileScreen(final Drivetopia app, int userId) {
@@ -156,7 +158,7 @@ public class ProfileScreen extends ScreenAdapter {
         editButton.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
                 app.setScreen(new UserEditScreen(app,userId));
-                dispose();
+              //  dispose();
             }
         });
 
@@ -172,7 +174,7 @@ public class ProfileScreen extends ScreenAdapter {
         backButton.addListener(new ClickListener() {
             public void clicked(InputEvent event,float x, float y) {
                 app.setScreen(new MainMenuScreen(app,userId));
-                dispose();
+           //     dispose();
             }
         });
 
@@ -363,6 +365,56 @@ public class ProfileScreen extends ScreenAdapter {
         cursor.close();
 
         return totalScore;
+    }
+
+
+
+    @Override
+    public void dispose() {
+        if (disposed) {
+            return; // Resources already disposed, skip further disposal
+        }
+        if (batch != null) {
+            batch.dispose();
+            batch = null;
+        }
+
+        if (sprite != null) {
+            sprite.getTexture().dispose();
+            sprite = null;
+        }
+
+        if (font != null) {
+            font.dispose();
+            font = null;
+        }
+
+        if (font1 != null) {
+            font1.dispose();
+            font1 = null;
+        }
+
+        if (font2 != null) {
+            font2.dispose();
+            font2 = null;
+        }
+
+        if (font3 != null) {
+            font3.dispose();
+            font3 = null;
+        }
+
+        if (emailFont != null) {
+            emailFont.dispose();
+            emailFont = null;
+        }
+
+
+        if (stage != null) {
+            stage.dispose();
+            stage = null;
+        }
+        disposed = true;
     }
 
 }
