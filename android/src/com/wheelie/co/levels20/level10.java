@@ -12,10 +12,12 @@ import com.wheelie.co.levelTemplates.questionTemplates.NormalTextInputQuestion;
 import java.util.Collections;
 import java.util.LinkedList;
 
-/**Тема 10: Обгін
- *3 запитання з вводом - 15 балів
- */
 
+/**
+ * Даний клас реалізовує логіку роботи практики 10 рівня: формування завдань, підрахунок балів, навігація між завданнями
+ Тема 10: Обгін
+ *3 запитання з вводом - 15 балів
+ * **/
 public class level10 extends Level{
     public level10(Drivetopia app, int userID) {
         // (app,1,new SimpleTextChoiceQuestion()));

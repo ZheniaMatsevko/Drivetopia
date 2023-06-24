@@ -14,7 +14,9 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import DBWorkH.DBConstants;
-
+/**
+ * Даний клас реалізовує логіку створення, заповнення та роботи завдання з флешкартами
+ * **/
 public class NormalFlashCardQuestion {
     private LinkedList<ImageButton> objects;
     private ImageButton correctAnswer;

@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 import java.util.Locale;
 
+/**
+ * Даний клас відповідає за створення різних шрифтів
+ * **/
 public class FontFactory {
     public static final String UKRAINIAN_FONT_NAME = "f3.ttf";
     public static final String UKRAINIAN_FONT_NAME2 = "f3.ttf";

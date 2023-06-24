@@ -10,6 +10,9 @@ import com.wheelie.co.Drivetopia;
 
 import DBWorkH.DatabaseHelperH;
 
+/**
+ * Даний клас відповідає за початковий запуск додатку
+ * **/
 public class AndroidLauncher extends AndroidApplication {
 
 	private SQLiteDatabase database;

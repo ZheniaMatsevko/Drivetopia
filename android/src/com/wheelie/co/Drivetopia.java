@@ -32,6 +32,9 @@ import java.util.LinkedList;
 
 import DBWorkH.DatabaseHelperH;
 
+/**
+ * Даний клас є основним класом застосунку, який містить з'єднання з базою даних та запускає початковий екран
+ * **/
 public class Drivetopia extends Game {
 
 	private SQLiteDatabase database;

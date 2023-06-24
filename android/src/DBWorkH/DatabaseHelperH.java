@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * Даний клас відповідає за створення бази даних та усіх її табличок, заповення їх даними
+ * **/
 public class DatabaseHelperH extends SQLiteOpenHelper {
     private static DatabaseHelperH instance;
     private SQLiteDatabase database;

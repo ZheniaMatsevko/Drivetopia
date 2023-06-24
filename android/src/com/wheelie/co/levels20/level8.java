@@ -13,12 +13,15 @@ import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
 import java.util.Collections;
 import java.util.LinkedList;
 
-/**Тема 8: Швидкість руху
+
+/**
+ * Даний клас реалізовує логіку роботи практики 8 рівня: формування завдань, підрахунок балів, навігація між завданнями
+ Тема 8: Швидкість руху
  * 3 запитання з вводом - 15 балів
  * 2 тести - 6 балів
  * 1 запитання на відповідність (текст) - 6 балів
- *Всього: 27 балів, прохідний - 21**/
-
+ *Всього: 27 балів, прохідний - 21
+ * **/
  public class level8 extends Level {
 
     public level8(Drivetopia app, int userID) {

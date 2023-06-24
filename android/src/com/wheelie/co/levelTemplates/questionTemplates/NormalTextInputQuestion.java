@@ -9,6 +9,9 @@ import java.util.LinkedList;
 
 import DBWorkH.DBConstants;
 
+/**
+ * Даний клас реалізовує логіку створення, заповнення та роботи завдання з введенням правильної відповіді
+ * **/
 public class NormalTextInputQuestion {
     private String question;
     private String answer;

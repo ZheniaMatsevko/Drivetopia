@@ -4,6 +4,9 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 
+/**
+ * Даний клас необхідний для відслідковування/обробки колізій в інтерактичних завданнях
+ * **/
 public class CollisionUtils {
     public static boolean collides(Polygon polygon, Rectangle rectangle) {
         float[] polygonVertices = polygon.getTransformedVertices();

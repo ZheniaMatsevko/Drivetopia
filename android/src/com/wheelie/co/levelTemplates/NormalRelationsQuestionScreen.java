@@ -41,6 +41,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Locale;
 
+/**
+ * Даний клас реалізовує графічний інтерфейс та логіку екрану завдання на відповідність з картинками
+ * **/
 public class NormalRelationsQuestionScreen extends ScreenAdapter {
     Drivetopia app;
     private SpriteBatch batch;

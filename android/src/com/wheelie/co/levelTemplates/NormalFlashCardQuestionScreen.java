@@ -36,6 +36,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Locale;
 
+/**
+ * Даний клас реалізовує графічний інтерфейс та логіку екрану завдання з флешкартами
+ * **/
 public class NormalFlashCardQuestionScreen extends ScreenAdapter  {
     Drivetopia app;
     private SpriteBatch batch;

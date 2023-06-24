@@ -8,6 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+/**
+ * Даний клас відповідає за створення діалогового вікна
+ * **/
 public class MyDialog extends Dialog {
     private Label message;
     private Integer level;

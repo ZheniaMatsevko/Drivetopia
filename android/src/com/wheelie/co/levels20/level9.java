@@ -9,9 +9,12 @@ import com.wheelie.co.levelTemplates.questionTemplates.NormalTextInputQuestion;
 import java.util.Collections;
 import java.util.LinkedList;
 
-/**Тема 9: Дистанція, інтервал, зустрічний роз'їзд
+
+/**
+ * Даний клас реалізовує логіку роботи практики 9 рівня: формування завдань, підрахунок балів, навігація між завданнями
+ Тема 9: Дистанція, інтервал, зустрічний роз'їзд
  *3 запитання з вводом - 15 балів
- */
+ * **/
 public class level9 extends Level {
 
     public level9(Drivetopia app, int userID) {
