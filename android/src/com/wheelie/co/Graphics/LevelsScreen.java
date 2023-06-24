@@ -382,4 +382,10 @@ public class LevelsScreen extends ScreenAdapter{
         stage.draw();
     }
 
+
+    public void dispose() {
+        stage.dispose();
+        batch.dispose();
+    }
+
 }

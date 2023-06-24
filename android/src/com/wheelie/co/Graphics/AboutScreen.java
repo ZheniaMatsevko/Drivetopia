@@ -176,4 +176,10 @@ public class AboutScreen extends ScreenAdapter{
         stage.draw();
     }
 
+
+    public void dispose() {
+        stage.dispose();
+        batch.dispose();
+    }
+
 }

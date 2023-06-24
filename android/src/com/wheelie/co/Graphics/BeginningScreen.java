@@ -140,4 +140,9 @@ public class BeginningScreen extends ScreenAdapter {
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
+
+    public void dispose() {
+        stage.dispose();
+        batch.dispose();
+    }
 }

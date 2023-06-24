@@ -212,4 +212,32 @@ public class HardPictureQuestionScreen extends ScreenAdapter {
         stage.draw();
         Gdx.input.setInputProcessor(stage);
     }
+
+
+
+
+
+
+    public void dispose() {
+        if (batch != null) {
+            batch.dispose(); // Dispose the SpriteBatch
+        }
+        if (stage != null) {
+            stage.dispose(); // Dispose the Stage
+        }
+        if (font1 != null) {
+            font1.dispose(); // Dispose the BitmapFont
+        }
+        if (font2 != null) {
+            font2.dispose(); // Dispose the BitmapFont
+        }
+        if (font3 != null) {
+            font3.dispose(); // Dispose the BitmapFont
+        }
+
+    }
+
+
+
+
 }

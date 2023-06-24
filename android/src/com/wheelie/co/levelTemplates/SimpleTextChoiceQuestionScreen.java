@@ -266,6 +266,7 @@ private LinkedList<String> generateRandomOrder() {
     @Override
     public void dispose() {
         stage.dispose();
+        batch.dispose();
     }
 
 }

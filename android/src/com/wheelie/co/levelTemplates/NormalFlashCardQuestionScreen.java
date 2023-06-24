@@ -235,4 +235,19 @@ dispose();
         Gdx.input.setInputProcessor(stage);
     }
 
+
+
+    public void dispose() {
+        // Dispose all disposable resources
+        stage.dispose();
+        batch.dispose();
+        sprite.getTexture().dispose();
+        font1.dispose();
+        font2.dispose();
+        font3.dispose();
+        // Dispose any additional resources that need cleanup
+    }
+
+
+
 }

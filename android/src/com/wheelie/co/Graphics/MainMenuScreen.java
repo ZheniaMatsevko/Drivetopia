@@ -203,4 +203,10 @@ public class MainMenuScreen extends ScreenAdapter{
         stage.draw();
     }
 
+
+    public void dispose() {
+        stage.dispose();
+        batch.dispose();
+    }
+
 }

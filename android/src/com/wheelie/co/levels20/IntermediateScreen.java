@@ -379,5 +379,13 @@ dispose();
         return score;
     }
 
+
+    public void dispose() {
+        stage.dispose();
+        batch.dispose();
+    }
+
+
+
 }
 

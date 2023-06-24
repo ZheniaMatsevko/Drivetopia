@@ -310,4 +310,8 @@ public class RegistrationScreen extends ScreenAdapter {
 
 
     }
+    public void dispose() {
+        stage.dispose();
+        batch.dispose();
+    }
 }

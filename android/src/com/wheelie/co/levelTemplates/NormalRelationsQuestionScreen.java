@@ -275,4 +275,16 @@ public class NormalRelationsQuestionScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(stage);
     }
 
+
+
+    public void dispose() {
+        batch.dispose();
+        stage.dispose();
+        font1.dispose();
+        font2.dispose();
+        font3.dispose();
+
+    }
+
+
 }

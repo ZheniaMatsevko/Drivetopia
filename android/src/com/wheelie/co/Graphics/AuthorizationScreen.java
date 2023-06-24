@@ -225,4 +225,10 @@ public class AuthorizationScreen extends ScreenAdapter{
         return credentialsId;
     }
 
+
+    public void dispose() {
+        stage.dispose();
+        batch.dispose();
+    }
+
 }

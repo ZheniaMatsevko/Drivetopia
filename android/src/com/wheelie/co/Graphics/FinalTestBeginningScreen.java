@@ -221,4 +221,9 @@ public class FinalTestBeginningScreen extends ScreenAdapter {
         stage.draw();
     }
 
+    public void dispose() {
+        stage.dispose();
+        batch.dispose();
+    }
+
 }
