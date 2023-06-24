@@ -3,11 +3,14 @@ package com.wheelie.co.levels20;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.wheelie.co.Drivetopia;
+import com.wheelie.co.Graphics.InteractiveParkingScreen;
 import com.wheelie.co.levelTemplates.HardPictureQuestionScreen;
+import com.wheelie.co.levelTemplates.NormalFlashCardQuestionScreen;
 import com.wheelie.co.levelTemplates.NormalRelationsTextQuestionScreen;
 import com.wheelie.co.levelTemplates.NormalTextInputQuestionScreen;
 import com.wheelie.co.levelTemplates.SimpleTextChoiceQuestionScreen;
 import com.wheelie.co.levelTemplates.questionTemplates.HardPictureQuestion;
+import com.wheelie.co.levelTemplates.questionTemplates.NormalFlashCardQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalRelationsQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.NormalTextInputQuestion;
 import com.wheelie.co.levelTemplates.questionTemplates.SimpleTextChoiceQuestion;
@@ -32,44 +35,43 @@ public class finalTest extends Level {
         this.failureScore = 10;
 
 
-        LinkedList<NormalTextInputQuestion> inputQuestions = NormalTextInputQuestion.extractNormalTextInputQuestionsFromDB(db,4);
 
-        /**Обираємо 2 серед них**/
-        LinkedList<NormalTextInputQuestion> finalInputQuestions = selectRandomInputQuestions(inputQuestions,2);
-
-        Collections.shuffle(finalInputQuestions);
-        // LinkedList<SimpleTextChoiceQuestionScreen> simpleScreens = new LinkedList<>();
-        /**Створюємо екрани для кожного запитання з вводом і додаємо в список екранів рівня**/
-        for (NormalTextInputQuestion q: finalInputQuestions
-        ) {
-            tasks.add(new NormalTextInputQuestionScreen(app,q,this,userID));
-        }
-
-        /**Дістаємо всі тестові завдання з вибором, що відносяться до рівню 4**/
-        LinkedList<SimpleTextChoiceQuestion> choiceQuestions = SimpleTextChoiceQuestion.extractSimpleTextChoiceQuestionsFromDB(db,4);
-
-        /**Обираємо 1 серед них**/
-        LinkedList<SimpleTextChoiceQuestion> finalChoiceQuestions = selectRandomSimpleChoiceQuestions(choiceQuestions,1);
-
-        /**Створюємо екрани для кожного запитання з вибором і додаємо в список екранів рівня**/
-        for (SimpleTextChoiceQuestion q: finalChoiceQuestions
-        ) {
-            tasks.add(new SimpleTextChoiceQuestionScreen(app,q,this,userID));
-        }
-
+        /**1) завдання на відповідність з рівню 4 **/
         LinkedList<NormalRelationsQuestion> relationsQuestions = NormalRelationsQuestion.extractNormalRelationsQuestionFromDB(db,4, "text");
 
 
         LinkedList<NormalRelationsQuestion> finalRelationsQuestions = selectRandomRelationsQuestions(relationsQuestions,1);
-
-        Collections.shuffle(finalRelationsQuestions);
 
         /**Створюємо екрани для кожного запитання на відповідність і додаємо в список екранів рівня**/
         for (NormalRelationsQuestion q: finalRelationsQuestions
         ) {
             tasks.add(new NormalRelationsTextQuestionScreen(app,q,this,userID));
         }
+
+        /**2) завдання з картинкою з рівню 4**/
         tasks.add(new HardPictureQuestionScreen(app,new HardPictureQuestion(4,false),this,userID));
+
+
+
+        /**3-4) 2 флеш-картки з рівню 14**/
+        LinkedList<NormalFlashCardQuestion> flashCardQuestions2 = NormalFlashCardQuestion.extractNormalFlashCardQuestionFromDB(db,levelNumb, "marking");
+
+        LinkedList<NormalFlashCardQuestion> finalFlashCardQuestions2 = selectRandomFlashCardQuestions(flashCardQuestions2,2);
+
+        Collections.shuffle(finalFlashCardQuestions2);
+
+        for (NormalFlashCardQuestion q: finalFlashCardQuestions2
+        ) {
+            tasks.add(new NormalFlashCardQuestionScreen(app,q,this,userID));
+        }
+
+        /**5) завдання з паркуванням**/
+        tasks.add(new InteractiveParkingScreen(app,this,userID));
+
+
+
+
+
 
 
         Collections.shuffle(tasks);

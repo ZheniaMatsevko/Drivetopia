@@ -177,7 +177,7 @@ public class FinalTestBeginningScreen extends ScreenAdapter {
         Label label = new Label(text, skinForText);
         label.setWrap(true);
         label.setWidth(GraphicConstants.screenWidth-GraphicConstants.screenWidth*0.05F);
-        label.setPosition(GraphicConstants.screenWidth*0.025F,GraphicConstants.centerY + label.getHeight()/2F);
+        label.setPosition(GraphicConstants.screenWidth*0.025F,GraphicConstants.centerY);
         stage.addActor(label);
 
 
