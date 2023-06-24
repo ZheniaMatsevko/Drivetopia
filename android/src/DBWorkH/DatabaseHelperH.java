@@ -1415,6 +1415,38 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
 
 
+        /**рівень 15**/
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 15);
+        normalInputValues.put("text", "Чи дозволяється навчальна їзда на автомагістралі?");
+        normalInputValues.put("answer", "ні");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 15);
+        normalInputValues.put("text", "Чи дозволяється у житловій зоні стоянка з працюючим двигуном?");
+        normalInputValues.put("answer", "ні");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+        normalInputValues = new ContentValues();
+        normalInputValues.put("levelNumb", 15);
+        normalInputValues.put("text", "Чи дозволяється пішоходам рухатися по проїзній частині у житловій зоні?");
+        normalInputValues.put("answer", "так");
+
+        db.insert("normalTextInputQuestion", null, normalInputValues);
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1452,7 +1484,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
             wrongChoiceValues.clear();
             wrongChoiceValues.put("questionId", 1);
-            wrongChoiceValues.put("wrongAnswer", "Глибовець");
+            wrongChoiceValues.put("wrongAnswer", "держава");
             db.insert("wrongChoices", null, wrongChoiceValues);
             wrongChoiceValues.clear();
 

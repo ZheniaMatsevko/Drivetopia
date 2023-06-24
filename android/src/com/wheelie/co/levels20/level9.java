@@ -43,6 +43,8 @@ public class level9 extends Level {
             tasks.add(new NormalTextInputQuestionScreen(app,q,this,userID));
         }
 
+
+
         // tasks.add(new HardPictureQuestionScreen(app,new HardPictureQuestion(4,false),this,userID));
 
         this.numberOfTasks = tasks.size();
