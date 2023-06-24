@@ -55,7 +55,7 @@ public DatabaseUtils(){}
     /**метод визначає, який кубок відображати при успішному завершенні фінального тесту**/
     public static String getCup(SQLiteDatabase database, int userId, boolean finTestMax) {
         boolean practiceMax = true;
-        int[] practices = getLevelsWithStateZero(database,userId);
+        int[] practices = getStatesForLevelsExcept16(database,userId);
         for(int i = 0;i<practices.length;i++) {
             if(practices[i]!=2) practiceMax = false;
         }
@@ -128,6 +128,29 @@ public DatabaseUtils(){}
 
         database.execSQL(query, args);
         Log.d("User " + userId, "failed final test.");
+    }
+
+
+
+    public static int[] getStatesForLevelsExcept16(SQLiteDatabase database, int userId) {
+        // Query the database to retrieve states for all levels except 16
+        String query = "SELECT state FROM scores WHERE userId = ? AND levelNumb != 16";
+        String[] selectionArgs = {String.valueOf(userId)};
+        Cursor cursor = database.rawQuery(query, selectionArgs);
+
+        int[] states = new int[cursor.getCount()];
+        int index = 0;
+
+        // Iterate over the cursor and extract the states
+        while (cursor.moveToNext()) {
+            int state = cursor.getInt(cursor.getColumnIndexOrThrow("state"));
+            states[index++] = state;
+        }
+
+        // Close the cursor
+        cursor.close();
+
+        return states;
     }
 
 

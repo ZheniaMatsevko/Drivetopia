@@ -190,6 +190,19 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
         newRowId = db.insertWithOnConflict("users", null, values2,SQLiteDatabase.CONFLICT_REPLACE);
 
+        ContentValues values3 = new ContentValues();
+
+        values3.put("id", 3);
+        values3.put("name", "Практика");
+        values3.put("surname", "На");
+        values3.put("fathername", "Максимум");
+        values3.put("score", 0);
+        values3.put("dateOfBirth", "1999-02-03");
+        values3.put("failures", 0);
+        values3.put("pass", 0);
+
+        newRowId = db.insertWithOnConflict("users", null, values3,SQLiteDatabase.CONFLICT_REPLACE);
+
         // Insert email and password into the "userInfo" table
         ContentValues userInfoValues1 = new ContentValues();
         userInfoValues1.put("id", 1); // Use the newly inserted row ID from the "users" table
@@ -205,7 +218,15 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
 
         db.insertWithOnConflict("userInfo", null, userInfoValues2, SQLiteDatabase.CONFLICT_REPLACE);
 
-        for (int userId = 1; userId <= 2; userId++) {
+        ContentValues userInfoValues3 = new ContentValues();
+        userInfoValues3.put("id", 3); // Use the next row ID
+        userInfoValues3.put("email", "max@gmail.com");
+        userInfoValues3.put("password", "87654321");
+
+        db.insertWithOnConflict("userInfo", null, userInfoValues3, SQLiteDatabase.CONFLICT_REPLACE);
+
+
+        for (int userId = 1; userId <= 3; userId++) {
             for (int levelNumb = 1; levelNumb <= 16; levelNumb++) {
                 ContentValues valuess = new ContentValues();
                 valuess.put("userId", userId);
@@ -213,7 +234,7 @@ public class DatabaseHelperH extends SQLiteOpenHelper {
                 valuess.put("score", 0);
 
                 if(userId==1 || levelNumb==16)valuess.put("state", 0);
-                else valuess.put("state", 1);
+                else valuess.put("state", 2);
 
                 long rowId = db.insert("scores", null, valuess);
 
