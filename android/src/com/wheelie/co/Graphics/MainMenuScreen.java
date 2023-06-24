@@ -60,8 +60,6 @@ public class MainMenuScreen extends ScreenAdapter{
     private final GlyphLayout layout;
     private Button startBtn;
     private ImageButton profileBtn;
-    private Image soundBtn;
-    private Button settingsBtn;
     private Button aboutBtn;
     private Button finalTestBtn;
     private Button exitBtn;
@@ -177,46 +175,6 @@ public class MainMenuScreen extends ScreenAdapter{
             }
         });
         stage.addActor(profileBtn);
-
-        /**звичайна іконка звуку**/
-
-
-        if (soundState == 1) {
-            soundBtn = new Image(new Texture(Gdx.files.internal("sound2.png")));
-        } else if (soundState == 2) {
-            soundBtn = new Image(new Texture(Gdx.files.internal("sound2small.png")));
-
-        } else if (soundState == 3) {
-
-            soundBtn = new Image(new Texture(Gdx.files.internal("sound2no.png")));
-
-        }
-        soundBtn.setSize(250, 150);
-        soundBtn.setPosition(GraphicConstants.colWidth * 7 - soundBtn.getWidth() / 2, GraphicConstants.rowHeight * 7.3F);
-        soundState = 1;
-
-        /**це чомусь не працює :( upd": працює**/
-        soundBtn.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y) {
-                switch (soundState) {
-                    case 1:
-                        soundBtn.setDrawable(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("sound2small.png")))));
-                        soundState = 2;
-                        break;
-                    case 2:
-                        soundBtn.setDrawable(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("sound2no.png")))));
-                        soundState = 3;
-                        break;
-                    default:
-                        soundBtn.setDrawable(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("sound2.png")))));
-                        soundState = 1;
-                        break;
-                }
-            }
-        });
-
-
-        stage.addActor(soundBtn);
 
 
         sprite = new Sprite(new Texture(Gdx.files.internal("b13.jpg")));
