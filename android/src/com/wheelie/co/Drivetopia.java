@@ -75,7 +75,7 @@ public class Drivetopia extends Game {
 		//setScreen(new AuthorizationScreen(this));
 	//	setScreen(new MainMenuScreen(this,1));
 		//setScreen(new NormalRelationsTextQuestionScreen(this,new NormalRelationsQuestion("text"), new level4(),1));
-//	setScreen(new LevelsScreen(this,1));
+	//setScreen(new LevelsScreen(this,1));
 		//setScreen(new HardPictureQuestionScreen(this, new HardPictureQuestion(11, true),new level3(),1));
 		//	setScreen(new LevelsScreen(this,2));
 		/*LinkedList<Slide> slides = new LinkedList<>();

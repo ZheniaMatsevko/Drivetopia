@@ -224,6 +224,7 @@ public class LevelsScreen extends ScreenAdapter{
                     dialogF.show(stage);
                 }
 
+
                 dispose();
             }
         });
