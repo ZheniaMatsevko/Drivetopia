@@ -157,6 +157,11 @@ public class InteractiveTrafficScreen extends ScreenAdapter{
         stage.draw();
     }
 
+    public void dispose() {
+        stage.dispose();
+        batch.dispose();
+    }
+
     private void verifyCarPassedTraffic() {
         car.setCarBounds(car.getCarBounds().getVertices());
 
@@ -229,7 +234,7 @@ public class InteractiveTrafficScreen extends ScreenAdapter{
                    }
                }
 
-
+                 dispose();
 
                return true;
            }
@@ -285,6 +290,7 @@ class TrafficLight extends Actor {
         }
 
     }
+
     void setBounds(float x, float y) {
         this.bounds = new Rectangle(x, y, this.getCurrent().getWidth(), this.getCurrent().getHeight());
     }

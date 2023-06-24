@@ -227,6 +227,11 @@ public class InteractiveParkingScreen extends ScreenAdapter {
         stage.draw();
     }
 
+    public void dispose() {
+        stage.dispose();
+        batch.dispose();
+    }
+
     private void processCarMovement() {
         float delta = Gdx.graphics.getDeltaTime();
         Vector2 direction = new Vector2(-MathUtils.sinDeg(userCar.getRotation()), MathUtils.cosDeg(userCar.getRotation())).nor();
@@ -330,13 +335,13 @@ public class InteractiveParkingScreen extends ScreenAdapter {
                 if(failed) {
                     level.failureScoreCount+=10;
                     if (level.failureScoreCount>=level.failureScore)app.setScreen(new IntermediateScreen(app,level,userID,2,true));
-
                 }
                 else {
                     if(level.getTasks().size()!=level.currentTaskNumber()) {
                         level.increaseTaskCounter();
                         level.currentscore += 10;
                         app.setScreen(level.tasks.get(level.currentTaskNumber() - 1));
+
                     }
                     else {
                         level.currentscore += 10;

@@ -232,6 +232,11 @@ public class TheoryScreen extends ScreenAdapter{
         Gdx.input.setInputProcessor(stage);
     }
 
+    public void dispose() {
+        stage.dispose();
+        batch.dispose();
+    }
+
 
 }
 

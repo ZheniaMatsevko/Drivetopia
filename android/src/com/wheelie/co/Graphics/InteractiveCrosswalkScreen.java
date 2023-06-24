@@ -229,17 +229,19 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter{
                 if(failed) {
                     level.failureScoreCount+=10;
                     if (level.failureScoreCount>=level.failureScore)app.setScreen(new IntermediateScreen(app,level,userID,2,true));
-
+                  dispose();
                 }
                 else {
                     if(level.getTasks().size()!=level.currentTaskNumber()) {
                         level.increaseTaskCounter();
                         level.currentscore += 10;
                         app.setScreen(level.tasks.get(level.currentTaskNumber() - 1));
+                        dispose();
                     }
                     else {
                         level.currentscore += 10;
                         app.setScreen(new IntermediateScreen(app,level,userID,2,false));
+                        dispose();
 
                     }
                 }
@@ -251,7 +253,10 @@ public class InteractiveCrosswalkScreen extends ScreenAdapter{
         dialog.setVisible(true);
         dialog.show(stage);
     }
-
+    public void dispose() {
+        stage.dispose();
+        batch.dispose();
+    }
 }
 
 /**
@@ -306,6 +311,7 @@ class Pedestrian extends Actor {
         batch.draw(region, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
     }
 
+
     public Rectangle getPedestrianBounds() {
         return bounds;
     }
@@ -313,4 +319,6 @@ class Pedestrian extends Actor {
     public void setPedestrianBounds(float x, float y, float width, float height) {
         this.bounds = new Rectangle(x, y, width, height);
     }
+
+
 }
