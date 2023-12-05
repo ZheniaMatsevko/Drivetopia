@@ -5,6 +5,8 @@
 ### Overview
 Drivetopia is a cutting-edge, open-source Android application crafted to assist users in preparing for the driving license test in Ukraine. Developed with Libgdx for high-performance graphics and featuring SQLite integration for seamless user data management, Drivetopia is a versatile learning platform available on Git for free.
 
+Link to Google Drive with video demonstration of a program : https://drive.google.com/drive/folders/11ea9Vv-IbcwGq8cWmz6Jzqn8qYelJwBz?usp=sharing
+
 ### Key Features
 
 1. **Theoretical Material:**
